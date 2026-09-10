@@ -1,0 +1,32 @@
+-- Python Adventure database schema
+CREATE TABLE players (
+  id INTEGER PRIMARY KEY AUTOINCREMENT,
+  username TEXT NOT NULL UNIQUE,
+  level INTEGER NOT NULL DEFAULT 12,
+  xp INTEGER NOT NULL DEFAULT 2450,
+  coins INTEGER NOT NULL DEFAULT 1250,
+  progress INTEGER NOT NULL DEFAULT 40
+);
+
+CREATE TABLE lessons (
+  id INTEGER PRIMARY KEY,
+  title TEXT NOT NULL,
+  description TEXT,
+  xp_reward INTEGER NOT NULL DEFAULT 100
+);
+
+CREATE TABLE player_lessons (
+  player_id INTEGER NOT NULL,
+  lesson_id INTEGER NOT NULL,
+  completed_at TEXT NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  PRIMARY KEY(player_id, lesson_id)
+);
+
+CREATE TABLE byte_state (
+  player_id INTEGER PRIMARY KEY,
+  level INTEGER NOT NULL DEFAULT 12,
+  bond INTEGER NOT NULL DEFAULT 38,
+  energy INTEGER NOT NULL DEFAULT 72,
+  state TEXT NOT NULL DEFAULT 'FOLLOW',
+  memory_json TEXT NOT NULL DEFAULT '[]'
+);
