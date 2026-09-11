@@ -287,9 +287,40 @@ function runCode(){
 
 async function loadState(){
  try{
-  const d=await api('/player');xp=d.player.xp;coins=d.player.coins;progress=d.player.progress;
+  const d=await api('/player');
+  const p=d.player;
+
+  xp=Number(p.xp)||0;
+  coins=Number(p.coins)||0;
+  progress=Number(p.progress)||0;
+
+  skillPoints=Number(p.skillPoints)||0;
+
+  completedLessons=[];
+  if(Array.isArray(p.completedLessons)){
+   completedLessons=p.completedLessons.map(Number);
+  }
+
+  if(p.skillLevels && typeof p.skillLevels==='object'){
+   Object.assign(skillLevels,p.skillLevels);
+  }
+
+  if(p.gameState && typeof p.gameState==='object'){
+   mergeGameState(p.gameState);
+  }
+
+  if(p.labStats && typeof p.labStats==='object'){
+   gameState.lab={
+    ...gameState.lab,
+    ...p.labStats
+   };
+  }
+
   renderAll();
- }catch(e){}
+  renderPersistentUI();
+ }catch(e){
+  console.warn('loadState error:',e);
+ }
 }
 function setMode(m){
  mode=m;const reg=m==='register';$('loginForm').style.display=reg?'none':'block';$('registerForm').style.display=reg?'block':'none';
