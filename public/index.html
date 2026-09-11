@@ -344,5 +344,554 @@ $('logoutBtn').onclick=async()=>{
 
 renderAll();checkAuth();
 </script>
+  <script>
+/* ===== حفظ تقدم اللعبة في قاعدة البيانات ===== */
+
+const API_BASE = '/api';
+
+let serverPlayer = null;
+
+let gameState = {
+  inventory: [
+    'print()',
+    'input()',
+    'int()',
+    'float()',
+    'type()',
+    '+',
+    '*',
+    '/'
+  ],
+
+  quests: {
+    q1: false,
+    q2: false,
+    q3: false,
+    q4: false
+  },
+
+  achievements: {
+    first: true,
+    variables: false,
+    debug: false,
+    master: false
+  },
+
+  map: {
+    stage: 1
+  },
+
+  chest: {
+    opened: 0
+  },
+
+  lab: {
+    runs: 0,
+    successes: 0,
+    errors: 0
+  }
+};
+
+let saveTimer = null;
+
+
+async function apiRequest(path, options = {}) {
+  try {
+    const res = await fetch(
+      API_BASE + path,
+      {
+        credentials: 'include',
+
+        headers: {
+          'Content-Type': 'application/json',
+          ...(options.headers || {})
+        },
+
+        ...options
+      }
+    );
+
+    const data =
+      await res.json().catch(() => ({}));
+
+    if (!res.ok) {
+      throw new Error(
+        data.error || ('API ' + res.status)
+      );
+    }
+
+    return data;
+
+  } catch (error) {
+
+    console.warn(
+      'API unavailable',
+      error
+    );
+
+    return null;
+  }
+}
+
+
+function mergeGameState(saved) {
+
+  if (
+    !saved ||
+    typeof saved !== 'object'
+  ) {
+    return;
+  }
+
+  gameState = {
+    ...gameState,
+    ...saved,
+
+    quests: {
+      ...gameState.quests,
+      ...(saved.quests || {})
+    },
+
+    achievements: {
+      ...gameState.achievements,
+      ...(saved.achievements || {})
+    },
+
+    map: {
+      ...gameState.map,
+      ...(saved.map || {})
+    },
+
+    chest: {
+      ...gameState.chest,
+      ...(saved.chest || {})
+    },
+
+    lab: {
+      ...gameState.lab,
+      ...(saved.lab || {})
+    },
+
+    inventory:
+      Array.isArray(saved.inventory) &&
+      saved.inventory.length
+        ? saved.inventory
+        : gameState.inventory
+  };
+}
+
+
+function collectGameState() {
+
+  return {
+    inventory:
+      gameState.inventory,
+
+    quests:
+      gameState.quests,
+
+    achievements:
+      gameState.achievements,
+
+    map: {
+      stage:
+        Math.max(
+          1,
+          Math.min(
+            6,
+            Math.ceil(
+              Number(progress || 0) / 17
+            )
+          )
+        )
+    },
+
+    chest:
+      gameState.chest,
+
+    lab:
+      gameState.lab
+  };
+}
+
+
+async function saveGameState(immediate = false) {
+
+  clearTimeout(saveTimer);
+
+  if (!immediate) {
+
+    saveTimer =
+      setTimeout(
+        () => saveGameState(true),
+        500
+      );
+
+    return;
+  }
+
+  gameState.map.stage =
+    Math.max(
+      1,
+      Math.min(
+        6,
+        Math.ceil(
+          Number(progress || 0) / 17
+        )
+      )
+    );
+
+  await apiRequest(
+    '/game-state',
+    {
+      method: 'PUT',
+
+      body:
+        JSON.stringify(
+          collectGameState()
+        )
+    }
+  );
+}
+
+
+async function loadServerState() {
+
+  const data =
+    await apiRequest('/player');
+
+  if (
+    !data ||
+    !data.player
+  ) {
+    return;
+  }
+
+  serverPlayer =
+    data.player;
+
+  xp =
+    Number(data.player.xp) || 0;
+
+  coins =
+    Number(data.player.coins) || 0;
+
+  progress =
+    Number(data.player.progress) || 0;
+
+  mergeGameState(
+    data.player.gameState
+  );
+
+  if (data.player.labStats) {
+
+    gameState.lab = {
+      ...gameState.lab,
+      ...data.player.labStats
+    };
+  }
+
+  const coinsEl =
+    document.getElementById('coins');
+
+  if (coinsEl) {
+    coinsEl.textContent =
+      coins;
+  }
+
+  const xpText =
+    document.getElementById('xpText');
+
+  if (xpText) {
+    xpText.textContent =
+      'XP ' + xp + ' / 4800';
+  }
+
+  const xpBar =
+    document.getElementById('xpBar');
+
+  if (xpBar) {
+    xpBar.style.width =
+      Math.min(
+        100,
+        xp / 4800 * 100
+      ) + '%';
+  }
+
+  const progressBar =
+    document.getElementById(
+      'progressBar'
+    );
+
+  if (progressBar) {
+    progressBar.style.width =
+      progress + '%';
+  }
+
+  const progressText =
+    document.getElementById(
+      'progressText'
+    );
+
+  if (progressText) {
+    progressText.textContent =
+      progress + '%';
+  }
+
+  renderPersistentUI();
+}
+
+
+function renderPersistentUI() {
+
+  const inventory =
+    [
+      ...new Set(
+        gameState.inventory || []
+      )
+    ];
+
+  document
+    .querySelectorAll(
+      '.inventory .items'
+    )
+    .forEach(box => {
+
+      box.innerHTML =
+        inventory
+          .map(item =>
+            `<button class="item">
+              ${String(item)
+                .replace(/</g, '&lt;')}
+            </button>`
+          )
+          .join('');
+    });
+
+  document
+    .querySelectorAll(
+      '.inventory .panel-title span'
+    )
+    .forEach(el => {
+
+      el.textContent =
+        inventory.length + '/30';
+    });
+}/* ===== الحفظ التلقائي ===== */
+
+async function savePlayerData() {
+  await apiRequest('/player', {
+    method: 'PUT',
+    body: JSON.stringify({
+      xp: Number(xp) || 0,
+      coins: Number(coins) || 0,
+      progress: Number(progress) || 0
+    })
+  });
+
+  await saveGameState(true);
+}
+
+
+/* حفظ عند تغيير الصفحة */
+window.addEventListener('beforeunload', () => {
+  savePlayerData();
+});
+
+
+/* حفظ تلقائي كل 10 ثواني */
+setInterval(() => {
+  savePlayerData();
+}, 10000);
+
+
+/* ===== حفظ إكمال الدرس ===== */
+
+async function completeLessonOnServer(lessonId) {
+  const result = await apiRequest(
+    '/lessons/' + Number(lessonId) + '/complete',
+    {
+      method: 'POST'
+    }
+  );
+
+  if (result && result.player) {
+
+    serverPlayer = result.player;
+
+    xp =
+      Number(result.player.xp) || 0;
+
+    coins =
+      Number(result.player.coins) || 0;
+
+    progress =
+      Number(result.player.progress) || 0;
+
+    mergeGameState(
+      result.player.gameState
+    );
+
+    renderPersistentUI();
+  }
+
+  return result;
+}
+
+
+/* ===== حفظ Byte ===== */
+
+async function saveByteData(byteData) {
+
+  if (!byteData) {
+    return;
+  }
+
+  await apiRequest('/byte', {
+    method: 'PUT',
+
+    body: JSON.stringify({
+      level:
+        Number(byteData.level) || 1,
+
+      bond:
+        Number(byteData.bond) || 0,
+
+      energy:
+        Number(byteData.energy) || 0,
+
+      state:
+        byteData.state || 'idle',
+
+      memory:
+        Array.isArray(byteData.memory)
+          ? byteData.memory
+          : []
+    })
+  });
+}
+
+
+/* ===== حفظ المختبر ===== */
+
+async function saveLabData(stats) {
+
+  if (!stats) {
+    return;
+  }
+
+  gameState.lab = {
+    ...gameState.lab,
+    ...stats
+  };
+
+  await apiRequest('/lab', {
+    method: 'PUT',
+
+    body: JSON.stringify({
+      runs:
+        Number(gameState.lab.runs) || 0,
+
+      successes:
+        Number(gameState.lab.successes) || 0,
+
+      errors:
+        Number(gameState.lab.errors) || 0
+    })
+  });
+}
+
+
+/* ===== تحميل البيانات بعد فتح الموقع ===== */
+
+document.addEventListener(
+  'DOMContentLoaded',
+  async () => {
+
+    await loadServerState();
+
+    renderPersistentUI();
+  }
+);
+
+
+/* ===== محاولة تحميل الحساب بعد تسجيل الدخول ===== */
+
+setTimeout(() => {
+  loadServerState();
+}, 3000);
+
+setTimeout(() => {
+  loadServerState();
+}, 7000);
+
+
+/* ===== حفظ تلقائي عند إخفاء التطبيق ===== */
+
+document.addEventListener(
+  'visibilitychange',
+  () => {
+
+    if (
+      document.visibilityState === 'hidden'
+    ) {
+      savePlayerData();
+    }
+  }
+);<script>
+/* ===== ربط أفعال اللعبة بالحفظ ===== */
+
+function saveGameNow() {
+  savePlayerData();
+  saveGameState(true);
+}
+
+
+/* حفظ عند الضغط على أزرار اللعبة */
+document.addEventListener('click', function () {
+
+  setTimeout(function () {
+    saveGameNow();
+  }, 300);
+
+});
+
+
+/* حفظ عند الكتابة في المختبر */
+document.addEventListener('input', function (event) {
+
+  const el = event.target;
+
+  if (
+    el &&
+    (
+      el.tagName === 'TEXTAREA' ||
+      el.tagName === 'INPUT'
+    )
+  ) {
+    saveGameState();
+  }
+
+});
+
+
+/* محاولة تحديث الدروس بعد تسجيل الدخول */
+async function refreshPlayerFromServer() {
+  await loadServerState();
+}
+
+
+/* تحميل آخر تقدم */
+setTimeout(function () {
+  refreshPlayerFromServer();
+}, 1500);
+
+
+/* حفظ نهائي */
+window.addEventListener('pagehide', function () {
+  saveGameNow();
+});
+
+</script>
 </body>
 </html>
