@@ -176,214 +176,1108 @@ function openChest(){coins+=100;document.getElementById('coins').textContent=coi
 function answer(btn,correct){document.querySelectorAll('.answer').forEach(b=>b.classList.remove('correct','wrong'));btn.classList.add(correct?'correct':'wrong');document.getElementById('answerMsg').textContent=correct?'🎉 إجابة صحيحة! أحسنت يا مبرمج.':'❌ حاول مرة أخرى.';if(correct)toast('⭐ +25 XP')}
 function completeLesson(){xp+=100;progress=Math.min(100,progress+10);document.getElementById('xpText').textContent='XP '+xp+' / 4800';document.getElementById('xpBar').style.width=(xp/4800*100)+'%';document.getElementById('progressBar').style.width=progress+'%';document.getElementById('progressText').textContent=progress+'%';toast('🎉 تم إكمال الدرس! +100 XP');setTimeout(closeWindows,900)}
 function runCode(){let code=document.getElementById('editor').value, out=document.getElementById('output');let m=code.match(/print\s*\(\s*["'`](.*?)["'`]\s*\)/);out.textContent=m?m[1]:'⚠️ هذا المختبر يدعم حاليًا أوامر print("نص") البسيطة.'}
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Python Adventure</title>
 
+<style>
+*{box-sizing:border-box}
+body{
+ margin:0;
+ min-height:100vh;
+ overflow:hidden;
+ background:#02070b;
+ color:#eaffff;
+ font-family:Arial,Tahoma,sans-serif
+}
+.game{
+ position:relative;
+ width:100vw;
+ height:100vh;
+ overflow:hidden;
+ background:
+ radial-gradient(circle at 50% 55%,rgba(0,255,190,.18),transparent 25%),
+ radial-gradient(circle at 50% 20%,rgba(0,180,255,.13),transparent 35%),
+ linear-gradient(135deg,#02070b,#07141b,#02070b)
+}
+.stars{
+ position:absolute;
+ inset:0;
+ background-image:
+ radial-gradient(circle,#63ffe0 1px,transparent 2px),
+ radial-gradient(circle,#55cfff 1px,transparent 2px);
+ background-size:130px 130px,190px 190px;
+ opacity:.35
+}
+.player{
+ position:absolute;
+ top:18px;
+ right:20px;
+ width:300px;
+ padding:12px;
+ display:flex;
+ gap:12px;
+ border:1px solid #176e76;
+ border-radius:12px;
+ background:rgba(2,14,21,.9);
+ z-index:5
+}
+.avatar{
+ width:65px;
+ height:65px;
+ display:grid;
+ place-items:center;
+ border:2px solid #30e7c0;
+ border-radius:50%;
+ background:#08171c;
+ font-size:34px
+}
+.player h3{color:#72ffe0;margin:0 0 5px}
+.level{color:#9ed1d6;font-size:13px}
+.bar{
+ height:7px;
+ margin-top:5px;
+ overflow:hidden;
+ border-radius:10px;
+ background:#13272d
+}
+.bar span{display:block;height:100%}
+.xp span{width:51%;background:#34f0a5}
+.hp span{width:100%;background:#21e48b}
+.mp span{width:100%;background:#36bfff}
 
-/* ===== BYTE LOCAL AI COMPANION ENGINE =====
-   يعمل محليًا بدون API: ذاكرة + سياق اللعبة + محرك قرار + ردود مولدة من السياق.
-   يمكن لاحقًا ربط نفس الواجهة بنموذج LLM محلي على Android/WebGPU.
-*/
-const pet=document.getElementById('pet'), petChat=document.getElementById('petChat');
-const byteStateEl=document.getElementById('byteState'), petStateEl=document.getElementById('petState');
-const byteEnergy=document.getElementById('byteEnergy'), byteBondEl=document.getElementById('byteBond');
-let byte={
-  level:12,bond:38,energy:72,state:'FOLLOW',targetX:32,targetY:27,dir:1,
-  busy:false,lastEvent:'start',memory:JSON.parse(localStorage.getItem('byteMemory')||'[]')
-};
-
-function saveByte(){
-  localStorage.setItem('byteMemory',JSON.stringify(byte.memory.slice(-30)));
-  byteBondEl.textContent=byte.bond;
+.progress{
+ position:absolute;
+ top:18px;
+ left:50%;
+ transform:translateX(-50%);
+ width:430px;
+ text-align:center;
+ z-index:5
 }
-function remember(text){
-  byte.memory.push({t:Date.now(),text});
-  saveByte();
+.progress-title{color:#b8ffff;margin-bottom:7px}
+.progress-bar{
+ height:13px;
+ border:1px solid #35777b;
+ border-radius:20px;
+ overflow:hidden;
+ background:#07151b
 }
-function byteSay(msg,ms=4300){
-  petChat.textContent=msg; petChat.classList.add('show');
-  clearTimeout(byteSay.timer); byteSay.timer=setTimeout(()=>petChat.classList.remove('show'),ms);
+.progress-bar span{
+ display:block;
+ width:40%;
+ height:100%;
+ background:linear-gradient(90deg,#2aff9d,#51ddff)
 }
-function setByteState(state){
-  byte.state=state; byteStateEl.textContent=state; petStateEl.textContent=state==='THINKING'?'يفكر محليًا...':state==='HELPING'?'يساعدك الآن':state==='EXPLORE'?'يستكشف المنطقة':'محلّي · '+state;
-  pet.classList.remove('ai-follow','ai-think','ai-happy','ai-alert','ai-sleep');
-  if(state==='FOLLOW')pet.classList.add('ai-follow');
-  if(state==='THINKING')pet.classList.add('ai-think');
-  if(state==='CELEBRATE')pet.classList.add('ai-happy');
-  if(state==='ALERT')pet.classList.add('ai-alert');
-  if(state==='SLEEP')pet.classList.add('ai-sleep');
-}
-function moveTo(x,y){
-  byte.targetX=Math.max(5,Math.min(72,x)); byte.targetY=Math.max(18,Math.min(55,y));
-}
-function localAI(input){
-  const s=(input||'').toLowerCase();
-  let reply;
-  if(/خطأ|غلط|error|bug/.test(s)){
-    reply="🐉 شفت مشكلة بالكود. لا تستعجل للحل: اقرأ السطر، حدّد نوع القيمة، وبعدها جرّب أصغر تعديل ممكن.";
-  }else if(/print|طبع|يطبع/.test(s)){
-    reply='💡 تذكّر: print() وظيفتها عرض قيمة على الشاشة. جرّب تغيير النص بين علامات الاقتباس وشوف الناتج.';
-  }else if(/input|ادخال|إدخال/.test(s)){
-    reply='🧠 input() تستقبل بيانات من المستخدم. وإذا تحتاج رقمًا صحيحًا، غالبًا تحول الناتج باستخدام int().';
-  }else if(/ما اعرف|لا افهم|صعب|مو فاهم/.test(s)){
-    reply='⚡ لا تحفظها كلها مرة واحدة. خلينا نفككها إلى خطوة صغيرة، وأنت تكتب الكود بنفسك.';
-  }else if(/ماذا|شنو|شلون|كيف|اشرح/.test(s)){
-    reply='🧠 أفهم سؤالك من سياق اللعبة. جرّب تعطيني اسم الأمر أو الكود الذي أمامك، وأنا أشرح لك فكرته خطوة بخطوة.';
-  }else{
-    reply='🐉 أنا Byte. أشتغل محليًا داخل اللعبة وأستخدم حالة اللاعب، الدرس، والذاكرة المحلية حتى أختار ردًا مناسبًا.';
-  }
-  remember('user:'+input); remember('byte:'+reply); return reply;
-}
-function byteThink(input){
-  setByteState('THINKING'); byte.busy=true; byteSay('🧠 Byte يعالج طلبك محليًا...');
-  setTimeout(()=>{byte.busy=false;setByteState('HELPING');byteSay(localAI(input));},500+Math.random()*450);
-}
-function petAI(type){
-  const msgs={
-    hint:'💡 تلميح محلي: لا أريد أعطيك الحل كامل. ابحث عن الأمر الذي يعرض النص على الشاشة، ثم جرّبه بنفسك.',
-    explain:'🧠 تحليل Byte: الكود الذي تكتبه يتحول إلى تعليمات، وأنا أقدر أشرح الفكرة قبل أن أعطيك الإجابة.',
-    motivate:'⚡ فشل المحاولة مو خسارة. كل خطأ تسجله في ذاكرتك يصير خبرة للمحاولة القادمة.'
-  };
-  byteThink(msgs[type]||'ساعدني');
-}
-function byteCommand(cmd){
-  if(cmd==='follow'){setByteState('FOLLOW');moveTo(31,29);byteSay('👤 حاضر. راح أبقى قريب منك وأتجنب تغطية واجهة اللعبة.');}
-  if(cmd==='explore'){setByteState('EXPLORE');moveTo(55+Math.random()*15,22+Math.random()*25);byteSay('🗺️ أستكشف المنطقة. إذا شفت شيء غريب راح أنبهك.');}
-  if(cmd==='help'){moveTo(25,25);byteThink('ساعدني في الدرس الحالي');}
-}
-pet.addEventListener('click',()=>{
-  if(byte.busy)return;
-  byteThink('أنا أريد مساعدة في Python');
-});
-/* Movement AI: smooth target-based flight, zone awareness, no fixed left-right loop. */
-let bx=12, by=25;
-function byteMovement(){
-  const dx=byte.targetX-bx, dy=byte.targetY-by, dist=Math.hypot(dx,dy);
-  if(dist>.18){
-    bx+=dx*.018; by+=dy*.018;
-    if(Math.abs(dx)>.15)byte.dir=dx>0?1:-1;
-    pet.style.transform=`translateY(${Math.sin(Date.now()/350)*3}px) scaleX(${byte.dir})`;
-  }else if(byte.state==='EXPLORE' && Math.random()<.006){
-    moveTo(8+Math.random()*62,20+Math.random()*34);
-  }
-  pet.style.left=bx+'%'; pet.style.bottom=by+'%';
-  requestAnimationFrame(byteMovement);
-}
-byteMovement();
-
-/* Game events the companion can react to. */
-function byteEvent(event,data=''){
-  byte.lastEvent=event;
-  if(event==='LESSON_OPEN'){setByteState('HELPING');moveTo(28,27);byteSay('📚 أنا وياك بالدرس. إذا وقفت عند نقطة، نحلها خطوة خطوة.');}
-  if(event==='CODE_ERROR'){setByteState('ALERT');byte.energy=Math.max(15,byte.energy-4);byteSay('⚠️ اكتشفت إشارة خطأ. اقرأ السطر بهدوء قبل ما تغيّره.');}
-  if(event==='CODE_SUCCESS'){byte.bond=Math.min(100,byte.bond+2);byte.energy=Math.min(100,byte.energy+8);setByteState('CELEBRATE');byteSay('🔥 ممتاز! هذا شغل مبرمج. +2 Bond');saveByte();setTimeout(()=>setByteState('FOLLOW'),1500);}
-  if(event==='QUEST_COMPLETE'){byte.bond=Math.min(100,byte.bond+5);setByteState('CELEBRATE');byteSay('🏆 مهمة مكتملة! علاقتنا صارت أقوى.');saveByte();}
-  if(event==='IDLE'){setByteState('EXPLORE');moveTo(10+Math.random()*60,20+Math.random()*35);}
+.coins{
+ position:absolute;
+ top:125px;
+ right:20px;
+ color:#ffd866;
+ font-weight:bold;
+ z-index:7
 }
 
-/* Hook the existing game actions into Byte. */
-const oldCompleteLesson=completeLesson;
-completeLesson=function(){oldCompleteLesson();byteEvent('LESSON_OPEN');byteEvent('QUEST_COMPLETE');};
-const oldRunCode=runCode;
-runCode=function(){
-  const code=document.getElementById('editor').value;
-  oldRunCode();
-  if(/print\s*\(/.test(code)){byteEvent('CODE_SUCCESS');}
-  else{byteEvent('CODE_ERROR');}
-};
-setInterval(()=>{if(!petChat.classList.contains('show')&&!byte.busy)byteEvent('IDLE')},11000);
-setTimeout(()=>byteSay('🐉 أنا Byte — تنين Cyber يعمل محليًا. اضغط عليّ أو استخدم أزرار التحكم.',6000),900);
+.portal{
+ position:absolute;
+ top:24%;
+ left:50%;
+ transform:translateX(-50%);
+ width:300px;
+ height:390px;
+ border:12px solid #123a3b;
+ border-bottom:0;
+ border-radius:160px 160px 0 0;
+ background:
+ repeating-linear-gradient(
+  90deg,
+  rgba(0,255,190,.12) 0 5px,
+  transparent 5px 13px
+ ),
+ radial-gradient(circle,#32ffad,#063b32 45%,#031216 70%);
+ box-shadow:0 0 25px #22ffae,0 0 80px rgba(0,255,180,.35)
+}
+.portal:before{
+ content:"PYTHON";
+ position:absolute;
+ top:42px;
+ left:50%;
+ transform:translateX(-50%);
+ font-size:30px;
+ font-weight:bold;
+ color:#caffed
+}
+.python{
+ position:absolute;
+ top:120px;
+ left:50%;
+ transform:translateX(-50%);
+ font-size:95px
+}
 
-</script>
+.door{
+ position:absolute;
+ top:33%;
+ width:125px;
+ height:230px;
+ border:3px solid #344f59;
+ border-radius:65px 65px 0 0;
+ background:linear-gradient(#0b1920,#03080c);
+ display:flex;
+ justify-content:center;
+ align-items:flex-start;
+ padding-top:18px;
+ color:#fff;
+ font-size:25px
+}
+.door.left{left:31%}
+.door.right{right:31%}
+.lock{
+ position:absolute;
+ bottom:55px;
+ font-size:34px
+}
+
+.code-screen{
+ position:absolute;
+ left:7%;
+ top:27%;
+ width:360px;
+ padding:18px;
+ border:1px solid #32dfff;
+ border-radius:12px;
+ background:rgba(2,15,23,.86);
+ z-index:4
+}
+.code-title{color:#56dfff;margin-bottom:12px;font-weight:bold}
+.code{
+ direction:ltr;
+ text-align:left;
+ font-family:monospace;
+ line-height:1.8;
+ color:#d8ffff
+}
+.keyword{color:#ff70e7}
+.func{color:#55ffb2}
+.string{color:#ffd36b}
+.number{color:#7ecfff}
+
+.panel{
+ position:absolute;
+ right:20px;
+ width:300px;
+ padding:15px;
+ border:1px solid #285963;
+ border-radius:12px;
+ background:rgba(3,14,20,.9);
+ z-index:6
+}
+.inventory{top:210px}
+.skills{top:420px}
+.panel-title{
+ color:#7dffe0;
+ font-weight:bold;
+ margin-bottom:12px
+}
+.items{
+ display:flex;
+ flex-wrap:wrap;
+ gap:6px
+}
+.item{
+ padding:7px 8px;
+ border:1px solid #278f69;
+ border-radius:7px;
+ color:#72ffad;
+ background:#071b18;
+ font-family:monospace;
+ font-size:12px
+}
+.skill-grid{
+ display:grid;
+ grid-template-columns:repeat(3,1fr);
+ gap:8px
+}
+.skill{
+ padding:10px 4px;
+ text-align:center;
+ border:1px solid #236d79;
+ border-radius:9px;
+ font-size:11px;
+ color:#83fff0
+}
+.skill b{
+ display:block;
+ font-size:20px;
+ margin-bottom:5px
+}
+
+.chest{
+ position:absolute;
+ bottom:110px;
+ right:28%;
+ width:130px;
+ height:80px;
+ border:4px solid #a35bff;
+ border-radius:18px;
+ background:#251237;
+ box-shadow:0 0 25px #a941ff;
+ cursor:pointer;
+ z-index:5;
+ display:grid;
+ place-items:center;
+ font-size:40px
+}
+
+.character{
+ position:absolute;
+ bottom:0;
+ left:50%;
+ transform:translateX(-50%);
+ width:170px;
+ height:260px;
+ z-index:3
+}
+.head{
+ position:absolute;
+ top:20px;
+ left:55px;
+ width:60px;
+ height:70px;
+ border-radius:45%;
+ background:#12191e;
+ border:2px solid #263a42
+}
+.body{
+ position:absolute;
+ top:80px;
+ left:25px;
+ width:120px;
+ height:175px;
+ border-radius:45px 45px 10px 10px;
+ background:linear-gradient(120deg,#101d25,#071015);
+ border:2px solid #1f5054
+}
+.body:after{
+ content:"</>";
+ position:absolute;
+ top:55px;
+ left:40px;
+ color:#43ffbd;
+ font-weight:bold;
+ font-size:25px
+}
+
+.floating{
+ position:absolute;
+ padding:9px 15px;
+ border:1px solid #37eeb0;
+ border-radius:20px;
+ color:#8bffe1;
+ background:rgba(4,32,30,.75);
+ font-family:monospace;
+ z-index:4
+}
+.f1{left:27%;bottom:27%}
+.f2{left:20%;bottom:19%}
+.f3{right:37%;bottom:27%}
+
+.bottom{
+ position:absolute;
+ bottom:0;
+ left:50%;
+ transform:translateX(-50%);
+ width:720px;
+ height:70px;
+ display:flex;
+ align-items:center;
+ justify-content:center;
+ gap:9px;
+ border:1px solid #24545c;
+ border-bottom:0;
+ border-radius:18px 18px 0 0;
+ background:rgba(2,11,16,.95);
+ z-index:10
+}
+.nav{
+ width:85px;
+ height:53px;
+ border:1px solid #315d64;
+ border-radius:10px;
+ background:#08171d;
+ color:#9bd5d5;
+ cursor:pointer;
+ font-size:11px
+}
+.nav span{
+ display:block;
+ font-size:21px;
+ margin-bottom:3px
+}
+.nav:hover{
+ border-color:#45f1b7;
+ color:#72ffcc
+}
+
+/* تسجيل الدخول */
+#authScreen{
+ position:fixed;
+ inset:0;
+ z-index:99999;
+ display:flex;
+ align-items:center;
+ justify-content:center;
+ background:
+ radial-gradient(circle,#07352d,#02070b 65%);
+ padding:20px
+}
+#authBox{
+ width:400px;
+ max-width:95vw;
+ padding:25px;
+ border:1px solid #36e8b0;
+ border-radius:20px;
+ background:#071820;
+ box-shadow:0 0 60px rgba(0,255,190,.2);
+ text-align:center
+}
+#authBox h1{
+ color:#7dffe0;
+ margin-top:0
+}
+.authTabs{
+ display:flex;
+ gap:8px;
+ margin:15px 0
+}
+.authTabs button{
+ flex:1;
+ padding:11px;
+ border:1px solid #31545d;
+ border-radius:9px;
+ background:#08151b;
+ color:#baffea
+}
+.authTabs .active{
+ border-color:#3eeeb2;
+ background:#07352c
+}
+.authInput{
+ width:100%;
+ padding:12px;
+ margin:6px 0;
+ border:1px solid #285963;
+ border-radius:9px;
+ background:#020b10;
+ color:white;
+ direction:rtl
+}
+#authSubmit{
+ width:100%;
+ padding:12px;
+ margin-top:10px;
+ border:1px solid #3eeeb2;
+ border-radius:9px;
+ background:#07352c;
+ color:#baffea;
+ font-weight:bold
+}
+#authMsg{
+ min-height:25px;
+ color:#ff9b9b;
+ margin-top:10px
+}
+
+/* الدردشة */
+#chatModal{
+ position:fixed;
+ inset:0;
+ z-index:99998;
+ display:none;
+ align-items:center;
+ justify-content:center;
+ background:rgba(0,4,7,.88);
+ padding:15px
+}
+#chatModal.show{display:flex}
+#chatBox{
+ width:min(850px,96vw);
+ height:min(650px,90vh);
+ display:flex;
+ flex-direction:column;
+ border:1px solid #3eeeb2;
+ border-radius:18px;
+ background:#041116;
+ overflow:hidden
+}
+#chatTop{
+ padding:12px;
+ display:flex;
+ gap:8px;
+ border-bottom:1px solid #204850
+}
+#chatSearch{
+ flex:1;
+ padding:10px;
+ border:1px solid #285963;
+ border-radius:9px;
+ background:#020b10;
+ color:white
+}
+#chatClose,#sendBtn{
+ padding:10px 14px;
+ border-radius:9px;
+ cursor:pointer
+}
+#chatClose{
+ border:1px solid #69434b;
+ background:#241015;
+ color:#ffb9c2
+}
+#chatBody{
+ display:flex;
+ flex:1;
+ min-height:0
+}
+#users{
+ width:220px;
+ padding:10px;
+ border-left:1px solid #204850;
+ overflow:auto
+}
+.user{
+ padding:11px;
+ margin-bottom:7px;
+ border:1px solid #244d55;
+ border-radius:9px;
+ color:#baffea;
+ cursor:pointer
+}
+.user:hover{
+ border-color:#3eeeb2;
+ background:#09251f
+}
+#conversation{
+ flex:1;
+ display:flex;
+ flex-direction:column
+}
+#chatTitle{
+ padding:12px;
+ color:#7dffe0;
+ border-bottom:1px solid #204850
+}
+#messages{
+ flex:1;
+ overflow:auto;
+ padding:15px;
+ display:flex;
+ flex-direction:column;
+ gap:8px
+}
+.message{
+ max-width:75%;
+ padding:9px 12px;
+ border-radius:12px;
+ line-height:1.6;
+ word-break:break-word
+}
+.mine{
+ align-self:flex-start;
+ background:#07352c;
+ border:1px solid #268b6d
+}
+.theirs{
+ align-self:flex-end;
+ background:#0a1d25;
+ border:1px solid #285963
+}
+#sendArea{
+ display:flex;
+ gap:8px;
+ padding:10px;
+ border-top:1px solid #204850
+}
+#messageInput{
+ flex:1;
+ padding:10px;
+ border:1px solid #285963;
+ border-radius:9px;
+ background:#020b10;
+ color:white
+}
+#sendBtn{
+ border:1px solid #3eeeb2;
+ background:#07352c;
+ color:#baffea
+}
+
+@media(max-width:900px){
+ body{overflow:auto}
+ .game{min-width:1100px;height:700px}
+}
+</style>
+</head>
+
+<body>
+
+<div class="game">
+<div class="stars"></div>
+
+<div class="progress">
+ <div class="progress-title">رحلة تعلم Python</div>
+ <div class="progress-bar">
+  <span id="progressBar"></span>
+ </div>
+ <p id="progressText">Python Adventure — 40%</p>
+</div>
+
+<div class="player">
+ <div class="avatar">🧙</div>
+ <div>
+  <h3 id="playerName">المبرمج المبتدئ</h3>
+  <div class="level">المستوى <span id="level">12</span></div>
+  <div>XP <span id="xp">2450</span> / 4800</div>
+  <div class="bar xp"><span></span></div>
+  <div>HP 850 / 850</div>
+  <div class="bar hp"><span></span></div>
+  <div>MP 620 / 620</div>
+  <div class="bar mp"><span></span></div>
+ </div>
+</div>
+
+<div class="coins">🪙 Coins: <span id="coins">1250</span></div>
+
+<div class="portal">
+ <div class="python">🐍</div>
+</div>
+
+<div class="door left">
+ ???
+ <div class="lock">🔒</div>
+</div>
+
+<div class="door right">
+ ???
+ <div class="lock">🔒</div>
+</div>
+
+<div class="code-screen">
+ <div class="code-title">💻 تحدي Python</div>
+ <div class="code">
+  <span class="keyword">print</span>(<span class="string">"Hello World"</span>)<br>
+  <span class="keyword">name</span> =
+  <span class="string">"Python"</span><br>
+  <span class="func">input</span>(<span class="string">"اسمك؟ "</span>)<br>
+  <span class="number">10</span> +
+  <span class="number">20</span>
+ </div>
+</div>
+
+<div class="panel inventory">
+ <div class="panel-title">🎒 الحقيبة</div>
+ <div class="items">
+  <div class="item">🐍 Python</div>
+  <div class="item">⌨️ Keyboard</div>
+  <div class="item">💻 Code</div>
+  <div class="item">🔑 Key</div>
+ </div>
+</div>
+
+<div class="panel skills">
+ <div class="panel-title">🧠 شجرة المهارات</div>
+ <div class="skill-grid">
+  <div class="skill"><b>👁️</b>المنطق</div>
+  <div class="skill"><b>🛠️</b>Debugging</div>
+  <div class="skill"><b>🧠</b>الذاكرة</div>
+ </div>
+</div>
+
+<div class="chest" id="chest">🎁</div>
+
+<div class="floating f1">🐍 Python</div>
+<div class="floating f2">⚡ Byte</div>
+<div class="floating f3">🔢 int</div>
+
+<div class="character">
+ <div class="head"></div>
+ <div class="body"></div>
+</div>
+
+<div class="bottom">
+ <button class="nav"><span>📜</span>المهام</button>
+ <button class="nav"><span>🗺️</span>الخريطة</button>
+ <button class="nav"><span>⚔️</span>المختبر</button>
+ <button class="nav"><span>🧠</span>المهارات</button>
+ <button class="nav"><span>🎒</span>الحقيبة</button>
+ <button class="nav" id="chatButton"><span>💬</span>الدردشة</button>
+</div>
+
+</div>
+
+<!-- تسجيل الدخول -->
+<div id="authScreen">
+ <div id="authBox">
+
+  <h1>🐍 Python Adventure</h1>
+  <p>سجّل دخولك واحفظ رحلتك البرمجية</p>
+
+  <div class="authTabs">
+   <button id="loginTab" class="active">تسجيل الدخول</button>
+   <button id="registerTab">حساب جديد</button>
+  </div>
+
+  <div id="loginForm">
+   <input id="loginValue" class="authInput"
+    placeholder="اسم المستخدم أو الإيميل">
+   <input id="loginPassword" class="authInput"
+    type="password" placeholder="كلمة المرور">
+  </div>
+
+  <div id="registerForm" style="display:none">
+   <input id="regUsername" class="authInput"
+    placeholder="اسم المستخدم">
+   <input id="regEmail" class="authInput"
+    type="email" placeholder="الإيميل">
+   <input id="regPassword" class="authInput"
+    type="password" placeholder="كلمة المرور">
+  </div>
+
+  <button id="authSubmit">دخول إلى اللعبة 🚀</button>
+
+  <div id="authMsg"></div>
+
+ </div>
+</div>
+
+<!-- الدردشة -->
+<div id="chatModal">
+
+ <div id="chatBox">
+
+  <div id="chatTop">
+   <input id="chatSearch"
+    placeholder="🔎 ابحث عن لاعب...">
+   <button id="chatClose">إغلاق ✕</button>
+  </div>
+
+  <div id="chatBody">
+
+   <div id="users"></div>
+
+   <div id="conversation">
+
+    <div id="chatTitle">
+     💬 اختر لاعبًا
+    </div>
+
+    <div id="messages"></div>
+
+    <div id="sendArea">
+     <input id="messageInput"
+      placeholder="اكتب رسالتك...">
+     <button id="sendBtn">إرسال</button>
+    </div>
+
+   </div>
+
+  </div>
+
+ </div>
+
+</div>
 
 <script>
-/* ===== SERVER DATABASE BRIDGE =====
-   The game keeps a local fallback, but when served by the Node/Express backend
-   it synchronizes player progress, Byte state and lesson completion to SQLite.
-*/
-const API_BASE = window.API_BASE || '/api';
-let serverPlayer = null;
 
-async function apiRequest(path, options={}) {
-  try {
-    const res = await fetch(API_BASE + path, {
-      headers: {'Content-Type':'application/json', ...(options.headers||{})},
-      ...options
-    });
-    if (!res.ok) throw new Error('API '+res.status);
-    return await res.json();
-  } catch (e) {
-    console.warn('API unavailable; using local fallback', e);
-    return null;
+let currentUser = null;
+let selectedUser = null;
+let mode = "login";
+
+const $ = id => document.getElementById(id);
+
+async function api(url, options = {}) {
+
+ const response = await fetch(url,{
+  credentials:"include",
+  ...options
+ });
+
+ const data =
+  await response.json().catch(()=>({}));
+
+ if(!response.ok)
+  throw new Error(data.error || "حدث خطأ");
+
+ return data;
+}
+
+/* ---------- تسجيل الدخول ---------- */
+
+$("loginTab").onclick = () => {
+
+ mode = "login";
+
+ $("loginTab").classList.add("active");
+ $("registerTab").classList.remove("active");
+
+ $("loginForm").style.display = "block";
+ $("registerForm").style.display = "none";
+
+ $("authSubmit").textContent =
+  "دخول إلى اللعبة 🚀";
+
+ $("authMsg").textContent = "";
+};
+
+$("registerTab").onclick = () => {
+
+ mode = "register";
+
+ $("registerTab").classList.add("active");
+ $("loginTab").classList.remove("active");
+
+ $("loginForm").style.display = "none";
+ $("registerForm").style.display = "block";
+
+ $("authSubmit").textContent =
+  "إنشاء الحساب 🚀";
+
+ $("authMsg").textContent = "";
+};
+
+$("authSubmit").onclick = async () => {
+
+ try {
+
+  $("authSubmit").disabled = true;
+  $("authMsg").textContent = "جاري الاتصال...";
+
+  if(mode === "login") {
+
+   const data = await api(
+    "/api/auth/login",
+    {
+     method:"POST",
+     headers:{
+      "Content-Type":"application/json"
+     },
+     body:JSON.stringify({
+      login:$("loginValue").value.trim(),
+      password:$("loginPassword").value
+     })
+    }
+   );
+
+   await startGame(data.user);
+
+  } else {
+
+   const data = await api(
+    "/api/auth/register",
+    {
+     method:"POST",
+     headers:{
+      "Content-Type":"application/json"
+     },
+     body:JSON.stringify({
+      username:$("regUsername").value.trim(),
+      email:$("regEmail").value.trim(),
+      password:$("regPassword").value
+     })
+    }
+   );
+
+   await startGame(data.user);
   }
+
+ } catch(error) {
+
+  $("authMsg").textContent = error.message;
+
+ } finally {
+
+  $("authSubmit").disabled = false;
+ }
+};
+
+/* ---------- تشغيل اللعبة ---------- */
+
+async function startGame(user) {
+
+ currentUser = user;
+
+ $("authScreen").style.display = "none";
+
+ $("playerName").textContent =
+  "🧙 " + user.username;
+
+ await loadServerState();
 }
 
 async function loadServerState() {
-  const data = await apiRequest('/player');
-  if (!data || !data.player) return;
-  serverPlayer = data.player;
-  xp = data.player.xp;
-  coins = data.player.coins;
-  progress = data.player.progress;
-  document.getElementById('coins').textContent = coins;
-  document.getElementById('xpText').textContent = 'XP '+xp+' / 4800';
-  document.getElementById('xpBar').style.width = (xp/4800*100)+'%';
-  document.getElementById('progressBar').style.width = progress+'%';
-  document.getElementById('progressText').textContent = progress+'%';
 
-  if (data.byte) {
-    byte.level = data.byte.level;
-    byte.bond = data.byte.bond;
-    byte.energy = data.byte.energy;
-    byte.state = data.byte.state;
-    saveByte();
-  }
+ try {
+
+  const data =
+   await api("/api/player");
+
+  const p = data.player;
+
+  $("playerName").textContent =
+   "🧙 " + p.username;
+
+  $("level").textContent = p.level;
+  $("xp").textContent = p.xp;
+  $("coins").textContent = p.coins;
+
+  $("progressBar").style.width =
+   p.progress + "%";
+
+  $("progressText").textContent =
+   "Python Adventure — " +
+   p.progress + "%";
+
+ } catch(error) {
+
+  console.log(error);
+ }
 }
 
-async function saveServerPlayer() {
-  await apiRequest('/player', {
-    method:'PUT',
-    body:JSON.stringify({xp, coins, progress})
+/* ---------- فتح الصندوق ---------- */
+
+$("chest").onclick = async () => {
+
+ try {
+
+  const data =
+   await api("/api/player");
+
+  const coins =
+   Number(data.player.coins) + 50;
+
+  await api("/api/player",{
+   method:"PUT",
+   headers:{
+    "Content-Type":"application/json"
+   },
+   body:JSON.stringify({
+    coins
+   })
   });
+
+  $("coins").textContent = coins;
+
+  alert("🎁 حصلت على 50 Coins!");
+
+ } catch(error) {
+
+  alert(error.message);
+ }
+};
+
+/* ---------- الدردشة ---------- */
+
+$("chatButton").onclick = () => {
+
+ $("chatModal").classList.add("show");
+
+ $("chatSearch").focus();
+};
+
+$("chatClose").onclick = () => {
+
+ $("chatModal").classList.remove("show");
+};
+
+$("chatModal").onclick = e => {
+
+ if(e.target === $("chatModal"))
+  $("chatModal").classList.remove("show");
+};
+
+$("chatSearch").oninput = async () => {
+
+ const q =
+  $("chatSearch").value.trim();
+
+ if(!q) {
+
+  $("users").innerHTML = "";
+  return;
+ }
+
+ try {
+
+  const data =
+   await api(
+    "/api/users?search=" +
+    encodeURIComponent(q)
+   );
+
+  $("users").innerHTML = "";
+
+  data.users.forEach(user => {
+
+   const div =
+    document.createElement("div");
+
+   div.className = "user";
+
+   div.textContent =
+    "🧙 " + user.username +
+    " — المستوى " + user.level;
+
+   div.onclick = () =>
+    selectUser(user);
+
+   $("users").appendChild(div);
+  });
+
+ } catch(error) {
+
+  console.log(error);
+ }
+};
+
+async function selectUser(user) {
+
+ selectedUser = user;
+
+ $("chatTitle").textContent =
+  "💬 محادثة مع " + user.username;
+
+ await loadMessages();
 }
 
-async function completeLessonServer(lessonId=1) {
-  const result = await apiRequest('/lessons/'+lessonId+'/complete', {method:'POST'});
-  if (result && result.player) {
-    xp = result.player.xp;
-    coins = result.player.coins;
-    progress = result.player.progress;
-    document.getElementById('xpText').textContent='XP '+xp+' / 4800';
-    document.getElementById('xpBar').style.width=(xp/4800*100)+'%';
-    document.getElementById('progressBar').style.width=progress+'%';
-    document.getElementById('progressText').textContent=progress+'%';
-  }
+async function loadMessages() {
+
+ if(!selectedUser) return;
+
+ try {
+
+  const data =
+   await api(
+    "/api/messages/" +
+    selectedUser.id
+   );
+
+  $("messages").innerHTML = "";
+
+  data.messages.forEach(message => {
+
+   const div =
+    document.createElement("div");
+
+   div.className =
+    "message " +
+    (
+     message.sender_id === currentUser.id
+      ? "mine"
+      : "theirs"
+    );
+
+   div.textContent =
+    message.body;
+
+   $("messages").appendChild(div);
+  });
+
+  $("messages").scrollTop =
+   $("messages").scrollHeight;
+
+ } catch(error) {
+
+  console.log(error);
+ }
 }
 
-const oldSaveByteDB = saveByte;
-saveByte = function() {
-  oldSaveByteDB();
-  apiRequest('/byte', {
-    method:'PUT',
+/* إرسال رسالة */
+
+$("sendBtn").onclick =
+ sendMessage;
+
+$("messageInput").onkeydown = e => {
+
+ if(e.key === "Enter")
+  sendMessage();
+};
+
+async function sendMessage() {
+
+ if(!selectedUser) {
+
+  alert("اختار لاعب أولاً");
+  return;
+ }
+
+ const input =
+  $("messageInput");
+
+ const body =
+  input.value.trim();
+
+ if(!body) return;
+
+ try {
+
+  await api(
+   "/api/messages",
+   {
+    method:"POST",
+    headers:{
+     "Content-Type":"application/json"
+    },
     body:JSON.stringify({
-      level:byte.level, bond:byte.bond, energy:byte.energy, state:byte.state,
-      memory:byte.memory.slice(-30)
+     receiverId:selectedUser.id,
+     body
     })
-  });
-};
+   }
+  );
 
-const oldCompleteLessonServerHook = completeLesson;
-completeLesson = function() {
-  oldCompleteLessonServerHook();
-  completeLessonServer(1);
-  saveServerPlayer();
-};
+  input.value = "";
 
-const oldOpenChestServerHook = openChest;
-openChest = function() {
-  oldOpenChestServerHook();
-  saveServerPlayer();
-};
+  await loadMessages();
 
-loadServerState();
+ } catch(error) {
+
+  alert(error.message);
+ }
+}
+
+/* تحديث المحادثة كل 4 ثواني */
+
+setInterval(() => {
+
+ if(
+  selectedUser &&
+  $("chatModal").classList.contains("show")
+ ) {
+  loadMessages();
+ }
+
+},4000);
+
+/* ---------- فحص تسجيل الدخول عند فتح الموقع ---------- */
+
+(async function checkLogin(){
+
+ try {
+
+  const data =
+   await api("/api/auth/me");
+
+  await startGame(data.user);
+
+ } catch(error) {
+
+  $("authScreen").style.display = "flex";
+ }
+
+})();
+
 </script>
 
 </body>
