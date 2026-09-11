@@ -893,5 +893,177 @@ window.addEventListener('pagehide', function () {
 });
 
 </script>
+  <script>
+/* ===== إصلاح تحميل تقدم الحساب بين الأجهزة ===== */
+
+async function syncFullPlayerProgress() {
+  try {
+    const data = await fetch('/api/player', {
+      credentials: 'include'
+    }).then(async r => {
+      const d = await r.json();
+      if (!r.ok) throw new Error(d.error || 'حدث خطأ');
+      return d;
+    });
+
+    if (!data.player) return;
+
+    const p = data.player;
+
+    /* XP والعملات والتقدم */
+    xp = Number(p.xp) || 0;
+    coins = Number(p.coins) || 0;
+    progress = Number(p.progress) || 0;
+
+    /* الدروس المكتملة */
+    completedLessons.length = 0;
+
+    if (Array.isArray(p.completedLessons)) {
+      p.completedLessons.forEach(id => {
+        completedLessons.push(Number(id));
+      });
+    }
+
+    /* نقاط المهارات */
+    skillPoints = Number(p.skillPoints) || 0;
+
+    /* مستويات المهارات */
+    if (
+      p.skillLevels &&
+      typeof p.skillLevels === 'object'
+    ) {
+      Object.keys(skillLevels).forEach(key => {
+        if (p.skillLevels[key] !== undefined) {
+          skillLevels[key] =
+            Number(p.skillLevels[key]) || 0;
+        }
+      });
+    }
+
+    /* حالة اللعبة */
+    if (p.gameState) {
+      if (Array.isArray(p.gameState.inventory)) {
+        gameState.inventory =
+          p.gameState.inventory;
+      }
+
+      if (p.gameState.quests) {
+        gameState.quests = {
+          ...gameState.quests,
+          ...p.gameState.quests
+        };
+      }
+
+      if (p.gameState.achievements) {
+        gameState.achievements = {
+          ...gameState.achievements,
+          ...p.gameState.achievements
+        };
+      }
+
+      if (p.gameState.map) {
+        gameState.map = {
+          ...gameState.map,
+          ...p.gameState.map
+        };
+      }
+
+      if (p.gameState.chest) {
+        gameState.chest = {
+          ...gameState.chest,
+          ...p.gameState.chest
+        };
+      }
+
+      if (p.gameState.lab) {
+        gameState.lab = {
+          ...gameState.lab,
+          ...p.gameState.lab
+        };
+      }
+    }
+
+    /* تحديث الشاشة */
+    renderAll();
+
+    if (typeof renderPersistentUI === 'function') {
+      renderPersistentUI();
+    }
+
+    console.log(
+      'تم تحميل تقدم الحساب:',
+      completedLessons
+    );
+
+  } catch (error) {
+    console.error(
+      'فشل تحميل تقدم الحساب:',
+      error
+    );
+  }
+}
+
+
+/* تحميل التقدم بعد تسجيل الدخول */
+setTimeout(() => {
+  syncFullPlayerProgress();
+}, 1000);
+
+
+/* إعادة التحقق بعد فتح اللعبة */
+setTimeout(() => {
+  syncFullPlayerProgress();
+}, 3000);
+
+
+/* ثم التحقق كل 15 ثانية */
+setInterval(() => {
+  if (currentUser) {
+    syncFullPlayerProgress();
+  }
+}, 15000);
+
+
+/* حفظ المهارات عند ترقيتها */
+const oldUpgradeSkill = window.upgradeSkill;
+
+window.upgradeSkill = async function(k) {
+
+  if (
+    skillPoints <= 0 ||
+    skillLevels[k] >= 5
+  ) {
+    return oldUpgradeSkill(k);
+  }
+
+  skillPoints--;
+  skillLevels[k]++;
+
+  renderAll();
+
+  try {
+    await fetch('/api/player', {
+      method: 'PUT',
+      credentials: 'include',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({
+        skillPoints,
+        skillLevels,
+        xp,
+        coins,
+        progress
+      })
+    });
+
+    toast('🧠 تمت ترقية المهارة وحفظها');
+
+  } catch (error) {
+    console.error(error);
+    toast('⚠️ تعذر حفظ المهارة');
+  }
+};
+  </script>
 </body>
 </html>
