@@ -143,7 +143,7 @@ app.get('/api/lessons', (req,res) => {
   res.json({lessons:rows});
 });
 
-app.get('*', (req,res) => {
+app.get('/{*splat}', (req, res) => {
   res.sendFile(path.join(__dirname, '../frontend/index.html'));
 });
 
