@@ -1,1 +1,0 @@
-function renderMap(){$('mapList').innerHTML=lessons.map((l,i)=>{const done=completedLessons.includes(l.id),current=!done&&(i===0||completedLessons.includes(lessons[i-1].id));return `<div class="map-step ${current?'current':''}">${done?'✓':current?'▶':'🔒'} <strong>المرحلة ${i+1}: ${l.title}</strong><br><small>${l.desc}</small></div>`}).join('')}
