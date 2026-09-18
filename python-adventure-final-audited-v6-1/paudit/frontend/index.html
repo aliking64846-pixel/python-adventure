@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Python Adventure — رحلة المبرمج</title>
+<link rel="stylesheet" href="/css/core/app.css">
+</head>
+<body>
+
+<div class="game">
+<div class="stars"></div>
+<div class="progress"><div class="progress-title">رحلة تعلم Python</div><div class="progress-bar"><span id="progressBar"></span></div><p id="progressText">0% — Python Adventure</p></div>
+
+<div class="player">
+<div class="avatar">🧙</div>
+<div style="flex:1">
+<h3 id="playerName">المبرمج المبتدئ</h3>
+<div class="level">المستوى <span id="level">1</span></div>
+<div>XP <span id="xp">0</span> / 4800</div><div class="bar xp"><span id="xpBar"></span></div>
+<div>HP 850 / 850</div><div class="bar hp"><span></span></div>
+<div>MP 620 / 620</div><div class="bar mp"><span></span></div><button id="logoutBtn" class="btn secondary" style="margin-top:7px;padding:7px 10px">تسجيل الخروج</button>
+</div></div>
+<div class="coins">🪙 Code Coins: <span id="coins">100</span></div>
+
+<div class="portal"><div class="python">🐍</div></div>
+<div class="door left">???<div class="lock">🔒</div></div>
+<div class="door right">???<div class="lock">🔒</div></div>
+
+<div class="code-screen"><div class="code-title">🐍 مختبر Python</div><div class="code">
+<div><span class="number">1</span> name = <span class="func">input</span>(<span class="string">"Your name: "</span>)</div>
+<div><span class="number">2</span> age = <span class="func">int</span>(<span class="func">input</span>(<span class="string">"Age: "</span>))</div>
+<div><span class="number">3</span></div>
+<div><span class="number">4</span> <span class="keyword">if</span> age &gt;= <span class="number">18</span>:</div>
+<div><span class="number">5</span>&nbsp;&nbsp;<span class="func">print</span>(<span class="string">"Welcome!"</span>)</div>
+</div></div>
+
+<div class="character"><div class="head"></div><div class="body"></div></div>
+<div class="floating f1">print()</div><div class="floating f2">input()</div><div class="floating f3">int()</div><div class="floating f4">+</div>
+
+<div class="panel inventory"><div class="panel-title">🎒 الحقيبة <span id="bagCount">3/30</span></div><div class="items" id="quickBag"></div></div>
+<div class="panel skills"><div class="panel-title">🧠 شجرة المهارات <span>💎 <span id="skillPoints">0</span></span></div><div class="skill-grid" id="quickSkills"></div></div>
+
+<div class="quests"><div class="panel-title">📜 المهام الحالية</div><div id="quickQuests"></div></div>
+<div class="chest" onclick="openChest()">🎁</div>
+
+<div class="bottom">
+<button class="nav" onclick="openWindow('lessonsModal')"><span>📚</span>الدروس</button>
+<button class="nav" onclick="openWindow('inventoryModal')"><span>🎒</span>الحقيبة</button>
+<button class="nav" onclick="openWindow('skillsModal')"><span>🧠</span>المهارات</button>
+<button class="nav" onclick="openWindow('labModal')"><span>🧪</span>المختبر</button>
+<button class="nav" onclick="openWindow('mapModal')"><span>🗺️</span>الخريطة</button>
+<button class="nav" onclick="openWindow('questModal')"><span>📜</span>المهام</button>
+<button class="nav" onclick="openWindow('achievementsModal')"><span>🏆</span>الإنجازات</button>
+<button class="nav" onclick="openChat()"><span>💬</span>الدردشة</button>
+</div>
+
+<div class="modal" id="lessonsModal"><div class="window"><button class="close" onclick="closeWindows()">×</button><h2>📚 دروس Python</h2><p class="lesson-description">تتقدم في الخريطة درسًا بعد درس. كل درس يعطيك XP ويفتح مهارات جديدة.</p><div id="lessonList"></div></div></div>
+
+<div class="modal" id="lessonDetailModal"><div class="window"><button class="close" onclick="closeWindows()">×</button><div id="lessonDetail"></div></div></div>
+
+<div class="modal" id="inventoryModal"><div class="window"><button class="close" onclick="closeWindows()">×</button><h2>🎒 الحقيبة</h2><p class="lesson-description">الأدوات البرمجية التي تجمعها خلال الرحلة.</p><div class="items" id="bagList" style="margin-top:20px"></div></div></div>
+
+<div class="modal" id="skillsModal"><div class="window"><button class="close" onclick="closeWindows()">×</button><h2>🧠 شجرة المهارات</h2><p class="lesson-description">كل درس ومهمة يمكن أن يمنحك نقاط مهارة.</p><div class="tree" id="skillTree" style="margin-top:20px"></div></div></div>
+
+<div class="modal" id="labModal"><div class="window"><button class="close" onclick="closeWindows()">×</button><h2>🧪 مختبر Python</h2><p class="lesson-description">اكتب أمر print بسيط وشاهد الناتج.</p><textarea id="editor">print("مرحبا يا مبرمج!")</textarea><button class="btn" style="margin-top:10px" onclick="runCode()">▶ تشغيل</button><div class="output" id="output">الناتج سيظهر هنا...</div></div></div>
+
+<div class="modal" id="mapModal"><div class="window"><button class="close" onclick="closeWindows()">×</button><h2>🗺️ خريطة Python Adventure</h2><div id="mapList"></div></div></div>
+
+<div class="modal" id="questModal"><div class="window"><button class="close" onclick="closeWindows()">×</button><h2>📜 المهام</h2><div id="questList"></div></div></div>
+
+<div class="modal" id="achievementsModal"><div class="window"><button class="close" onclick="closeWindows()">×</button><h2>🏆 الإنجازات</h2><div id="achievementList"></div></div></div>
+<div class="toast" id="toast"></div>
+</div>
+
+<div id="authScreen"><div id="authBox">
+<h1>🐍 Python Adventure</h1><div class="sub">سجّل دخولك واحفظ رحلتك البرمجية</div>
+<div class="authTab"><button id="loginTab" class="active">تسجيل الدخول</button><button id="registerTab">حساب جديد</button></div>
+<div id="loginForm"><input id="loginValue" class="authField" placeholder="اسم المستخدم أو الإيميل"><input id="loginPassword" class="authField" type="password" placeholder="كلمة المرور"></div>
+<div id="registerForm" style="display:none"><input id="regUsername" class="authField" placeholder="اسم المستخدم"><input id="regEmail" class="authField" type="email" placeholder="الإيميل"><input id="regPassword" class="authField" type="password" placeholder="كلمة المرور (6 أحرف على الأقل)"></div>
+<button id="authSubmit" class="authSubmit">دخول إلى اللعبة 🚀</button><div id="authMsg"></div>
+</div></div>
+
+<div id="chatModal"><div id="chatBox"><div id="chatTop"><input id="chatSearch" placeholder="🔎 ابحث عن لاعب بالاسم..."><button id="chatClose">إغلاق ✕</button></div><div id="chatBody"><div id="users"></div><div id="conversation"><div id="chatTitle">💬 اختر لاعبًا لبدء المحادثة</div><div id="messages"></div><div id="sendArea"><input id="messageInput" placeholder="اكتب رسالتك..." disabled><button id="sendBtn" disabled>إرسال</button></div></div></div></div></div>
+
+<script src="/js/data.js"></script>
+<script src="/js/state/player.state.js"></script>
+<script src="/js/state/game.state.js"></script>
+<script src="/js/core/api.js"></script>
+<script src="/js/api/persistence.api.js"></script>
+<script src="/js/components/ui.js"></script>
+<script src="/js/features/lessons/lessons.js"></script>
+<script src="/js/features/skills/skills.js"></script>
+<script src="/js/features/inventory/inventory.js"></script>
+<script src="/js/features/quests/quests.js"></script>
+<script src="/js/features/map/map.js"></script>
+<script src="/js/features/achievements/achievements.js"></script>
+<script src="/js/features/lab/lab.js"></script>
+<script src="/js/features/auth/auth.js"></script>
+<script src="/js/features/chat/chat.js"></script>
+<script src="/js/core/render.js"></script>
+<script src="/js/core/persistence.js"></script>
+<script src="/js/core/app.js"></script>
+</body>
+</html>
