@@ -293,3 +293,79 @@ button,input,textarea,select{max-width:100%;font:inherit}
   .portal{top:250px}.door{top:273px}
   .bottom{left:5px;right:5px;transform:none}
 }
+
+/* ===== Liquid Glass Floating Navigation ===== */
+.bottom{
+  --glass-x: 50%;
+  --glass-w: 64px;
+  position:fixed;
+  isolation:isolate;
+  overflow:visible;
+  background:rgba(4,16,22,.68);
+  border:1px solid rgba(170,255,244,.20);
+  box-shadow:0 18px 45px rgba(0,0,0,.34),inset 0 1px 0 rgba(255,255,255,.10);
+  backdrop-filter:blur(22px) saturate(150%);
+  -webkit-backdrop-filter:blur(22px) saturate(150%);
+}
+.bottom::before{
+  content:"";
+  position:absolute;
+  z-index:-1;
+  top:50%;
+  left:var(--glass-x);
+  width:var(--glass-w);
+  height:54px;
+  transform:translate(-50%,-50%);
+  border-radius:18px;
+  background:
+    radial-gradient(circle at 35% 25%,rgba(255,255,255,.34),transparent 34%),
+    linear-gradient(145deg,rgba(140,255,237,.28),rgba(63,220,255,.12) 52%,rgba(255,255,255,.08));
+  border:1px solid rgba(210,255,249,.42);
+  box-shadow:0 8px 24px rgba(0,255,205,.16),inset 0 1px 0 rgba(255,255,255,.30);
+  pointer-events:none;
+  transition:left .42s cubic-bezier(.22,1,.36,1),width .42s cubic-bezier(.22,1,.36,1),height .42s cubic-bezier(.22,1,.36,1);
+}
+.bottom::after{
+  content:"";
+  position:absolute;
+  z-index:-2;
+  top:50%;
+  left:var(--glass-x);
+  width:82px;height:34px;
+  transform:translate(-50%,-50%);
+  border-radius:50%;
+  background:rgba(51,255,203,.16);
+  filter:blur(18px);
+  pointer-events:none;
+  transition:left .42s cubic-bezier(.22,1,.36,1);
+}
+.bottom .nav{
+  position:relative;
+  z-index:2;
+  border-color:transparent;
+  background:transparent;
+  color:#86aaa9;
+  transition:color .28s ease,transform .42s cubic-bezier(.22,1,.36,1),filter .28s ease;
+}
+.bottom .nav.is-active{
+  color:#d9fff7;
+  transform:translateY(-5px);
+  filter:drop-shadow(0 0 10px rgba(100,255,220,.28));
+}
+.bottom .nav.is-active span{transform:scale(1.13)}
+.bottom .nav span{transition:transform .42s cubic-bezier(.22,1,.36,1)}
+@media(max-width:640px){
+  .bottom{
+    overflow:hidden;
+    background:rgba(3,13,19,.70);
+    border-color:rgba(170,255,244,.22);
+    backdrop-filter:blur(24px) saturate(155%);
+    -webkit-backdrop-filter:blur(24px) saturate(155%);
+  }
+  .bottom::before{height:48px;border-radius:16px}
+  .bottom::after{width:72px;height:30px}
+  .bottom .nav.is-active{transform:translateY(-4px) scale(1.01)}
+}
+@media(prefers-reduced-motion:reduce){
+  .bottom::before,.bottom::after,.bottom .nav,.bottom .nav span{transition:none!important}
+}
