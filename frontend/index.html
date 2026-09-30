@@ -136,5 +136,24 @@
   else initLiquidNav();
 })();
 </script>
+<!-- Floating Tasks & Messages -->
+<div class="quick-actions" aria-label="إجراءات سريعة">
+  <button class="quick-action" type="button" onclick="openWindow('questModal')" aria-label="المهام">
+    <span>📜</span><b>المهام</b><i class="quick-badge" id="questBadge"></i>
+  </button>
+  <button class="quick-action" type="button" onclick="openChat()" aria-label="الرسائل">
+    <span>💬</span><b>الرسائل</b><i class="quick-badge" id="messageBadge"></i>
+  </button>
+</div>
+
+<style>
+.quick-actions{position:fixed;top:14px;right:14px;z-index:1100;display:flex;gap:8px;direction:rtl}
+.quick-action{position:relative;width:58px;height:54px;border:1px solid rgba(170,255,244,.2);border-radius:16px;background:rgba(4,16,22,.68);color:#c9ffff;backdrop-filter:blur(18px) saturate(150%);-webkit-backdrop-filter:blur(18px) saturate(150%);box-shadow:0 10px 28px rgba(0,0,0,.28),inset 0 1px 0 rgba(255,255,255,.1);cursor:pointer;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:1px;transition:.2s ease}
+.quick-action:hover{transform:translateY(-2px);border-color:rgba(170,255,244,.4);box-shadow:0 14px 32px rgba(0,0,0,.34),0 0 18px rgba(95,235,218,.1)}
+.quick-action:active{transform:scale(.94)}
+.quick-action span{font-size:21px;line-height:21px}.quick-action b{font-size:8px;font-weight:600}.quick-badge{position:absolute;top:5px;right:6px;width:7px;height:7px;border-radius:50%;background:#ff6b8a;box-shadow:0 0 8px rgba(255,107,138,.8);display:none}
+@media(max-width:640px){.quick-actions{top:10px;right:10px;gap:6px}.quick-action{width:51px;height:48px;border-radius:14px}.quick-action span{font-size:19px}.quick-action b{font-size:7px}}
+</style>
+
 </body>
 </html>
