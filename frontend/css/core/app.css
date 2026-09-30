@@ -76,3 +76,246 @@ button,input,textarea,select{max-width:100%;font:inherit}
   .card,.panel{padding:12px !important}
   .map{min-height:320px}
 }
+
+
+/* ===== Mobile app-like experience ===== */
+@media (max-width: 640px){
+  html,body{
+    min-height:100%;
+    background:#02070b;
+    overscroll-behavior:none;
+  }
+
+  body{overflow:hidden}
+  .game{
+    width:100vw;
+    height:100dvh;
+    min-height:0;
+    overflow:hidden;
+    border-radius:0;
+  }
+
+  /* Compact player HUD */
+  .player{
+    top:10px;
+    right:10px;
+    left:10px;
+    width:auto;
+    min-height:72px;
+    padding:8px;
+    gap:8px;
+    border-radius:16px;
+    backdrop-filter:blur(12px);
+  }
+  .avatar{width:48px;height:48px;font-size:25px;flex:0 0 48px}
+  .player h3{font-size:14px}
+  .player .level,.player>div:last-child{font-size:11px}
+  .player .bar{height:5px;margin-top:3px}
+  .player .btn{position:absolute;left:8px;top:8px;font-size:11px;padding:6px 8px !important}
+
+  .progress{
+    top:92px;
+    left:10px;
+    right:10px;
+    transform:none;
+    width:auto;
+  }
+  .progress-title{font-size:11px;margin-bottom:4px}
+  .progress-bar{height:8px}
+  .progress p{font-size:10px;margin-top:3px}
+
+  .coins{
+    top:122px;
+    right:12px;
+    font-size:12px;
+    padding:5px 9px;
+    border:1px solid #5f5430;
+    border-radius:20px;
+    background:rgba(20,18,5,.75);
+  }
+
+  /* Keep the main game scene clean on a phone */
+  .portal{
+    top:23%;
+    width:155px;
+    height:205px;
+    border-width:7px;
+    border-bottom:0;
+    border-radius:90px 90px 0 0;
+  }
+  .portal:before{top:20px;font-size:15px}
+  .python{top:62px;font-size:54px}
+  .door{top:29%;width:72px;height:135px;border-width:2px;border-radius:38px 38px 0 0;font-size:14px;padding-top:10px}
+  .door.left{left:5%}
+  .door.right{right:5%}
+  .lock{bottom:27px;font-size:22px}
+
+  .code-screen{
+    left:10px;
+    right:10px;
+    top:auto;
+    bottom:88px;
+    width:auto;
+    padding:10px;
+    border-radius:14px;
+    transform:scale(.86);
+    transform-origin:bottom center;
+    opacity:.9;
+  }
+  .code-title{font-size:12px;margin-bottom:5px}
+  .code{font-size:9px;line-height:1.55}
+
+  .character{height:135px;width:90px}
+  .head{top:10px;left:30px;width:32px;height:38px}
+  .body{top:43px;left:12px;width:66px;height:92px}
+  .body:after{top:28px;left:21px;font-size:15px}
+
+  .floating{display:none}
+  .inventory,.skills,.quests{display:none}
+  .chest{right:12px;bottom:170px;width:58px;height:44px;border-width:2px;border-radius:12px;font-size:25px}
+
+  /* Bottom navigation becomes an app tab bar */
+  .bottom{
+    position:fixed;
+    left:0;
+    bottom:0;
+    transform:none;
+    width:100vw;
+    height:72px;
+    min-height:72px;
+    padding:6px 5px calc(6px + env(safe-area-inset-bottom));
+    gap:4px;
+    justify-content:flex-start;
+    overflow-x:auto;
+    overflow-y:hidden;
+    flex-wrap:nowrap;
+    border:0;
+    border-top:1px solid #24545c;
+    border-radius:18px 18px 0 0;
+    background:rgba(2,11,16,.96);
+    backdrop-filter:blur(14px);
+    -webkit-overflow-scrolling:touch;
+  }
+  .bottom::-webkit-scrollbar{display:none}
+  .nav{
+    flex:0 0 72px;
+    width:72px;
+    height:58px;
+    min-height:58px;
+    padding:4px 2px;
+    border-radius:12px;
+    font-size:9px;
+  }
+  .nav span{font-size:19px;margin-bottom:2px}
+
+  /* Full-screen app-like windows */
+  .modal{
+    align-items:stretch;
+    justify-content:stretch;
+    padding:0;
+  }
+  .window{
+    width:100vw;
+    max-width:none;
+    height:100dvh;
+    max-height:none;
+    padding:20px 14px calc(85px + env(safe-area-inset-bottom));
+    border:0;
+    border-radius:0;
+    overflow-y:auto;
+    -webkit-overflow-scrolling:touch;
+  }
+  .window h2{font-size:20px;padding-top:4px}
+  .lesson-description{font-size:13px;line-height:1.8}
+  .close{
+    position:sticky;
+    top:0;
+    z-index:3;
+    float:none;
+    width:42px;
+    height:42px;
+    border:1px solid #315d64;
+    border-radius:12px;
+    background:#08171d;
+    margin-bottom:8px;
+  }
+  .lesson-card{padding:13px;margin:8px 0}
+  .lesson-title{font-size:16px}
+  .row{grid-template-columns:1fr}
+  .tree{grid-template-columns:repeat(2,minmax(0,1fr));gap:8px}
+  .node{padding:12px 7px}
+  .node strong{font-size:22px}
+  textarea{min-height:210px;font-size:13px}
+
+  /* Authentication screen feels like a native app */
+  #authScreen{
+    min-height:100dvh;
+    padding:14px;
+    align-items:center;
+    background:
+      radial-gradient(circle at 50% 15%,rgba(0,255,190,.12),transparent 35%),
+      #02080c;
+  }
+  #authBox{
+    width:100%;
+    max-width:420px;
+    padding:22px 16px;
+    border-radius:22px;
+    box-shadow:0 18px 60px rgba(0,0,0,.45);
+  }
+  #authBox h1{font-size:25px !important}
+  #authBox .sub{font-size:13px;line-height:1.7}
+  .authTab{gap:7px;margin-bottom:12px}
+  .authTab button{min-height:48px;font-size:14px}
+  .authField{
+    min-height:50px;
+    margin:6px 0;
+    padding:13px 14px;
+    font-size:16px;
+  }
+  .authSubmit{
+    min-height:52px;
+    margin-top:9px;
+    font-size:15px;
+  }
+  #authMsg{font-size:13px;line-height:1.5}
+
+  /* Chat becomes a phone screen */
+  #chatModal{padding:0}
+  #chatBox{
+    width:100vw;
+    height:100dvh;
+    max-width:none;
+    max-height:none;
+    border:0;
+    border-radius:0;
+  }
+  #chatTop{padding:10px}
+  #chatBody{flex-direction:column}
+  #users{
+    width:100%;
+    height:115px;
+    flex:0 0 115px;
+    border-left:0;
+    border-bottom:1px solid #204850;
+    display:flex;
+    gap:7px;
+    overflow-x:auto;
+  }
+  .user{min-width:120px;height:max-content;margin:0}
+  #conversation{min-height:0}
+  .message{max-width:88%}
+  #sendArea{padding-bottom:calc(10px + env(safe-area-inset-bottom))}
+}
+
+/* Very small phones */
+@media (max-width: 380px){
+  .player{top:7px;left:7px;right:7px}
+  .progress{top:87px}
+  .coins{top:116px}
+  .portal{top:22%;transform:translateX(-50%) scale(.9)}
+  .door{top:28%;width:62px;height:120px}
+  .code-screen{bottom:82px;transform:scale(.78)}
+  .nav{flex-basis:68px;width:68px}
+  #authBox{padding:18px 13px}
+}
