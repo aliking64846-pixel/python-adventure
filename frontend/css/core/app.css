@@ -256,3 +256,40 @@ button,input,textarea,select{max-width:100%;font:inherit}
   .code-screen{left:10%;right:10%;bottom:175px}
   .bottom{left:5px;right:5px}.nav{font-size:7px}.nav span{font-size:17px}
 }
+
+
+/* ===== Mobile layout fix v3: header + bottom nav ===== */
+@media (max-width:640px){
+  .player{
+    top:8px;left:8px;right:8px;height:105px;min-height:105px;
+    padding:8px 9px;overflow:hidden;align-items:flex-start;
+  }
+  .player>div:nth-child(2){padding-top:1px;min-width:0;padding-right:2px}
+  .player h3{display:block;height:18px;line-height:18px;font-size:13px;margin:0 0 1px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+  .player .level{line-height:13px}
+  .player>div:nth-child(2)>div:not(.level){font-size:11px;line-height:16px}
+  .player .bar{height:5px;margin-top:1px}
+  .player .btn{left:7px;top:8px;z-index:3}
+
+  .progress{top:118px;height:44px}
+  .coins{top:166px}
+  .mobileQuick{top:201px}
+
+  .portal{top:255px}
+  .door{top:278px}
+  .code-screen{bottom:178px}
+  .chest{bottom:205px}
+
+  /* Reset the desktop centering transform left over from .bottom. */
+  .bottom{
+    left:7px;right:7px;transform:none;
+    width:auto;display:grid;grid-template-columns:repeat(5,minmax(0,1fr));
+  }
+  .nav{width:auto;min-width:0}
+}
+@media(max-width:380px){
+  .player{height:102px;min-height:102px}
+  .progress{top:115px}.coins{top:163px}.mobileQuick{top:198px}
+  .portal{top:250px}.door{top:273px}
+  .bottom{left:5px;right:5px;transform:none}
+}
