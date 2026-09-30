@@ -369,3 +369,18 @@ button,input,textarea,select{max-width:100%;font:inherit}
 @media(prefers-reduced-motion:reduce){
   .bottom::before,.bottom::after,.bottom .nav,.bottom .nav span{transition:none!important}
 }
+
+
+/* ===== Liquid Glass Navigation Always Visible ===== */
+/* Keep the bottom navigation above lesson/map/etc. full-screen modals. */
+.bottom{
+  z-index:1000 !important;
+}
+/* Leave enough room so modal content can still scroll without hiding behind the nav. */
+.window{
+  padding-bottom:calc(92px + env(safe-area-inset-bottom));
+}
+@media(max-width:640px){
+  .bottom{z-index:1000 !important;}
+  .window{padding-bottom:calc(96px + env(safe-area-inset-bottom));}
+}
