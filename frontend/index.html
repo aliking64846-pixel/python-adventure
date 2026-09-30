@@ -2,7 +2,7 @@
 <html lang="ar" dir="rtl">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover,user-scalable=no">\n<meta name="theme-color" content="#02070b">\n<meta name="mobile-web-app-capable" content="yes">\n<meta name="apple-mobile-web-app-capable" content="yes">\n<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">\n<link rel="manifest" href="/manifest.webmanifest">
 <title>Python Adventure — رحلة المبرمج</title>
 <link rel="stylesheet" href="/css/core/app.css">
 </head>
@@ -22,6 +22,14 @@
 <div>MP 620 / 620</div><div class="bar mp"><span></span></div><button id="logoutBtn" class="btn secondary" style="margin-top:7px;padding:7px 10px">تسجيل الخروج</button>
 </div></div>
 <div class="coins">🪙 Code Coins: <span id="coins">100</span></div>
+
+<div class="mobileQuick" aria-label="اختصارات سريعة">
+<button class="quickAction" onclick="openWindow('lessonsModal')">📚 الدروس</button>
+<button class="quickAction" onclick="openWindow('labModal')">🧪 المختبر</button>
+<button class="quickAction" onclick="openWindow('mapModal')">🗺️ الخريطة</button>
+<button class="quickAction" onclick="openWindow('questModal')">📜 المهام</button>
+<button class="quickAction" onclick="openChat()">💬 الدردشة</button>
+</div>
 
 <div class="portal"><div class="python">🐍</div></div>
 <div class="door left">???<div class="lock">🔒</div></div>
