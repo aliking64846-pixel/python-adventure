@@ -79,204 +79,121 @@ button,input,textarea,select{max-width:100%;font:inherit}
 
 
 
-/* ===== Modern mobile web-app experience ===== */
+
+/* ===== Lightweight mobile app shell ===== */
 @media (max-width:640px){
-  :root{color-scheme:dark}
-  html,body{width:100%;height:100%;overflow:hidden;background:#02070b}
-  body{font-size:14px;overscroll-behavior:none}
+  html,body{width:100%;height:100%;overflow:hidden;overscroll-behavior:none}
+  body{-webkit-tap-highlight-color:transparent}
   .game{
     width:100vw;height:100dvh;min-height:0;overflow:hidden;
-    background:
-      radial-gradient(circle at 50% 18%,rgba(65,255,207,.14),transparent 30%),
-      radial-gradient(circle at 15% 75%,rgba(61,181,255,.10),transparent 28%),
-      linear-gradient(160deg,#02070b 0%,#06151b 48%,#02070b 100%);
+    background:radial-gradient(circle at 50% 18%,rgba(45,220,180,.10),transparent 28%),linear-gradient(160deg,#02070b,#06151b 52%,#02070b);
   }
-  .game:after{
-    content:"";position:absolute;inset:-20%;pointer-events:none;
-    background:radial-gradient(circle at 30% 30%,rgba(61,255,205,.08),transparent 22%),
-               radial-gradient(circle at 75% 65%,rgba(71,190,255,.07),transparent 25%);
-    animation:mobileGlow 8s ease-in-out infinite alternate;
-  }
-  @keyframes mobileGlow{from{transform:translate3d(-2%,0,0) scale(1)}to{transform:translate3d(2%,-2%,0) scale(1.08)}}
-  .stars{opacity:.22}
-  .game:before{opacity:.14;background-size:30px 30px;transform:perspective(500px) rotateX(58deg) scale(2)}
-
-  /* Floating glass HUD */
+  .game:after{display:none}
+  .game:before{opacity:.08;animation:none}
   .player{
-    top:10px;right:10px;left:10px;width:auto;min-height:74px;
-    padding:9px 10px;gap:9px;border:1px solid rgba(86,240,210,.28);
-    border-radius:20px;background:rgba(4,17,24,.68);
-    box-shadow:0 10px 35px rgba(0,0,0,.28),inset 0 1px rgba(255,255,255,.05);
-    backdrop-filter:blur(18px);-webkit-backdrop-filter:blur(18px);
+    top:9px;left:9px;right:9px;width:auto;min-height:70px;padding:8px 9px;
+    border:1px solid rgba(86,240,210,.20);border-radius:17px;
+    background:rgba(4,17,24,.88);box-shadow:0 8px 24px rgba(0,0,0,.24);
+    backdrop-filter:none;-webkit-backdrop-filter:none;
   }
-  .avatar{
-    width:50px;height:50px;flex:0 0 50px;font-size:26px;
-    border-color:rgba(71,255,207,.7);box-shadow:0 0 18px rgba(46,255,194,.18);
-  }
-  .player h3{font-size:14px}.player .level{font-size:10px}
-  .player .bar{height:5px;margin-top:3px}
-  .player .btn{position:absolute;left:8px;top:8px;padding:5px 8px!important;font-size:10px;border-radius:10px}
-
+  .avatar{width:46px;height:46px;flex-basis:46px;font-size:24px;box-shadow:none}
+  .player h3{font-size:13px}.player .level{font-size:9px}
+  .player .bar{height:4px;margin-top:3px}
+  .player .btn{position:absolute;left:7px;top:7px;padding:4px 7px!important;font-size:9px;border-radius:9px}
   .progress{
-    top:92px;left:12px;right:12px;transform:none;width:auto;
-    padding:7px 10px;border:1px solid rgba(69,225,196,.16);border-radius:14px;
-    background:rgba(4,18,24,.5);backdrop-filter:blur(12px);z-index:5;
+    top:87px;left:10px;right:10px;transform:none;width:auto;padding:6px 9px;
+    border:1px solid rgba(69,225,196,.12);border-radius:12px;background:rgba(4,18,24,.72);
+    backdrop-filter:none;z-index:5;
   }
-  .progress-title{font-size:10px;margin-bottom:4px}
-  .progress-bar{height:7px;border-color:#28585f}
-  .progress p{font-size:9px;margin-top:3px}
-  .coins{
-    top:139px;right:12px;font-size:11px;padding:5px 9px;border-radius:20px;
-    background:rgba(35,28,7,.65);border:1px solid rgba(255,216,102,.25);
-    backdrop-filter:blur(10px);
+  .progress-title{font-size:9px;margin-bottom:3px}.progress-bar{height:6px}.progress p{font-size:8px;margin-top:2px}
+  .coins{top:128px;right:10px;font-size:10px;padding:4px 8px;background:rgba(25,22,7,.85);border-radius:16px}
+  
+  /* Quick actions: one-tap access to the important parts */
+  .mobileQuick{
+    position:absolute;top:159px;left:10px;right:10px;display:flex;gap:7px;
+    overflow-x:auto;z-index:8;scrollbar-width:none;direction:rtl;
   }
+  .mobileQuick::-webkit-scrollbar{display:none}
+  .quickAction{
+    flex:0 0 auto;min-width:74px;height:38px;padding:5px 9px;
+    border:1px solid rgba(75,226,193,.18);border-radius:12px;
+    background:rgba(5,19,25,.78);color:#a9ddd5;font-size:10px;
+    box-shadow:0 5px 15px rgba(0,0,0,.16);transition:transform .14s ease,background .14s ease,border-color .14s ease;
+  }
+  .quickAction:active{transform:scale(.94);background:rgba(19,72,62,.75);border-color:rgba(75,226,193,.45)}
 
-  /* Center stage */
   .portal{
-    top:25%;width:190px;height:245px;border-width:7px;
-    border-radius:110px 110px 0 0;
-    box-shadow:0 0 22px #22ffae,0 0 70px rgba(0,255,180,.22),inset 0 0 45px #00ffb3;
-    animation:portalPulse 3.5s ease-in-out infinite;
+    top:29%;width:170px;height:220px;border-width:6px;
+    box-shadow:0 0 18px rgba(34,255,174,.62),inset 0 0 28px rgba(0,255,179,.55);
+    animation:none;
   }
-  @keyframes portalPulse{
-    0%,100%{filter:brightness(.92);transform:translateX(-50%) scale(1)}
-    50%{filter:brightness(1.12);transform:translateX(-50%) scale(1.035)}
-  }
-  .portal:before{top:25px;font-size:16px}
-  .python{top:73px;font-size:62px;animation:snakeFloat 3s ease-in-out infinite}
-  @keyframes snakeFloat{0%,100%{transform:translateX(-50%) translateY(0) rotate(-2deg)}50%{transform:translateX(-50%) translateY(-8px) rotate(2deg)}}
-  .door{top:32%;width:66px;height:130px;border-width:2px;border-radius:35px 35px 0 0;font-size:12px;padding-top:9px;opacity:.78}
-  .door.left{left:3%}.door.right{right:3%}.lock{bottom:25px;font-size:20px}
-
+  .portal:before{top:22px;font-size:14px}
+  .python{top:67px;font-size:55px;animation:mobileSnake 3.2s ease-in-out infinite}
+  @keyframes mobileSnake{0%,100%{transform:translateX(-50%) translateY(0)}50%{transform:translateX(-50%) translateY(-5px)}}
+  .door{top:34%;width:58px;height:116px;font-size:11px;opacity:.62}
+  .door.left{left:2%}.door.right{right:2%}.lock{bottom:22px;font-size:18px}
   .code-screen{
-    left:10px;right:10px;top:auto;bottom:91px;width:auto;
-    padding:9px 11px;border-radius:16px;opacity:.72;
-    background:rgba(2,12,17,.62);border-color:rgba(50,223,255,.24);
-    box-shadow:0 12px 35px rgba(0,0,0,.25);backdrop-filter:blur(10px);
-    transform:scale(.78);transform-origin:bottom center;
+    left:10px;right:10px;bottom:88px;width:auto;padding:8px 10px;border-radius:13px;
+    opacity:.58;background:rgba(2,12,17,.78);box-shadow:none;backdrop-filter:none;
+    transform:scale(.70);transform-origin:bottom center;
   }
-  .code-title{font-size:11px;margin-bottom:4px}
-  .code{font-size:8px;line-height:1.5}
+  .code-title{font-size:10px}.code{font-size:8px;line-height:1.45}
+  .character{height:115px;width:80px;bottom:62px}
+  .head{top:7px;left:27px;width:28px;height:34px}.body{top:39px;left:10px;width:60px;height:77px}
+  .body:after{top:23px;left:18px;font-size:13px}
+  .floating,.inventory,.skills,.quests{display:none}
+  .chest{right:11px;bottom:157px;width:50px;height:39px;font-size:22px;box-shadow:0 0 13px rgba(169,65,255,.35);animation:chestFloat 3s ease-in-out infinite}
+  @keyframes chestFloat{0%,100%{transform:translateY(0)}50%{transform:translateY(-4px)}}
 
-  .character{height:125px;width:86px;bottom:66px}
-  .head{top:8px;left:29px;width:30px;height:37px}
-  .body{top:42px;left:11px;width:64px;height:84px}
-  .body:after{top:25px;left:20px;font-size:14px}
-  .floating{display:none}
-  .inventory,.skills,.quests{display:none}
-  .chest{
-    right:13px;bottom:165px;width:55px;height:43px;border-width:2px;
-    border-radius:13px;font-size:24px;box-shadow:0 0 20px rgba(169,65,255,.5);
-    animation:chestFloat 2.5s ease-in-out infinite;
-  }
-  @keyframes chestFloat{0%,100%{transform:translateY(0)}50%{transform:translateY(-7px)}}
-
-  /* App dock */
   .bottom{
-    position:fixed;left:8px;right:8px;bottom:8px;transform:none;width:auto;
-    height:64px;min-height:64px;padding:5px 6px;gap:4px;justify-content:flex-start;
-    flex-wrap:nowrap;overflow-x:auto;overflow-y:hidden;
-    border:1px solid rgba(76,224,193,.24);border-radius:22px;
-    background:rgba(3,13,19,.78);backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);
-    box-shadow:0 14px 40px rgba(0,0,0,.4),inset 0 1px rgba(255,255,255,.05);
+    position:fixed;left:8px;right:8px;bottom:7px;width:auto;height:62px;min-height:62px;
+    padding:5px;gap:3px;justify-content:flex-start;flex-wrap:nowrap;overflow-x:auto;
+    border:1px solid rgba(76,224,193,.18);border-radius:19px;background:rgba(3,13,19,.94);
+    box-shadow:0 9px 25px rgba(0,0,0,.32);backdrop-filter:none;
   }
   .bottom::-webkit-scrollbar{display:none}
-  .nav{
-    position:relative;flex:0 0 66px;width:66px;height:52px;min-height:52px;
-    padding:4px 2px;border:1px solid transparent;border-radius:16px;
-    background:transparent;color:#86afb1;font-size:8px;transition:.22s ease;
-  }
-  .nav span{font-size:20px;margin-bottom:1px;transition:.22s ease}
-  .nav:active{transform:scale(.92)}
-  .nav:hover,.nav:focus-visible{border-color:rgba(69,238,181,.35);background:rgba(31,101,88,.22);color:#9fffe5}
-  .nav:hover span{transform:translateY(-2px) scale(1.08)}
-
-  /* Full-screen app pages */
-  .modal{align-items:stretch;justify-content:stretch;padding:0;background:rgba(0,4,7,.76)}
+  .nav{flex:0 0 64px;width:64px;height:50px;min-height:50px;padding:3px 2px;border:1px solid transparent;border-radius:13px;background:transparent;color:#83a9aa;font-size:8px;transition:transform .14s ease,background .14s ease}
+  .nav span{font-size:19px;margin-bottom:1px;transition:transform .14s ease}
+  .nav:active{transform:scale(.93);background:rgba(30,104,89,.28)}
+  
+  .modal{align-items:stretch;justify-content:stretch;padding:0;background:rgba(0,4,7,.82)}
   .window{
-    width:100vw;max-width:none;height:100dvh;max-height:none;
-    padding:14px 13px 92px;border:0;border-radius:0;
-    background:
-      radial-gradient(circle at 85% 8%,rgba(58,245,198,.09),transparent 25%),
-      linear-gradient(160deg,#06171e,#020a0f);
-    animation:pageIn .24s ease-out;
+    width:100vw;max-width:none;height:100dvh;max-height:none;padding:12px 12px 86px;
+    border:0;border-radius:0;background:linear-gradient(160deg,#06171e,#020a0f);
+    animation:pageIn .18s ease-out;
   }
-  @keyframes pageIn{from{opacity:0;transform:translateY(12px)}to{opacity:1;transform:translateY(0)}}
-  .window h2{font-size:21px;margin:4px 0 12px}
-  .close{
-    float:none;position:sticky;top:0;z-index:5;width:42px;height:42px;
-    border:1px solid rgba(69,238,181,.25);border-radius:13px;
-    background:rgba(8,23,29,.86);backdrop-filter:blur(12px);font-size:25px;
-  }
-  .lesson-description{font-size:13px;line-height:1.8}
-  .lesson-card{
-    padding:14px;margin:9px 0;border-radius:16px;
-    background:rgba(6,21,27,.72);border-color:rgba(40,89,99,.65);
-    box-shadow:0 8px 25px rgba(0,0,0,.16);transition:.2s ease;
-  }
+  @keyframes pageIn{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
+  .window h2{font-size:20px;margin:3px 0 10px}
+  .close{float:none;position:sticky;top:0;z-index:5;width:40px;height:40px;border:1px solid #315d64;border-radius:12px;background:#08171d;font-size:23px}
+  .lesson-description{font-size:13px;line-height:1.75}
+  .lesson-card{padding:13px;margin:8px 0;border-radius:14px;box-shadow:none;transition:transform .14s ease,border-color .14s ease}
   .lesson-card:active{transform:scale(.985);border-color:#43efb1}
-  .lesson-title{font-size:16px}
-  .row{grid-template-columns:1fr}
-  .tree{grid-template-columns:repeat(2,minmax(0,1fr));gap:9px}
-  .node{padding:13px 7px;border-radius:15px}
-  .node strong{font-size:22px}
-  textarea{min-height:215px;border-radius:14px}
+  .lesson-title{font-size:15px}.row{grid-template-columns:1fr}.tree{grid-template-columns:repeat(2,minmax(0,1fr));gap:8px}
+  .node{padding:12px 7px;border-radius:13px}.node strong{font-size:21px}textarea{min-height:210px;border-radius:13px}
 
-  /* Login is an app launch screen */
-  #authScreen{
-    min-height:100dvh;padding:16px;align-items:center;
-    background:
-      radial-gradient(circle at 50% 12%,rgba(49,255,202,.15),transparent 34%),
-      radial-gradient(circle at 10% 90%,rgba(51,173,255,.08),transparent 28%),
-      #02080c;
-  }
-  #authBox{
-    width:100%;max-width:410px;padding:24px 17px;border-radius:26px;
-    border:1px solid rgba(67,238,181,.45);
-    background:rgba(4,17,23,.78);backdrop-filter:blur(22px);-webkit-backdrop-filter:blur(22px);
-    box-shadow:0 24px 80px rgba(0,0,0,.48),0 0 45px rgba(0,255,190,.08);
-    animation:authIn .35s ease-out;
-  }
-  @keyframes authIn{from{opacity:0;transform:translateY(18px) scale(.97)}to{opacity:1;transform:none}}
-  #authBox h1{font-size:25px!important;letter-spacing:.2px}
-  #authBox .sub{font-size:13px;line-height:1.7}
-  .authTab{gap:7px;margin-bottom:12px}
-  .authTab button{min-height:48px;border-radius:14px;font-size:14px}
-  .authField{
-    min-height:51px;margin:6px 0;padding:13px 14px;font-size:16px;
-    border-radius:14px;background:rgba(2,11,16,.72);
-    transition:.2s ease;
-  }
-  .authField:focus{outline:none;border-color:#45efb7;box-shadow:0 0 0 3px rgba(69,239,183,.10)}
-  .authSubmit{
-    min-height:53px;margin-top:10px;border-radius:15px;font-size:15px;
-    box-shadow:0 8px 24px rgba(0,255,190,.10);transition:.2s ease;
-  }
-  .authSubmit:active{transform:scale(.985)}
+  #authScreen{min-height:100dvh;padding:14px;align-items:center;background:radial-gradient(circle at 50% 12%,rgba(49,255,202,.10),transparent 30%),#02080c}
+  #authBox{width:100%;max-width:410px;padding:22px 15px;border-radius:22px;border:1px solid rgba(67,238,181,.35);background:#041117;box-shadow:0 18px 45px rgba(0,0,0,.42);animation:authIn .22s ease-out}
+  @keyframes authIn{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:none}}
+  #authBox h1{font-size:24px!important}#authBox .sub{font-size:13px}
+  .authTab{gap:6px;margin-bottom:10px}.authTab button{min-height:46px;border-radius:13px;font-size:14px}
+  .authField{min-height:50px;margin:6px 0;padding:12px 13px;font-size:16px;border-radius:13px;transition:border-color .15s ease,box-shadow .15s ease}
+  .authField:focus{outline:none;border-color:#45efb7;box-shadow:0 0 0 2px rgba(69,239,183,.08)}
+  .authSubmit{min-height:51px;margin-top:9px;border-radius:14px;font-size:15px;transition:transform .14s ease}.authSubmit:active{transform:scale(.985)}
   #authMsg{font-size:13px;line-height:1.5}
 
-  /* Chat */
-  #chatModal{padding:0}
-  #chatBox{width:100vw;height:100dvh;max-width:none;max-height:none;border:0;border-radius:0}
-  #chatTop{padding:10px}
-  #chatBody{flex-direction:column}
-  #users{
-    width:100%;height:108px;flex:0 0 108px;border:0;border-bottom:1px solid #204850;
-    display:flex;gap:7px;overflow-x:auto;
-  }
-  .user{min-width:125px;height:max-content;margin:0;border-radius:13px}
-  #conversation{min-height:0}
-  .message{max-width:88%;border-radius:14px}
-  #sendArea{padding:10px 10px calc(10px + env(safe-area-inset-bottom))}
+  #chatModal{padding:0}#chatBox{width:100vw;height:100dvh;max-width:none;max-height:none;border:0;border-radius:0}
+  #chatTop{padding:9px}#chatBody{flex-direction:column}
+  #users{width:100%;height:104px;flex:0 0 104px;border:0;border-bottom:1px solid #204850;display:flex;gap:6px;overflow-x:auto}
+  .user{min-width:120px;margin:0}.message{max-width:88%;border-radius:13px}
+  #sendArea{padding:9px 9px calc(9px + env(safe-area-inset-bottom))}
 }
-
 @media(max-width:380px){
-  .player{top:7px;left:7px;right:7px}
-  .progress{top:88px;left:9px;right:9px}
-  .coins{top:134px}
-  .portal{top:24%;transform:translateX(-50%) scale(.9)}
-  .code-screen{bottom:88px;transform:scale(.7)}
-  .bottom{left:6px;right:6px;bottom:6px}
-  .nav{flex-basis:62px;width:62px}
-  #authBox{padding:20px 13px}
+  .player{top:7px;left:7px;right:7px}.progress{top:85px;left:8px;right:8px}.coins{top:124px}
+  .mobileQuick{top:153px}.quickAction{min-width:69px;height:36px;font-size:9px}
+  .portal{top:29%;transform:translateX(-50%) scale(.9)}.code-screen{bottom:84px;transform:scale(.62)}
+  .bottom{left:6px;right:6px;bottom:5px}.nav{flex-basis:60px;width:60px}
+  #authBox{padding:19px 12px}
+}
+@media(prefers-reduced-motion:reduce){
+  *,*::before,*::after{animation-duration:.01ms!important;animation-iteration-count:1!important;transition-duration:.01ms!important;scroll-behavior:auto!important}
 }
