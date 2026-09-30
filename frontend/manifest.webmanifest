@@ -1,0 +1,14 @@
+{
+  "name": "Python Adventure — رحلة المبرمج",
+  "short_name": "Python Adventure",
+  "description": "لعبة تفاعلية لتعلم Python",
+  "lang": "ar",
+  "dir": "rtl",
+  "start_url": "/",
+  "scope": "/",
+  "display": "standalone",
+  "orientation": "portrait-primary",
+  "background_color": "#02070b",
+  "theme_color": "#02070b",
+  "categories": ["education", "games"]
+}
