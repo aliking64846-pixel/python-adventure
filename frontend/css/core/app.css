@@ -78,244 +78,205 @@ button,input,textarea,select{max-width:100%;font:inherit}
 }
 
 
-/* ===== Mobile app-like experience ===== */
-@media (max-width: 640px){
-  html,body{
-    min-height:100%;
-    background:#02070b;
-    overscroll-behavior:none;
-  }
 
-  body{overflow:hidden}
+/* ===== Modern mobile web-app experience ===== */
+@media (max-width:640px){
+  :root{color-scheme:dark}
+  html,body{width:100%;height:100%;overflow:hidden;background:#02070b}
+  body{font-size:14px;overscroll-behavior:none}
   .game{
-    width:100vw;
-    height:100dvh;
-    min-height:0;
-    overflow:hidden;
-    border-radius:0;
+    width:100vw;height:100dvh;min-height:0;overflow:hidden;
+    background:
+      radial-gradient(circle at 50% 18%,rgba(65,255,207,.14),transparent 30%),
+      radial-gradient(circle at 15% 75%,rgba(61,181,255,.10),transparent 28%),
+      linear-gradient(160deg,#02070b 0%,#06151b 48%,#02070b 100%);
   }
+  .game:after{
+    content:"";position:absolute;inset:-20%;pointer-events:none;
+    background:radial-gradient(circle at 30% 30%,rgba(61,255,205,.08),transparent 22%),
+               radial-gradient(circle at 75% 65%,rgba(71,190,255,.07),transparent 25%);
+    animation:mobileGlow 8s ease-in-out infinite alternate;
+  }
+  @keyframes mobileGlow{from{transform:translate3d(-2%,0,0) scale(1)}to{transform:translate3d(2%,-2%,0) scale(1.08)}}
+  .stars{opacity:.22}
+  .game:before{opacity:.14;background-size:30px 30px;transform:perspective(500px) rotateX(58deg) scale(2)}
 
-  /* Compact player HUD */
+  /* Floating glass HUD */
   .player{
-    top:10px;
-    right:10px;
-    left:10px;
-    width:auto;
-    min-height:72px;
-    padding:8px;
-    gap:8px;
-    border-radius:16px;
-    backdrop-filter:blur(12px);
+    top:10px;right:10px;left:10px;width:auto;min-height:74px;
+    padding:9px 10px;gap:9px;border:1px solid rgba(86,240,210,.28);
+    border-radius:20px;background:rgba(4,17,24,.68);
+    box-shadow:0 10px 35px rgba(0,0,0,.28),inset 0 1px rgba(255,255,255,.05);
+    backdrop-filter:blur(18px);-webkit-backdrop-filter:blur(18px);
   }
-  .avatar{width:48px;height:48px;font-size:25px;flex:0 0 48px}
-  .player h3{font-size:14px}
-  .player .level,.player>div:last-child{font-size:11px}
+  .avatar{
+    width:50px;height:50px;flex:0 0 50px;font-size:26px;
+    border-color:rgba(71,255,207,.7);box-shadow:0 0 18px rgba(46,255,194,.18);
+  }
+  .player h3{font-size:14px}.player .level{font-size:10px}
   .player .bar{height:5px;margin-top:3px}
-  .player .btn{position:absolute;left:8px;top:8px;font-size:11px;padding:6px 8px !important}
+  .player .btn{position:absolute;left:8px;top:8px;padding:5px 8px!important;font-size:10px;border-radius:10px}
 
   .progress{
-    top:92px;
-    left:10px;
-    right:10px;
-    transform:none;
-    width:auto;
+    top:92px;left:12px;right:12px;transform:none;width:auto;
+    padding:7px 10px;border:1px solid rgba(69,225,196,.16);border-radius:14px;
+    background:rgba(4,18,24,.5);backdrop-filter:blur(12px);z-index:5;
   }
-  .progress-title{font-size:11px;margin-bottom:4px}
-  .progress-bar{height:8px}
-  .progress p{font-size:10px;margin-top:3px}
-
+  .progress-title{font-size:10px;margin-bottom:4px}
+  .progress-bar{height:7px;border-color:#28585f}
+  .progress p{font-size:9px;margin-top:3px}
   .coins{
-    top:122px;
-    right:12px;
-    font-size:12px;
-    padding:5px 9px;
-    border:1px solid #5f5430;
-    border-radius:20px;
-    background:rgba(20,18,5,.75);
+    top:139px;right:12px;font-size:11px;padding:5px 9px;border-radius:20px;
+    background:rgba(35,28,7,.65);border:1px solid rgba(255,216,102,.25);
+    backdrop-filter:blur(10px);
   }
 
-  /* Keep the main game scene clean on a phone */
+  /* Center stage */
   .portal{
-    top:23%;
-    width:155px;
-    height:205px;
-    border-width:7px;
-    border-bottom:0;
-    border-radius:90px 90px 0 0;
+    top:25%;width:190px;height:245px;border-width:7px;
+    border-radius:110px 110px 0 0;
+    box-shadow:0 0 22px #22ffae,0 0 70px rgba(0,255,180,.22),inset 0 0 45px #00ffb3;
+    animation:portalPulse 3.5s ease-in-out infinite;
   }
-  .portal:before{top:20px;font-size:15px}
-  .python{top:62px;font-size:54px}
-  .door{top:29%;width:72px;height:135px;border-width:2px;border-radius:38px 38px 0 0;font-size:14px;padding-top:10px}
-  .door.left{left:5%}
-  .door.right{right:5%}
-  .lock{bottom:27px;font-size:22px}
+  @keyframes portalPulse{
+    0%,100%{filter:brightness(.92);transform:translateX(-50%) scale(1)}
+    50%{filter:brightness(1.12);transform:translateX(-50%) scale(1.035)}
+  }
+  .portal:before{top:25px;font-size:16px}
+  .python{top:73px;font-size:62px;animation:snakeFloat 3s ease-in-out infinite}
+  @keyframes snakeFloat{0%,100%{transform:translateX(-50%) translateY(0) rotate(-2deg)}50%{transform:translateX(-50%) translateY(-8px) rotate(2deg)}}
+  .door{top:32%;width:66px;height:130px;border-width:2px;border-radius:35px 35px 0 0;font-size:12px;padding-top:9px;opacity:.78}
+  .door.left{left:3%}.door.right{right:3%}.lock{bottom:25px;font-size:20px}
 
   .code-screen{
-    left:10px;
-    right:10px;
-    top:auto;
-    bottom:88px;
-    width:auto;
-    padding:10px;
-    border-radius:14px;
-    transform:scale(.86);
-    transform-origin:bottom center;
-    opacity:.9;
+    left:10px;right:10px;top:auto;bottom:91px;width:auto;
+    padding:9px 11px;border-radius:16px;opacity:.72;
+    background:rgba(2,12,17,.62);border-color:rgba(50,223,255,.24);
+    box-shadow:0 12px 35px rgba(0,0,0,.25);backdrop-filter:blur(10px);
+    transform:scale(.78);transform-origin:bottom center;
   }
-  .code-title{font-size:12px;margin-bottom:5px}
-  .code{font-size:9px;line-height:1.55}
+  .code-title{font-size:11px;margin-bottom:4px}
+  .code{font-size:8px;line-height:1.5}
 
-  .character{height:135px;width:90px}
-  .head{top:10px;left:30px;width:32px;height:38px}
-  .body{top:43px;left:12px;width:66px;height:92px}
-  .body:after{top:28px;left:21px;font-size:15px}
-
+  .character{height:125px;width:86px;bottom:66px}
+  .head{top:8px;left:29px;width:30px;height:37px}
+  .body{top:42px;left:11px;width:64px;height:84px}
+  .body:after{top:25px;left:20px;font-size:14px}
   .floating{display:none}
   .inventory,.skills,.quests{display:none}
-  .chest{right:12px;bottom:170px;width:58px;height:44px;border-width:2px;border-radius:12px;font-size:25px}
+  .chest{
+    right:13px;bottom:165px;width:55px;height:43px;border-width:2px;
+    border-radius:13px;font-size:24px;box-shadow:0 0 20px rgba(169,65,255,.5);
+    animation:chestFloat 2.5s ease-in-out infinite;
+  }
+  @keyframes chestFloat{0%,100%{transform:translateY(0)}50%{transform:translateY(-7px)}}
 
-  /* Bottom navigation becomes an app tab bar */
+  /* App dock */
   .bottom{
-    position:fixed;
-    left:0;
-    bottom:0;
-    transform:none;
-    width:100vw;
-    height:72px;
-    min-height:72px;
-    padding:6px 5px calc(6px + env(safe-area-inset-bottom));
-    gap:4px;
-    justify-content:flex-start;
-    overflow-x:auto;
-    overflow-y:hidden;
-    flex-wrap:nowrap;
-    border:0;
-    border-top:1px solid #24545c;
-    border-radius:18px 18px 0 0;
-    background:rgba(2,11,16,.96);
-    backdrop-filter:blur(14px);
-    -webkit-overflow-scrolling:touch;
+    position:fixed;left:8px;right:8px;bottom:8px;transform:none;width:auto;
+    height:64px;min-height:64px;padding:5px 6px;gap:4px;justify-content:flex-start;
+    flex-wrap:nowrap;overflow-x:auto;overflow-y:hidden;
+    border:1px solid rgba(76,224,193,.24);border-radius:22px;
+    background:rgba(3,13,19,.78);backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);
+    box-shadow:0 14px 40px rgba(0,0,0,.4),inset 0 1px rgba(255,255,255,.05);
   }
   .bottom::-webkit-scrollbar{display:none}
   .nav{
-    flex:0 0 72px;
-    width:72px;
-    height:58px;
-    min-height:58px;
-    padding:4px 2px;
-    border-radius:12px;
-    font-size:9px;
+    position:relative;flex:0 0 66px;width:66px;height:52px;min-height:52px;
+    padding:4px 2px;border:1px solid transparent;border-radius:16px;
+    background:transparent;color:#86afb1;font-size:8px;transition:.22s ease;
   }
-  .nav span{font-size:19px;margin-bottom:2px}
+  .nav span{font-size:20px;margin-bottom:1px;transition:.22s ease}
+  .nav:active{transform:scale(.92)}
+  .nav:hover,.nav:focus-visible{border-color:rgba(69,238,181,.35);background:rgba(31,101,88,.22);color:#9fffe5}
+  .nav:hover span{transform:translateY(-2px) scale(1.08)}
 
-  /* Full-screen app-like windows */
-  .modal{
-    align-items:stretch;
-    justify-content:stretch;
-    padding:0;
-  }
+  /* Full-screen app pages */
+  .modal{align-items:stretch;justify-content:stretch;padding:0;background:rgba(0,4,7,.76)}
   .window{
-    width:100vw;
-    max-width:none;
-    height:100dvh;
-    max-height:none;
-    padding:20px 14px calc(85px + env(safe-area-inset-bottom));
-    border:0;
-    border-radius:0;
-    overflow-y:auto;
-    -webkit-overflow-scrolling:touch;
+    width:100vw;max-width:none;height:100dvh;max-height:none;
+    padding:14px 13px 92px;border:0;border-radius:0;
+    background:
+      radial-gradient(circle at 85% 8%,rgba(58,245,198,.09),transparent 25%),
+      linear-gradient(160deg,#06171e,#020a0f);
+    animation:pageIn .24s ease-out;
   }
-  .window h2{font-size:20px;padding-top:4px}
-  .lesson-description{font-size:13px;line-height:1.8}
+  @keyframes pageIn{from{opacity:0;transform:translateY(12px)}to{opacity:1;transform:translateY(0)}}
+  .window h2{font-size:21px;margin:4px 0 12px}
   .close{
-    position:sticky;
-    top:0;
-    z-index:3;
-    float:none;
-    width:42px;
-    height:42px;
-    border:1px solid #315d64;
-    border-radius:12px;
-    background:#08171d;
-    margin-bottom:8px;
+    float:none;position:sticky;top:0;z-index:5;width:42px;height:42px;
+    border:1px solid rgba(69,238,181,.25);border-radius:13px;
+    background:rgba(8,23,29,.86);backdrop-filter:blur(12px);font-size:25px;
   }
-  .lesson-card{padding:13px;margin:8px 0}
+  .lesson-description{font-size:13px;line-height:1.8}
+  .lesson-card{
+    padding:14px;margin:9px 0;border-radius:16px;
+    background:rgba(6,21,27,.72);border-color:rgba(40,89,99,.65);
+    box-shadow:0 8px 25px rgba(0,0,0,.16);transition:.2s ease;
+  }
+  .lesson-card:active{transform:scale(.985);border-color:#43efb1}
   .lesson-title{font-size:16px}
   .row{grid-template-columns:1fr}
-  .tree{grid-template-columns:repeat(2,minmax(0,1fr));gap:8px}
-  .node{padding:12px 7px}
+  .tree{grid-template-columns:repeat(2,minmax(0,1fr));gap:9px}
+  .node{padding:13px 7px;border-radius:15px}
   .node strong{font-size:22px}
-  textarea{min-height:210px;font-size:13px}
+  textarea{min-height:215px;border-radius:14px}
 
-  /* Authentication screen feels like a native app */
+  /* Login is an app launch screen */
   #authScreen{
-    min-height:100dvh;
-    padding:14px;
-    align-items:center;
+    min-height:100dvh;padding:16px;align-items:center;
     background:
-      radial-gradient(circle at 50% 15%,rgba(0,255,190,.12),transparent 35%),
+      radial-gradient(circle at 50% 12%,rgba(49,255,202,.15),transparent 34%),
+      radial-gradient(circle at 10% 90%,rgba(51,173,255,.08),transparent 28%),
       #02080c;
   }
   #authBox{
-    width:100%;
-    max-width:420px;
-    padding:22px 16px;
-    border-radius:22px;
-    box-shadow:0 18px 60px rgba(0,0,0,.45);
+    width:100%;max-width:410px;padding:24px 17px;border-radius:26px;
+    border:1px solid rgba(67,238,181,.45);
+    background:rgba(4,17,23,.78);backdrop-filter:blur(22px);-webkit-backdrop-filter:blur(22px);
+    box-shadow:0 24px 80px rgba(0,0,0,.48),0 0 45px rgba(0,255,190,.08);
+    animation:authIn .35s ease-out;
   }
-  #authBox h1{font-size:25px !important}
+  @keyframes authIn{from{opacity:0;transform:translateY(18px) scale(.97)}to{opacity:1;transform:none}}
+  #authBox h1{font-size:25px!important;letter-spacing:.2px}
   #authBox .sub{font-size:13px;line-height:1.7}
   .authTab{gap:7px;margin-bottom:12px}
-  .authTab button{min-height:48px;font-size:14px}
+  .authTab button{min-height:48px;border-radius:14px;font-size:14px}
   .authField{
-    min-height:50px;
-    margin:6px 0;
-    padding:13px 14px;
-    font-size:16px;
+    min-height:51px;margin:6px 0;padding:13px 14px;font-size:16px;
+    border-radius:14px;background:rgba(2,11,16,.72);
+    transition:.2s ease;
   }
+  .authField:focus{outline:none;border-color:#45efb7;box-shadow:0 0 0 3px rgba(69,239,183,.10)}
   .authSubmit{
-    min-height:52px;
-    margin-top:9px;
-    font-size:15px;
+    min-height:53px;margin-top:10px;border-radius:15px;font-size:15px;
+    box-shadow:0 8px 24px rgba(0,255,190,.10);transition:.2s ease;
   }
+  .authSubmit:active{transform:scale(.985)}
   #authMsg{font-size:13px;line-height:1.5}
 
-  /* Chat becomes a phone screen */
+  /* Chat */
   #chatModal{padding:0}
-  #chatBox{
-    width:100vw;
-    height:100dvh;
-    max-width:none;
-    max-height:none;
-    border:0;
-    border-radius:0;
-  }
+  #chatBox{width:100vw;height:100dvh;max-width:none;max-height:none;border:0;border-radius:0}
   #chatTop{padding:10px}
   #chatBody{flex-direction:column}
   #users{
-    width:100%;
-    height:115px;
-    flex:0 0 115px;
-    border-left:0;
-    border-bottom:1px solid #204850;
-    display:flex;
-    gap:7px;
-    overflow-x:auto;
+    width:100%;height:108px;flex:0 0 108px;border:0;border-bottom:1px solid #204850;
+    display:flex;gap:7px;overflow-x:auto;
   }
-  .user{min-width:120px;height:max-content;margin:0}
+  .user{min-width:125px;height:max-content;margin:0;border-radius:13px}
   #conversation{min-height:0}
-  .message{max-width:88%}
-  #sendArea{padding-bottom:calc(10px + env(safe-area-inset-bottom))}
+  .message{max-width:88%;border-radius:14px}
+  #sendArea{padding:10px 10px calc(10px + env(safe-area-inset-bottom))}
 }
 
-/* Very small phones */
-@media (max-width: 380px){
+@media(max-width:380px){
   .player{top:7px;left:7px;right:7px}
-  .progress{top:87px}
-  .coins{top:116px}
-  .portal{top:22%;transform:translateX(-50%) scale(.9)}
-  .door{top:28%;width:62px;height:120px}
-  .code-screen{bottom:82px;transform:scale(.78)}
-  .nav{flex-basis:68px;width:68px}
-  #authBox{padding:18px 13px}
+  .progress{top:88px;left:9px;right:9px}
+  .coins{top:134px}
+  .portal{top:24%;transform:translateX(-50%) scale(.9)}
+  .code-screen{bottom:88px;transform:scale(.7)}
+  .bottom{left:6px;right:6px;bottom:6px}
+  .nav{flex-basis:62px;width:62px}
+  #authBox{padding:20px 13px}
 }
