@@ -197,3 +197,62 @@ button,input,textarea,select{max-width:100%;font:inherit}
 @media(prefers-reduced-motion:reduce){
   *,*::before,*::after{animation-duration:.01ms!important;animation-iteration-count:1!important;transition-duration:.01ms!important;scroll-behavior:auto!important}
 }
+
+
+/* ===== Mobile layout fix v2 ===== */
+@media (max-width:640px){
+  /* Keep the game area stable on phones and prevent desktop layers from leaking into it. */
+  .game{position:relative;width:100vw;height:100dvh;min-height:0;overflow:hidden}
+  .stars{animation:none;opacity:.18}
+
+  /* Header */
+  .player{top:8px;left:8px;right:8px;height:66px;min-height:66px;padding:7px 8px;align-items:center}
+  .avatar{width:48px;height:48px;flex-basis:48px;font-size:25px}
+  .player>div:nth-child(2){min-width:0}
+  .player h3{font-size:14px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;padding-right:4px}
+  .player>div:nth-child(2)>div:not(.level){font-size:12px;line-height:1.15}
+  .player .level{font-size:9px}
+  .player .btn{left:7px;top:8px;font-size:9px!important;padding:4px 7px!important}
+  .progress{top:78px;left:8px;right:8px;height:44px;padding:5px 8px}
+  .progress-title{font-size:9px}.progress-bar{height:5px}.progress p{font-size:8px}
+  .coins{top:126px;right:8px;font-size:9px;padding:3px 7px}
+
+  /* Five quick actions fit on one row; no half-cut buttons. */
+  .mobileQuick{top:154px;left:8px;right:8px;height:42px;display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:5px;overflow:hidden;direction:rtl}
+  .quickAction{width:100%;min-width:0;height:40px;padding:3px 2px;border-radius:11px;font-size:9px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+
+  /* Main game scene: portal first, code panel below it. */
+  .portal{top:205px;left:50%;width:158px;height:205px;border-width:6px}
+  .portal:before{top:20px;font-size:14px}
+  .python{top:62px;font-size:52px}
+  .door{top:235px;width:54px;height:112px;font-size:10px}
+  .door.left{left:5px}.door.right{right:5px}
+  .lock{bottom:20px;font-size:17px}
+
+  .code-screen{left:12%;right:12%;top:auto;bottom:178px;width:auto;height:112px;padding:7px 8px;opacity:.9;transform:none;overflow:hidden;border-radius:12px;background:rgba(2,12,17,.88);z-index:4}
+  .code-title{font-size:9px;margin-bottom:5px}.code{font-size:7px;line-height:1.35;overflow:hidden}
+  .character{bottom:67px;height:90px;width:62px;z-index:3}
+  .head{top:5px;left:21px;width:23px;height:29px}.body{top:33px;left:8px;width:47px;height:59px}.body:after{top:17px;left:13px;font-size:11px}
+  .floating,.inventory,.skills,.quests{display:none!important}
+  .chest{right:10px;bottom:205px;width:48px;height:38px;font-size:21px;z-index:7}
+
+  /* Bottom navigation: show the five primary destinations, all fully visible. */
+  .bottom{left:7px;right:7px;bottom:6px;width:auto;height:61px;min-height:61px;padding:4px;display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:3px;overflow:hidden;justify-content:stretch}
+  .nav{width:auto;min-width:0;height:51px;min-height:51px;padding:3px 1px;font-size:8px;overflow:hidden}
+  .nav span{font-size:18px}
+  .nav:nth-child(n+6){display:none}
+
+  /* Full-screen windows should scroll internally, not push the game underneath. */
+  .modal{padding:0;overflow:hidden}
+  .window{width:100vw;height:100dvh;max-height:none;overflow-y:auto;overscroll-behavior:contain;padding:10px 12px calc(82px + env(safe-area-inset-bottom));border:0;border-radius:0}
+  .window h2{font-size:19px}
+  .close{position:sticky;top:0;float:none;width:38px;height:38px;margin-bottom:6px}
+}
+
+@media (max-width:380px){
+  .player{left:6px;right:6px}.progress{left:6px;right:6px}
+  .mobileQuick{left:6px;right:6px;gap:3px}.quickAction{font-size:8px}
+  .portal{top:202px;width:145px;height:190px}.python{font-size:47px}
+  .code-screen{left:10%;right:10%;bottom:175px}
+  .bottom{left:5px;right:5px}.nav{font-size:7px}.nav span{font-size:17px}
+}
