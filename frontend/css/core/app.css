@@ -403,3 +403,22 @@ button,input,textarea,select{max-width:100%;font:inherit}
   .bottom::-webkit-scrollbar{display:none}
   .bottom{scrollbar-width:none}
 }
+
+
+/* ===== Show all bottom navigation items ===== */
+@media(max-width:640px){
+  .bottom{
+    grid-template-columns:repeat(8,minmax(0,1fr)) !important;
+    gap:2px !important;
+    overflow:hidden !important;
+  }
+  .bottom .nav{
+    display:flex !important;
+    width:auto !important;
+    min-width:0 !important;
+    height:51px !important;
+    padding:2px 0 !important;
+    font-size:7px !important;
+  }
+  .bottom .nav span{font-size:15px !important;margin-bottom:1px}
+}
