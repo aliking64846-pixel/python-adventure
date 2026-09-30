@@ -114,5 +114,27 @@
 <script src="/js/core/render.js"></script>
 <script src="/js/core/persistence.js"></script>
 <script src="/js/core/app.js"></script>
+<script>
+(function(){
+  function initLiquidNav(){
+    const bar=document.querySelector('.bottom');
+    if(!bar) return;
+    const buttons=[...bar.querySelectorAll('.nav')].filter(b=>getComputedStyle(b).display!=='none');
+    if(!buttons.length) return;
+    function move(btn){
+      const br=bar.getBoundingClientRect(), r=btn.getBoundingClientRect();
+      bar.style.setProperty('--glass-x',(r.left-br.left+r.width/2)+'px');
+      bar.style.setProperty('--glass-w',Math.max(58,r.width-4)+'px');
+      buttons.forEach(b=>b.classList.toggle('is-active',b===btn));
+    }
+    function sync(){ move(buttons.find(b=>b.classList.contains('is-active'))||buttons[0]); }
+    buttons.forEach(btn=>btn.addEventListener('click',()=>move(btn)));
+    window.addEventListener('resize',sync,{passive:true});
+    requestAnimationFrame(sync);
+  }
+  if(document.readyState==='loading') document.addEventListener('DOMContentLoaded',initLiquidNav);
+  else initLiquidNav();
+})();
+</script>
 </body>
 </html>
