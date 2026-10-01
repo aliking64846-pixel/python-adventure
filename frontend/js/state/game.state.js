@@ -23,7 +23,7 @@ function collectGameState() {
     inventory:gameState.inventory,
     quests:gameState.quests,
     achievements:gameState.achievements,
-    map:{stage:Math.max(1,Math.min(6,Math.ceil(Number(progress||0)/17)))},
+    map:{stage:Math.max(1,Math.min(10,Math.ceil(Number(progress||0)/10)))},
     chest:gameState.chest,
     lab:gameState.lab
   };
