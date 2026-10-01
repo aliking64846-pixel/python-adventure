@@ -1,0 +1,48 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 760">
+<defs>
+ <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#061a1b"/><stop offset=".45" stop-color="#0b4d42"/><stop offset="1" stop-color="#02110f"/></linearGradient>
+ <linearGradient id="mist" x1="0" y1="0" x2="0" y2="1"><stop stop-color="#9dffbd" stop-opacity=".34"/><stop offset="1" stop-color="#2b9e70" stop-opacity="0"/></linearGradient>
+ <linearGradient id="d" x1="0" y1="0" x2="0" y2="1"><stop stop-color="#a7ff76"/><stop offset=".42" stop-color="#43e34e"/><stop offset="1" stop-color="#087438"/></linearGradient>
+ <linearGradient id="w" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#5eff75"/><stop offset=".5" stop-color="#119b4d"/><stop offset="1" stop-color="#063b29"/></linearGradient>
+ <filter id="blur"><feGaussianBlur stdDeviation="22"/></filter>
+ <filter id="glow"><feGaussianBlur stdDeviation="7"/></filter>
+</defs>
+<rect width="900" height="760" fill="url(#bg)"/>
+<ellipse cx="650" cy="180" rx="300" ry="180" fill="#b6ffca" opacity=".18" filter="url(#blur)"/>
+<path d="M0 340 Q130 245 260 330 T510 310 T720 270 T900 300V760H0Z" fill="#061f1c"/>
+<path d="M0 440 Q140 350 280 430 T540 420 T900 390V760H0Z" fill="#082d24"/>
+<g opacity=".55" fill="#0c5a45">
+ <path d="M610 320l38-145 40 145z"/><path d="M670 320l50-185 52 185z"/><path d="M740 320l35-135 42 135z"/>
+</g>
+<g transform="translate(70 100)">
+ <path d="M560 220l22-95 25 95 42-67 14 83 52-48 20 100H535z" fill="#071e24" stroke="#75ffae" stroke-opacity=".25" stroke-width="3"/>
+ <rect x="582" y="217" width="128" height="130" rx="4" fill="#061d20" stroke="#4cff9f" stroke-opacity=".25" stroke-width="4"/>
+ <g fill="#d5ff9b"><rect x="606" y="237" width="12" height="20"/><rect x="632" y="237" width="12" height="20"/><rect x="658" y="237" width="12" height="20"/><rect x="684" y="237" width="12" height="20"/><rect x="620" y="274" width="12" height="20"/><rect x="646" y="274" width="12" height="20"/><rect x="672" y="274" width="12" height="20"/><rect x="647" y="309" width="20" height="38"/></g>
+</g>
+<path d="M0 600q190-120 390-5t510-35v200H0z" fill="#041712"/>
+<g transform="translate(45 205)">
+ <ellipse cx="300" cy="410" rx="250" ry="35" fill="#000" opacity=".48"/>
+ <path d="M205 220Q55 20 15 100q125 95 105 270 48-80 85-150z" fill="url(#w)" stroke="#a9ff91" stroke-width="6"/>
+ <path d="M390 220Q540 20 580 100q-125 95-105 270-48-80-85-150z" fill="url(#w)" stroke="#a9ff91" stroke-width="6"/>
+ <path d="M430 370q190 70 260-40-55 150-270 86z" fill="#15954b" stroke="#75ff88" stroke-width="6"/>
+ <ellipse cx="300" cy="330" rx="135" ry="160" fill="url(#d)" stroke="#c0ffab" stroke-width="7"/>
+ <ellipse cx="300" cy="155" rx="116" ry="112" fill="url(#d)" stroke="#c0ffab" stroke-width="7"/>
+ <path d="M225 73l-35-88 70 65zM375 73l35-88-70 65z" fill="#eaffd9"/>
+ <path d="M205 130q-85-58-55 45 34 45 80 7zM395 130q85-58 55 45-34 45-80 7z" fill="#45db61"/>
+ <ellipse cx="251" cy="160" rx="28" ry="35" fill="#faffef"/><ellipse cx="349" cy="160" rx="28" ry="35" fill="#faffef"/>
+ <circle cx="258" cy="166" r="13" fill="#112e1b"/><circle cx="342" cy="166" r="13" fill="#112e1b"/>
+ <circle cx="263" cy="160" r="4" fill="#fff"/><circle cx="347" cy="160" r="4" fill="#fff"/>
+ <ellipse cx="300" cy="220" rx="67" ry="46" fill="#d6ffb5"/>
+ <circle cx="268" cy="220" r="7" fill="#28713a"/><circle cx="332" cy="220" r="7" fill="#28713a"/>
+ <path d="M275 246q25 18 50 0" fill="none" stroke="#28713a" stroke-width="6" stroke-linecap="round"/>
+ <path d="M255 290q45-30 90 0l18 145q-63 45-126 0z" fill="#dff7b4"/>
+ <path d="M225 415q75-28 150 0l35 26H190z" fill="#143a30"/>
+ <rect x="238" y="318" width="124" height="78" rx="10" fill="#08212a" stroke="#52edff" stroke-width="6"/>
+ <rect x="251" y="331" width="98" height="49" rx="6" fill="#031017"/>
+ <text x="300" y="366" text-anchor="middle" font-family="Arial" font-size="31" font-weight="700" fill="#55e6ff">Py</text>
+ <path d="M218 395h164l27 22H191z" fill="#0b3540" stroke="#55e6ff" stroke-width="5"/>
+ <rect x="145" y="404" width="80" height="55" rx="8" fill="#071b22" stroke="#4ddfff" stroke-width="4"/>
+ <text x="185" y="442" text-anchor="middle" font-family="Arial" font-size="25" font-weight="700" fill="#55e6ff">Py</text>
+</g>
+<g fill="#a5ffc0" opacity=".7"><circle cx="80" cy="230" r="4"/><circle cx="115" cy="290" r="6"/><circle cx="815" cy="420" r="5"/><circle cx="760" cy="475" r="3"/></g>
+</svg>
