@@ -265,7 +265,7 @@
     const box=$('academyStats');if(!box)return;
     const p=platformState(),runs=Number(gameState.lab?.runs)||0,success=Number(gameState.lab?.successes)||0;
     const lessonPct=Math.round(completedLessons.length/Math.max(1,lessons.length)*100);
-    const projectCount=Object.values(p.projects||{}).filter(x=>x.step>=projects.find(pr=>pr.id===x.id)?.steps.length).length;
+    
     box.innerHTML=`<h2 style="margin:6px 0 8px">📊 إحصائيات رحلتك</h2><div class="statGrid">
       <div class="statCard"><b>${completedLessons.length}</b><p>دروس مكتملة</p></div>
       <div class="statCard"><b>${lessonPct}%</b><p>نسبة المسار الأساسي</p></div>

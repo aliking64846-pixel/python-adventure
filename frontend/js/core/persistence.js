@@ -6,7 +6,7 @@ async function completeLessonOnServer(lessonId){const result=await apiRequest('/
 async function saveByteData(byteData){if(!byteData)return;await putByte({level:Number(byteData.level)||1,bond:Number(byteData.bond)||0,energy:Number(byteData.energy)||0,state:byteData.state||'idle',memory:Array.isArray(byteData.memory)?byteData.memory:[]})}
 async function saveLabData(stats){if(!stats)return;gameState.lab={...gameState.lab,...stats};await putLab({runs:Number(gameState.lab.runs)||0,successes:Number(gameState.lab.successes)||0,errors:Number(gameState.lab.errors)||0})}
 function saveGameNow(){savePlayerData();saveGameState(true)}
-window.addEventListener('beforeunload',()=>savePlayerData());window.addEventListener('pagehide',()=>saveGameNow());document.addEventListener('visibilitychange',()=>{if(document.visibilityState==='hidden')savePlayerData()});document.addEventListener('click',()=>setTimeout(saveGameNow,300));document.addEventListener('input',event=>{const el=event.target;if(el&&(el.tagName==='TEXTAREA'||el.tagName==='INPUT'))saveGameState()});setInterval(savePlayerData,10000);setTimeout(loadServerState,1500);setTimeout(loadServerState,3000);setTimeout(loadServerState,7000);document.addEventListener('DOMContentLoaded',async()=>{await loadServerState();renderAll();renderPersistentUI()});
+window.addEventListener('beforeunload',()=>savePlayerData());window.addEventListener('pagehide',()=>saveGameNow());document.addEventListener('visibilitychange',()=>{if(document.visibilityState==='hidden')savePlayerData()});document.addEventListener('input',event=>{const el=event.target;if(el&&(el.tagName==='TEXTAREA'||el.tagName==='INPUT'))saveGameState()});setInterval(savePlayerData,10000);document.addEventListener('DOMContentLoaded',async()=>{await loadServerState();renderAll();renderPersistentUI()});
 
 async function refreshPlayerFromServer(){await loadServerState()}
-setTimeout(()=>refreshPlayerFromServer(),1500);
+
