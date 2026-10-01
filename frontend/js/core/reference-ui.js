@@ -75,7 +75,7 @@
   function closeSheet(){const o=$id('overlay');if(o)o.classList.remove('open')}
 
   function openMenu(){
-    openSheet('☰ قائمة الرحلة','اختر القسم الذي تريد دخوله.',`<div class="menu"><button data-menu="home">⌂ الرئيسية</button><button data-menu="lessons">📖 الدروس</button><button data-menu="tasks">☑️ المهام</button><button data-menu="skills">⭐ المهارات</button><button data-menu="messages">💬 الرسائل</button><button data-menu="lab">🧪 المختبر</button><button id="communityBtn">👥 مجتمع اللاعبين</button></div>`);
+    openSheet('☰ قائمة الرحلة','اختر القسم الذي تريد دخوله.',`<div class="menu"><button data-menu="home">⌂ الرئيسية</button><button data-menu="lessons">📖 الدروس</button><button data-menu="tasks">☑️ المهام</button><button data-menu="skills">⭐ المهارات</button><button data-menu="inventoryPage">🎒 الحقيبة</button><button data-menu="mapPage">🗺️ الخريطة</button><button data-menu="achievementsPage">🏆 الإنجازات</button><button data-menu="lab">🧪 المختبر</button><button id="communityBtn">👥 مجتمع اللاعبين</button></div>`);
     document.querySelectorAll('[data-menu]').forEach(b=>b.onclick=()=>{closeSheet();go(b.dataset.menu)});
     $id('communityBtn')?.addEventListener('click',()=>{closeSheet();openChat()});
   }
