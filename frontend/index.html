@@ -116,6 +116,14 @@ print("Hello", name)</textarea><button class="run" id="run">▶ تشغيل ال�
 <div class="skills"><div class="skill-grid" id="quickSkills"></div></div>
 <div class="quests"><div id="quickQuests"></div></div>
 </div>
+<div id="authScreen"><div id="authBox">
+<h1>🐍 Python Adventure</h1><div class="sub">سجّل دخولك واحفظ رحلتك البرمجية</div>
+<div class="authTab"><button id="loginTab" class="active">تسجيل الدخول</button><button id="registerTab">حساب جديد</button></div>
+<div id="loginForm"><input id="loginValue" class="authField" placeholder="اسم المستخدم أو الإيميل"><input id="loginPassword" class="authField" type="password" placeholder="كلمة المرور"></div>
+<div id="registerForm" style="display:none"><input id="regUsername" class="authField" placeholder="اسم المستخدم"><input id="regEmail" class="authField" type="email" placeholder="الإيميل"><input id="regPassword" class="authField" type="password" placeholder="كلمة المرور (6 أحرف على الأقل)"></div>
+<button id="authSubmit" class="authSubmit">دخول إلى اللعبة 🚀</button><div id="authMsg"></div>
+</div></div>
+<div id="chatModal"><div id="chatBox"><div id="chatTop"><input id="chatSearch" placeholder="🔎 ابحث عن لاعب بالاسم..."><button id="chatClose">إغلاق ✕</button></div><div id="chatBody"><div id="users"></div><div id="conversation"><div id="chatTitle">💬 اختر لاعبًا لبدء المحادثة</div><div id="messages"></div><div id="sendArea"><input id="messageInput" placeholder="اكتب رسالتك..." disabled><button id="sendBtn" disabled>إرسال</button></div></div></div></div></div>
 <script src="/js/data.js?v=20261001-1"></script>
 <script src="/js/state/player.state.js?v=20261001-1"></script>
 <script src="/js/state/game.state.js?v=20261001-1"></script>
@@ -134,5 +142,31 @@ print("Hello", name)</textarea><button class="run" id="run">▶ تشغيل ال�
 <script src="/js/core/render.js?v=20261001-1"></script>
 <script src="/js/core/persistence.js?v=20261001-1"></script>
 <script src="/js/core/app.js?v=20261001-1"></script>
+<script>
+(function(){
+  const originalOpen=window.openWindow, originalClose=window.closeWindows;
+  window.openWindow=function(id){
+    const map={lessonsModal:"lessons",lessonDetailModal:"lessons",inventoryModal:"lessons",skillsModal:"skills",labModal:"lab",mapModal:"lessons",questModal:"tasks",achievementsModal:"skills"};
+    const target=map[id];
+    if(target){
+      document.querySelectorAll(".view").forEach(v=>v.classList.remove("active"));
+      const v=document.getElementById(target); if(v) v.classList.add("active");
+      document.querySelectorAll(".nav").forEach(n=>n.classList.toggle("active",n.dataset.nav===target));
+      window.scrollTo({top:0,behavior:"smooth"});
+      return;
+    }
+    if(id==="chatModal"){ if(typeof openChat==="function") openChat(); return; }
+    if(originalOpen) originalOpen(id);
+  };
+  window.closeWindows=function(){
+    document.querySelectorAll(".view").forEach(v=>v.classList.remove("active"));
+    const home=document.getElementById("home"); if(home) home.classList.add("active");
+    document.querySelectorAll(".nav").forEach(n=>n.classList.toggle("active",n.dataset.nav==="home"));
+    if(document.getElementById("chatModal")) document.getElementById("chatModal").classList.remove("show");
+    if(originalClose) { try{ originalClose(); }catch(e){} }
+  };
+  window.addEventListener("error",function(e){ if(e.message && /Cannot read properties of null/.test(e.message)) e.preventDefault(); });
+})();
+</script>
 </body>
 </html>
