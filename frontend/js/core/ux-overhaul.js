@@ -70,33 +70,11 @@
    $('uxResults').innerHTML=results.map(r=>`<button data-cmd="${r[0]}">${r[1]} <b>${esc(r[2])}</b><small style="color:#718b90"> — ${esc(r[3])}</small></button>`).join('');
    $('uxResults').querySelectorAll('[data-cmd]').forEach(b=>b.onclick=()=>{$('uxCommandModal').classList.remove('open');go(b.dataset.cmd)});
  }
- function buildHomeDashboard(){
-   const home=$('home');if(!home||$('uxHomeGrid'))return;
-   const section=home.querySelector('.section');if(!section)return;
-   const grid=document.createElement('div');grid.id='uxHomeGrid';
-   grid.innerHTML=`
-    <div class="uxPanel"><h3>🎯 مهمتك الآن</h3><p id="uxNextText">جارِ تحديد الخطوة التالية...</p><div class="uxMiniProgress"><i id="uxHomeProgress" style="width:0"></i></div><div class="uxActionGrid">
-      <button class="uxAction" id="uxContinueBtn"><b>▶️ تابع التعلم</b><small>انتقل مباشرة للدرس التالي</small></button>
-      <button class="uxAction" id="uxDailyBtn"><b>⚡ تحدي اليوم</b><small>اربح XP وحافظ على السلسلة</small></button>
-      <button class="uxAction" id="uxProjectBtn"><b>🛠️ ابنِ مشروعاً</b><small>طبق ما تعلمته عملياً</small></button>
-      <button class="uxAction" id="uxLabBtn"><b>🧪 افتح المختبر</b><small>اكتب وشغّل Python</small></button>
-    </div></div>
-    <div class="uxPanel"><h3>📈 رحلتك اليوم</h3><p id="uxJourneyText">استمر بخطوة صغيرة كل يوم.</p><div style="margin-top:15px"><div style="display:flex;justify-content:space-between;font-size:10px;color:#819b9e"><span>XP</span><b id="uxJourneyXP">0</b></div><div class="uxMiniProgress"><i id="uxJourneyBar" style="width:0"></i></div></div><div style="margin-top:15px"><div style="display:flex;justify-content:space-between;font-size:10px;color:#819b9e"><span>الدروس</span><b id="uxJourneyLessons">0/0</b></div><div class="uxMiniProgress"><i id="uxJourneyLessonBar" style="width:0"></i></div></div></div>`;
-   section.prepend(grid);
-   $('uxContinueBtn').onclick=()=>{const id=lessons[Math.min(completedLessons.length,lessons.length-1)]?.id||1;openLesson(id)};
-   $('uxDailyBtn').onclick=()=>window.openAcademy?.('daily');
-   $('uxProjectBtn').onclick=()=>window.openAcademy?.('projects');
-   $('uxLabBtn').onclick=()=>go('lab');
- }
+
  function updateContinue(){
    const id=lessons[Math.min(completedLessons.length,lessons.length-1)]?.id||1;
    const l=lessons.find(x=>x.id===id);
-   if($('uxNextText'))$('uxNextText').innerHTML=l?`الدرس القادم: <b style="color:#6df6c0">${esc(l.title)}</b><br>${esc(l.desc)}`:'كل الدروس الأساسية مكتملة 🎉';
-   if($('uxHomeProgress'))$('uxHomeProgress').style.width=(Number(progress)||0)+'%';
-   if($('uxJourneyXP'))$('uxJourneyXP').textContent=(Number(xp)||0)+' XP';
-   if($('uxJourneyLessons'))$('uxJourneyLessons').textContent=completedLessons.length+'/'+lessons.length;
-   if($('uxJourneyLessonBar'))$('uxJourneyLessonBar').style.width=Math.round(completedLessons.length/Math.max(1,lessons.length)*100)+'%';
-   if($('uxJourneyBar'))$('uxJourneyBar').style.width=Math.min(100,(Number(xp)||0)%500/5)+'%';
+
    if($('uxTopXP'))$('uxTopXP').textContent=Number(xp)||0;
    if($('uxTopCoins'))$('uxTopCoins').textContent=Number(coins)||0;
  }

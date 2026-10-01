@@ -9,15 +9,6 @@
     window.scrollTo({top:0,behavior:'smooth'});
   }
 
-  function refreshReferenceHome(){
-    const progressValue=Math.max(0,Math.min(100,Number(progress)||0));
-    const level=Math.max(1,Math.floor((Number(xp)||0)/500)+1);
-    const levelNum=$id('levelNum'); if(levelNum)levelNum.textContent=Math.min(10,Math.ceil(progressValue/10)||1)+' / 10';
-    const bar=document.querySelector('.progressline i'); if(bar)bar.style.width=progressValue+'%';
-    const nextIndex=Math.min(lessons.length-1,completedLessons.length);
-    const next=$id('continue'); if(next)next.dataset.lesson=String(lessons[nextIndex]?.id||1);
-  }
-
   function renderReferenceTasks(){
     const list=$id('taskList'); if(!list)return;
     list.innerHTML=tasks.map(t=>{
@@ -110,7 +101,7 @@
   }
 
   function renderReferenceAll(){
-    renderReferenceTasks();renderReferenceSkills();refreshReferenceHome();
+    renderReferenceTasks();renderReferenceSkills();
     const chat=$id('chat');
     if(chat && !chat.dataset.bound){
       chat.dataset.bound='1';

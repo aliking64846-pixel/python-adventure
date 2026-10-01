@@ -42,9 +42,9 @@ function openLesson(id=1){
     document.querySelectorAll('.lesson-answer').forEach(x=>x.style.outline='');
     const correct=Number(btn.dataset.answer)===l.correct;
     btn.style.outline=correct?'2px solid #35f0ad':'2px solid #ff6e7d';
-    $('lessonAnswerResult').textContent=correct?'🎉 إجابة صحيحة!':'❌ حاول مرة أخرى';
+    const result=$('lessonAnswerResult');result.dataset.correct=correct?'1':'';result.textContent=correct?'🎉 إجابة صحيحة!':'❌ حاول مرة أخرى';
   });
-  $('completeLessonBtn')?.addEventListener('click',()=>completeLesson(id));
+  $('completeLessonBtn')?.addEventListener('click',()=>{if(!$('lessonAnswerResult')?.dataset.correct){toast('🎯 جاوب السؤال بشكل صحيح أولاً');return}completeLesson(id)});
 }
 
 async function completeLesson(id){
