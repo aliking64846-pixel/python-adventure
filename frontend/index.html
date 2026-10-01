@@ -34,57 +34,57 @@
 <button class="quickAction" onclick="openChat()">💬 الرسائل</button>
 </div>
 
-<section class="new-home" aria-label="الصفحة الرئيسية رحلة بايثون">
-  <header class="home-top">
-    <button class="home-menu" aria-label="القائمة">☰</button>
-    <div class="brand"><span class="py-logo">🐍</span><strong>Python <i>Adventure</i></strong></div>
-    <div class="home-avatar">🐉</div>
+<section class="new-home ref-home" aria-label="الصفحة الرئيسية رحلة بايثون">
+  <header class="ref-top">
+    <button class="ref-menu" aria-label="القائمة">☰</button>
+    <div class="ref-brand"><span class="python-mark">🐍</span><strong>Python <i>Adventure</i></strong></div>
+    <button class="ref-avatar" aria-label="الملف الشخصي">🐉</button>
   </header>
 
-  <section class="home-hero">
-    <div class="hero-art"></div>
-    <div class="hero-copy">
-      <div class="hero-kicker">PYTHON ADVENTURE</div>
+  <section class="ref-hero">
+    <div class="ref-hero-art"></div>
+    <div class="ref-hero-overlay"></div>
+    <div class="ref-hero-copy">
       <h1>مرحباً بك في<br><span>رحلة بايثون</span></h1>
-      <p>تعلّم البرمجة بطريقة ممتعة وتفاعلية<br>واكتشف عالم بايثون خطوة بخطوة</p>
-      <div class="hero-actions">
-        <button class="hero-start" onclick="openWindow('lessonsModal')">ابدأ الرحلة <b>▶</b></button>
-        <button class="hero-lab" onclick="openWindow('labModal')">المختبر <b>⚗</b></button>
+      <p>تعلم البرمجة بطريقة ممتعة وتفاعلية<br>واكتشف عالم بايثون خطوة بخطوة</p>
+      <div class="ref-hero-buttons">
+        <button class="ref-start" onclick="openWindow('lessonsModal')">ابدأ الرحلة <b>▶</b></button>
+        <button class="ref-lab" onclick="openWindow('labModal')">المختبر <b>⚗</b></button>
       </div>
     </div>
   </section>
 
-  <div class="home-shortcuts">
-    <button onclick="openChat()"><span>💬</span><b>الرسائل</b><small>تواصل مع مجتمع<br>المتعلمين</small><em>←</em></button>
-    <button onclick="openWindow('skillsModal')"><span>☆</span><b>المهارات</b><small>طوّر مهاراتك<br>واكسب النجوم</small><em>←</em></button>
-    <button onclick="openWindow('questModal')"><span>☑</span><b>المهام</b><small>أكمل التمارين<br>واربح المكافآت</small><em>←</em></button>
-    <button onclick="openWindow('lessonsModal')"><span>📖</span><b>الدروس</b><small>تعلّم من الصفر<br>حتى الاحتراف</small><em>←</em></button>
+  <div class="ref-cards">
+    <button onclick="openWindow('lessonsModal')"><span class="ico purple">▣</span><b>الدروس</b><small>تعلم من الصفر<br>حتى الاحتراف</small><em>→</em></button>
+    <button onclick="openWindow('questModal')"><span class="ico green">✓</span><b>المهام</b><small>أكمل التمارين<br>واربح المكافآت</small><em>→</em></button>
+    <button onclick="openWindow('skillsModal')"><span class="ico yellow">☆</span><b>المهارات</b><small>طوّر مهاراتك<br>واكسب النجوم</small><em>→</em></button>
+    <button onclick="openChat()"><span class="ico blue">•••</span><b>الرسائل</b><small>تواصل مع مجتمع<br>المتعلمين</small><em>→</em></button>
   </div>
 
-  <section class="home-progress">
-    <div class="rank-icon">✦</div>
-    <div class="rank-copy"><small>مستواك الحالي</small><b>المبتدئ</b></div>
-    <div class="rank-bar"><span id="homeProgressBar"></span></div>
+  <section class="ref-level">
+    <div class="ref-level-icon">♙</div>
+    <div class="ref-level-name"><small>مستواك الحالي</small><b>المبتدئ</b></div>
+    <div class="ref-progress"><span id="homeProgressBar"></span></div>
     <strong id="homeProgressText">1 / 10</strong>
   </section>
 
-  <button class="first-step" onclick="openWindow('lessonsModal')">
-    <span class="code-icon">&lt;/&gt;</span>
-    <div><b>ابدأ أولى خطواتك</b><small>تعلّم أساسيات بايثون وابدأ رحلتك في عالم البرمجة</small></div>
+  <button class="ref-first" onclick="openWindow('lessonsModal')">
+    <span class="ref-code">&lt;/&gt;</span>
+    <div><b>ابدأ أولى خطواتك</b><small>تعلم أساسيات بايثون وابدأ رحلتك في عالم البرمجة</small></div>
     <strong>→</strong>
   </button>
 
-  <section class="latest">
-    <div class="latest-head"><h2>أحدث الدروس</h2><button onclick="openWindow('lessonsModal')">عرض الكل →</button></div>
-    <button class="lesson-card" onclick="openWindow('lessonsModal')">
-      <span class="lesson-icon">🐍</span>
-      <div class="lesson-info"><b>مقدمة في بايثون</b><small>تعرّف على لغة بايثون وميزاتها الأساسية</small><strong>ابدأ الدرس ▶</strong></div>
-      <div class="lesson-level">المستوى الأول</div><div class="lesson-pct">0%</div>
+  <section class="ref-lessons">
+    <div class="ref-section-head"><h2>أحدث الدروس</h2><button onclick="openWindow('lessonsModal')">عرض الكل <b>→</b></button></div>
+    <button class="ref-lesson" onclick="openWindow('lessonsModal')">
+      <span class="ref-python-box">Py</span>
+      <div class="ref-lesson-info"><b>مقدمة في بايثون</b><small>تعرّف على لغة بايثون وميزاتها الأساسية</small><strong>ابدأ الدرس ▶</strong></div>
+      <span class="ref-level-tag">المستوى الأول</span><span class="ref-zero">0%</span>
     </button>
-    <button class="lesson-card" onclick="openWindow('lessonsModal')">
-      <span class="lesson-icon code">⌘</span>
-      <div class="lesson-info"><b>المتغيرات</b><small>تعلّم كيفية استخدام المتغيرات في بايثون</small></div>
-      <div class="lesson-level">المستوى الأول</div><div class="lesson-pct">0%</div>
+    <button class="ref-lesson" onclick="openWindow('lessonsModal')">
+      <span class="ref-code-box">&lt;/&gt;</span>
+      <div class="ref-lesson-info"><b>المتغيرات</b><small>تعلّم كيفية استخدام المتغيرات في بايثون</small></div>
+      <span class="ref-level-tag">المستوى الأول</span><span class="ref-zero">0%</span>
     </button>
   </section>
 </section>
