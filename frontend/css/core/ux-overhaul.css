@@ -1,0 +1,96 @@
+/* Python Adventure UX Overhaul — v2 */
+:root{
+ --ux-bg:#071014;--ux-surface:#0b1a20;--ux-surface2:#0f232a;--ux-line:#1b424b;
+ --ux-text:#effffc;--ux-muted:#91aaae;--ux-accent:#35f0ad;--ux-accent2:#3ddcff;
+}
+html,body{background:var(--ux-bg)!important}
+body{display:block!important;overflow-x:hidden!important}
+#app{width:100%!important;max-width:none!important;min-height:100vh!important;background:
+ radial-gradient(circle at 75% -10%,rgba(53,240,173,.12),transparent 32%),
+ radial-gradient(circle at 15% 30%,rgba(61,220,255,.07),transparent 28%),#071014!important}
+#app .top{height:70px;padding:10px 24px!important;border-bottom:1px solid var(--ux-line)!important;background:rgba(5,14,18,.86)!important}
+#app main{max-width:1180px;margin:0 auto;padding:24px 28px 120px!important}
+#app .view.page,#app .view#home{animation:uxIn .22s ease both}
+@keyframes uxIn{from{opacity:0;transform:translateY(5px)}to{opacity:1;transform:none}}
+#app .hero{min-height:330px;border-radius:28px!important;border:1px solid var(--ux-line);background:
+ linear-gradient(110deg,rgba(4,16,20,.97),rgba(7,31,35,.72)),
+ url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='700' height='400'%3E%3Cdefs%3E%3CradialGradient id='a'%3E%3Cstop stop-color='%2335f0ad' stop-opacity='.22'/%3E%3Cstop offset='1' stop-color='%2335f0ad' stop-opacity='0'/%3E%3C/radialGradient%3E%3C/defs%3E%3Ccircle cx='560' cy='120' r='280' fill='url(%23a)'/%3E%3C/svg%3E")!important;
+ box-shadow:0 25px 70px rgba(0,0,0,.22);padding:38px!important}
+#app .heroText{max-width:650px}
+#app .hero h1{font-size:clamp(30px,5vw,52px);line-height:1.15}
+#app .hero h1 b{color:var(--ux-accent)}
+#app .hero p{font-size:15px;line-height:2;color:#a8c2c5}
+#app .actions{display:flex;gap:10px;flex-wrap:wrap;margin-top:20px}
+#app .actions button{min-width:150px;padding:13px 18px;border-radius:15px}
+#app .section{padding:20px 0!important}
+#app .quick{grid-template-columns:repeat(4,1fr)!important;gap:10px!important}
+#app .quick .q{min-height:125px!important;padding:18px!important;text-align:right!important;border-radius:18px!important;border:1px solid var(--ux-line)!important;background:linear-gradient(145deg,#0b1c22,#08151a)!important;transition:.2s}
+#app .quick .q:hover{transform:translateY(-3px);border-color:#2d7c6d!important}
+#app .progress,#app .next,.home .progress,.home .next{border-radius:18px}
+#app .progress{margin-top:14px!important;background:#0b1c22!important;border:1px solid var(--ux-line)!important;padding:16px!important}
+#app .next{margin-top:10px!important;border:1px solid #1e5d52!important;background:#09241f!important;padding:16px!important}
+#app .titleRow{margin-top:24px}
+#app .lesson{border-radius:16px!important;border:1px solid var(--ux-line)!important;background:#0b1a20!important;margin:8px 0!important;padding:15px!important}
+#app .lesson:hover{border-color:#2a806c!important}
+#app .page>h1{font-size:30px;margin-bottom:6px}
+#app .page>p{color:var(--ux-muted);margin-bottom:20px}
+#app .bottom{position:fixed!important;bottom:14px!important;left:50%!important;width:min(760px,calc(100% - 28px))!important;height:68px!important;border:1px solid #26505a!important;border-radius:20px!important;background:rgba(6,18,23,.94)!important;box-shadow:0 15px 50px rgba(0,0,0,.4);backdrop-filter:blur(18px);z-index:50!important}
+#app .nav{flex:1!important;width:auto!important;height:52px!important;border:0!important;background:transparent!important;border-radius:14px!important}
+#app .nav.active{background:#0d332e!important;color:#7affc9!important}
+#uxSidebar{position:fixed;top:0;right:0;bottom:0;width:250px;padding:22px 15px;border-left:1px solid var(--ux-line);background:rgba(6,16,20,.97);z-index:70;display:flex;flex-direction:column;gap:8px}
+#uxSidebar .uxBrand{font-weight:900;font-size:20px;padding:8px 10px 18px;border-bottom:1px solid var(--ux-line);margin-bottom:8px}
+#uxSidebar .uxBrand span{color:var(--ux-accent)}
+#uxSidebar button{border:1px solid transparent;background:transparent;color:#9bb3b6;padding:12px;border-radius:13px;text-align:right;font-size:13px;display:flex;gap:10px;align-items:center}
+#uxSidebar button:hover,#uxSidebar button.active{background:#0c2829;color:#73ffd0;border-color:#1e5a53}
+#uxSidebar .uxLabel{font-size:10px;color:#5e7b80;padding:10px 12px 3px}
+#uxSidebar .uxBottom{margin-top:auto;border-top:1px solid var(--ux-line);padding-top:10px}
+body.uxHasSidebar #app{padding-right:250px}
+#uxTopbar{position:fixed;top:0;left:0;right:250px;height:70px;z-index:60;display:flex;align-items:center;gap:12px;padding:10px 28px;background:rgba(5,14,18,.76);backdrop-filter:blur(18px);border-bottom:1px solid var(--ux-line)}
+#uxTopbar .uxSearch{flex:1;max-width:500px;padding:12px 15px;border:1px solid var(--ux-line);border-radius:14px;background:#08181d;color:#dffbf5;outline:none}
+#uxTopbar .uxSearch:focus{border-color:#35f0ad}
+#uxTopbar .uxStat{padding:9px 12px;border:1px solid var(--ux-line);border-radius:12px;background:#09191e;font-size:11px;color:#9db5b8}
+#uxTopbar .uxStat b{color:#65f5bd}
+body.uxHasSidebar #app .top{margin-top:70px}
+#uxMobileNav{display:none}
+#uxDrawer{position:fixed;inset:0;z-index:100;background:rgba(0,0,0,.6);display:none}
+#uxDrawer.open{display:block}
+#uxDrawer .drawer{width:min(330px,88vw);height:100%;background:#071318;border-left:1px solid var(--ux-line);padding:20px;overflow:auto}
+.uxModal{position:fixed;inset:0;z-index:120;background:rgba(0,0,0,.72);display:none;align-items:flex-start;justify-content:center;padding:90px 20px}
+.uxModal.open{display:flex}
+.uxCommand{width:min(650px,100%);background:#0a1b21;border:1px solid #2c625c;border-radius:20px;box-shadow:0 30px 90px #000;padding:14px}
+.uxCommand input{width:100%;padding:14px;border:1px solid var(--ux-line);border-radius:13px;background:#061217;color:white;outline:none}
+.uxResults{display:grid;gap:6px;margin-top:10px}
+.uxResults button{padding:12px;border:1px solid transparent;border-radius:12px;background:#07171c;color:#d9f4f1;text-align:right}
+.uxResults button:hover{background:#0d2c2d;border-color:#25665b}
+#uxContinue{position:fixed;bottom:94px;right:28px;z-index:45;padding:11px 16px;border:1px solid #2d7e69;border-radius:15px;background:#0a3029;color:#8affd3;box-shadow:0 10px 30px #0007}
+#uxHomeGrid{display:grid;grid-template-columns:1.4fr .8fr;gap:14px;margin-top:14px}
+.uxPanel{border:1px solid var(--ux-line);border-radius:20px;background:#091a20;padding:18px}
+.uxPanel h3{margin:0 0 10px;font-size:15px}.uxPanel p{color:var(--ux-muted);font-size:11px;line-height:1.7}
+.uxMiniProgress{height:7px;background:#102d34;border-radius:99px;overflow:hidden;margin-top:10px}.uxMiniProgress i{display:block;height:100%;background:linear-gradient(90deg,#35f0ad,#3ddcff)}
+.uxActionGrid{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:10px}.uxAction{padding:13px;border:1px solid var(--ux-line);border-radius:14px;background:#07171c;color:#d9f8f2;text-align:right}.uxAction b{display:block;color:#71f8c7;margin-bottom:3px}.uxAction small{color:#789397}
+@media(max-width:900px){
+ body.uxHasSidebar #app{padding-right:0}
+ #uxSidebar,#uxTopbar{display:none}
+ #app .top{margin-top:0!important}
+ #uxMobileNav{display:flex;position:fixed;top:12px;right:14px;z-index:65;width:44px;height:44px;border:1px solid #2b6663;border-radius:13px;background:#092129;color:#7effd0;align-items:center;justify-content:center;font-size:20px}
+ #app main{padding:18px 16px 120px!important}
+ #app .quick{grid-template-columns:repeat(2,1fr)!important}
+ #app .hero{min-height:300px;padding:28px 22px!important}
+ #uxContinue{right:14px;bottom:90px}
+}
+@media(max-width:560px){
+ #app .top{padding:10px 12px!important}
+ #app .brand{font-size:15px}
+ #app .hero h1{font-size:30px}
+ #app .quick .q{min-height:105px!important}
+ #app .page>h1{font-size:25px}
+ #uxHomeGrid{grid-template-columns:1fr}
+ #uxTopStats{display:none}
+ #app .bottom{bottom:8px!important;width:calc(100% - 12px)!important}
+ #app .nav{font-size:9px!important}
+ #app .nav span{font-size:18px!important}
+}
+@media(min-width:901px){
+ #app .bottom{display:none}
+ #app main{padding-top:30px!important}
+}
