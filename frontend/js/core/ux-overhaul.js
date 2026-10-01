@@ -4,7 +4,6 @@
  const $=id=>document.getElementById(id);
  const esc=v=>String(v??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#039;'}[c]));
  const routes=[
-  ['home','🏠','الرئيسية','نظرة عامة'],
   ['academy','🚀','الأكاديمية','مسار التعلم'],
   ['lessons','📚','الدروس','تعلم خطوة بخطوة'],
   ['lab','🧪','المختبر','اكتب وشغّل Python'],
@@ -102,7 +101,7 @@
    if($('uxTopCoins'))$('uxTopCoins').textContent=Number(coins)||0;
  }
  function addContinue(){if($('uxContinue'))return;const b=document.createElement('button');b.id='uxContinue';b.innerHTML='▶️ تابع من حيث توقفت';b.onclick=()=>{const id=lessons[Math.min(completedLessons.length,lessons.length-1)]?.id||1;openLesson(id)};document.body.appendChild(b)}
- function refresh(){buildSidebar();buildTopbar();buildMobile();buildHomeDashboard();addContinue();updateContinue()}
+ function refresh(){buildSidebar();buildTopbar();buildMobile();addContinue();updateContinue()}
  function hookRender(){
    if(window.__uxRenderWrapped)return;
    const old=window.renderAll;

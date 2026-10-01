@@ -37,7 +37,7 @@
       const r=await api('/player',{method:'PUT',body:JSON.stringify({xp:newXp,coins:newCoins,progress:newProgress})});
       if(r?.player){xp=Number(r.player.xp)||newXp;coins=Number(r.player.coins)||newCoins;progress=Number(r.player.progress)||newProgress;skillPoints=Number(r.player.skillPoints)||skillPoints}
       await putGameState(collectGameState());
-      renderAll();renderPersistentUI();renderReferenceTasks();refreshReferenceHome();
+      renderAll();renderPersistentUI();renderReferenceTasks();
       toast('🎉 تمت المهمة +'+reward+' XP');
     }catch(e){gameState.quests[id]=false;toast(e.message||'تعذر حفظ المهمة')}
   }
@@ -75,7 +75,7 @@
   function closeSheet(){const o=$id('overlay');if(o)o.classList.remove('open')}
 
   function openMenu(){
-    openSheet('☰ قائمة الرحلة','اختر القسم الذي تريد دخوله.',`<div class="menu"><button data-menu="home">⌂ الرئيسية</button><button data-menu="lessons">📖 الدروس</button><button data-menu="tasks">☑️ المهام</button><button data-menu="skills">⭐ المهارات</button><button data-menu="inventoryPage">🎒 الحقيبة</button><button data-menu="mapPage">🗺️ الخريطة</button><button data-menu="achievementsPage">🏆 الإنجازات</button><button data-menu="lab">🧪 المختبر</button><button id="communityBtn">👥 مجتمع اللاعبين</button></div>`);
+    openSheet('☰ قائمة الرحلة','اختر القسم الذي تريد دخوله.',`<div class="menu"><button data-menu="lessons">📖 الدروس</button><button data-menu="tasks">☑️ المهام</button><button data-menu="skills">⭐ المهارات</button><button data-menu="inventoryPage">🎒 الحقيبة</button><button data-menu="mapPage">🗺️ الخريطة</button><button data-menu="achievementsPage">🏆 الإنجازات</button><button data-menu="lab">🧪 المختبر</button><button id="communityBtn">👥 مجتمع اللاعبين</button></div>`);
     document.querySelectorAll('[data-menu]').forEach(b=>b.onclick=()=>{closeSheet();go(b.dataset.menu)});
     $id('communityBtn')?.addEventListener('click',()=>{closeSheet();openChat()});
   }

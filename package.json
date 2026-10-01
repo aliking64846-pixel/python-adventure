@@ -6,8 +6,7 @@
   "main": "server.js",
   "scripts": {
     "start": "node server.js",
-    "dev": "node --watch server.js",
-    "audit": "node tests/audit/smoke.js"
+    "dev": "node --watch server.js"
   },
   "engines": {
     "node": ">=20"
