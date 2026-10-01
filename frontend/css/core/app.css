@@ -683,3 +683,23 @@ body,.game{font-family:'Cairo',Tahoma,Arial,sans-serif!important}
     backdrop-filter:blur(14px)!important;
   }
 }
+
+/* ===== FINAL MOBILE POLISH — PYTHON ADVENTURE REFERENCE ===== */
+@media(max-width:640px){
+  html,body{overflow:hidden!important;background:#02080c!important}
+  .game{width:100vw!important;height:100dvh!important;min-height:0!important;overflow-y:auto!important;overflow-x:hidden!important}
+  .new-home.ref-home{min-height:100dvh!important;overflow:visible!important}
+  .ref-top{position:sticky!important;top:0!important;z-index:20!important;background:linear-gradient(180deg,rgba(2,10,14,.96),rgba(2,10,14,.72),transparent)!important}
+  .ref-hero{box-shadow:0 14px 35px rgba(0,0,0,.24)!important}
+  .ref-hero-copy{filter:drop-shadow(0 4px 9px rgba(0,0,0,.4))}
+  .ref-start,.ref-lab,.ref-cards button,.ref-first,.ref-lesson,.ref-menu,.ref-avatar{transition:transform .14s ease,border-color .14s ease,box-shadow .14s ease!important}
+  .ref-start:active,.ref-lab:active,.ref-cards button:active,.ref-first:active,.ref-lesson:active,.ref-menu:active,.ref-avatar:active{transform:scale(.97)!important}
+  .ref-level{box-shadow:0 8px 25px rgba(0,0,0,.2),inset 0 1px rgba(255,255,255,.03)!important}
+  .ref-progress span{transition:width .45s ease!important}
+  .ref-lessons{box-shadow:0 8px 25px rgba(0,0,0,.16)!important}
+  .bottom{position:fixed!important;z-index:10000!important}
+}
+@media(min-width:641px){
+  .new-home.ref-home{width:min(520px,100%)!important;margin:0 auto!important}
+  .game{overflow-y:auto!important}
+}
