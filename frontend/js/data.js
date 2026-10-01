@@ -10,8 +10,8 @@ const lessons=[
 {id:9,title:'🛡️ الملفات والأخطاء',desc:'احفظ البيانات وتعامل مع الأخطاء.',xp:325,skill:'Debugging',code:'try:\n    x = int("10")\nexcept ValueError:\n    print("Error")',explain:'try/except تساعدك على التعامل مع الأخطاء أثناء تشغيل البرنامج.',question:'أي كلمة تبدأ معالجة الاستثناء؟',answers:['catch','except','error'],correct:1},
 {id:10,title:'🚀 مشروع Python حقيقي',desc:'اجمع مهاراتك وابنِ برنامجاً كاملاً.',xp:500,skill:'البناء',code:'def greet(name):\n    return "Hello " + name\n\nprint(greet("Ali"))',explain:'المشروع النهائي يجمع المتغيرات والشروط والدوال والبيانات لبناء برنامج متكامل.',question:'أي كلمة تعيد قيمة من الدالة؟',answers:['send','return','give'],correct:1}
 ];
-const skills=[['🟢','أساسيات Python','basics'],['🔵','منطق البرمجة','logic'],['🟣','قوة التكرار','loops'],['🟡','هندسة الدوال','functions'],['🛠️','Debugging','debug'],['🧠','حل المشاكل','solve']];
-const skillLevels={basics:1,logic:0,loops:0,functions:0,debug:0,solve:0};
+const skills=[['🟢','أساسيات Python','memory'],['🔵','منطق البرمجة','detect'],['🟣','قوة التكرار','speed'],['🟡','هندسة الدوال','build'],['🛠️','Debugging','debug'],['🧠','حل المشاكل','solve']];
+const skillLevels={memory:1,debug:0,detect:0,speed:0,build:0,solve:0};
 const items=['print()','input()','int()','float()','type()','+','*','/'];
 const tasks=[
 ['q1','🎯 مهمة المتغير الأول','أنشئ متغيراً باسم name وضع فيه اسمك.',20],
