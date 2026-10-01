@@ -315,6 +315,5 @@
     injectStyle();ensurePage();bindTabs();
     document.querySelectorAll('[data-nav="academy"]').forEach(b=>b.onclick=()=>openAcademy('path'));
     platformState().totalSessions++;
-    putGameState(collectGameState()).catch(()=>{});
   });
 })();
