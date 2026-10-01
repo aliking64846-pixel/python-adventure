@@ -683,3 +683,25 @@ body,.game{font-family:'Cairo',Tahoma,Arial,sans-serif!important}
     backdrop-filter:blur(14px)!important;
   }
 }
+
+
+/* ===== GLOBAL SCROLL FIX — MOBILE + DESKTOP ===== */
+html{min-height:100%;overflow-x:hidden!important;overflow-y:auto!important}
+body{min-height:100%;height:auto!important;overflow-x:hidden!important;overflow-y:auto!important;overscroll-behavior-y:auto!important;-webkit-overflow-scrolling:touch!important}
+.game{width:100%!important;min-height:100dvh!important;height:auto!important;overflow:visible!important;overflow-x:hidden!important;overflow-y:visible!important}
+.new-home.ref-home{min-height:100dvh!important;height:auto!important;overflow:visible!important}
+.bottom{position:fixed!important;z-index:10000!important}
+.modal{overflow:hidden!important}
+.modal .window{overflow-y:auto!important;overflow-x:hidden!important;-webkit-overflow-scrolling:touch!important;overscroll-behavior:contain}
+.stars,.game:before,.game:after,.ref-hero-art,.ref-hero-overlay{pointer-events:none!important}
+@media(max-width:640px){
+ html,body{width:100%!important;min-height:100%!important;height:auto!important;overflow-x:hidden!important;overflow-y:auto!important;touch-action:pan-y!important}
+ .game{width:100vw!important;min-height:100dvh!important;height:auto!important;overflow:visible!important;touch-action:pan-y!important}
+ .new-home.ref-home{width:100%!important;max-width:none!important;min-height:100dvh!important;height:auto!important;padding-bottom:105px!important;overflow:visible!important}
+ .ref-top{position:sticky!important;top:0!important;z-index:20!important}
+ .bottom{position:fixed!important;left:10px!important;right:10px!important;bottom:8px!important;z-index:10000!important}
+}
+@media(min-width:641px){
+ html,body{overflow-x:hidden!important;overflow-y:auto!important}
+ .game{min-height:100dvh!important;height:auto!important;overflow:visible!important}
+}
