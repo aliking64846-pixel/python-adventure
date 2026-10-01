@@ -40,7 +40,51 @@ main{padding-bottom:86px}.hero{position:relative;min-height:385px;padding:26px 1
 @media(min-width:700px){body{padding:20px 0}.bottom{position:absolute}.toast{position:absolute}}
 </style>
 
-</head>
+<style id="python-adventure-home-redesign">
+/* Python Adventure — Home redesign only */
+#home{background:
+ radial-gradient(900px 420px at 50% -100px,rgba(53,240,173,.13),transparent 65%),
+ linear-gradient(180deg,#06171d 0%,#020a0d 100%);
+}
+#home .hero{min-height:430px;padding:22px 18px 20px;border-bottom:1px solid rgba(61,220,255,.12);
+ background:
+ radial-gradient(circle at 15% 20%,rgba(53,240,173,.18),transparent 26%),
+ radial-gradient(circle at 85% 15%,rgba(61,220,255,.15),transparent 30%),
+ linear-gradient(145deg,rgba(4,27,32,.96),rgba(2,10,14,.98)) !important;
+}
+#home .hero:before{content:"";position:absolute;inset:0;opacity:.24;
+ background-image:linear-gradient(rgba(53,240,173,.18) 1px,transparent 1px),linear-gradient(90deg,rgba(53,240,173,.18) 1px,transparent 1px);
+ background-size:34px 34px;mask-image:linear-gradient(to bottom,black,transparent 85%);pointer-events:none;
+}
+#home .hero:after{background:radial-gradient(circle at 75% 45%,rgba(53,240,173,.12),transparent 25%),linear-gradient(180deg,transparent 40%,rgba(2,8,11,.85) 100%) !important}
+#home .heroText{width:100%;padding:48px 2px 0;text-align:right}
+#home .hero h1{font-size:38px;letter-spacing:-.8px;text-shadow:0 8px 30px rgba(0,0,0,.45)}
+#home .hero h1 b{display:inline-block;font-size:44px;text-shadow:0 0 28px rgba(53,240,173,.18)}
+#home .hero p{font-size:14px;color:#c9dddd;max-width:310px}
+#home .actions{grid-template-columns:1.45fr .75fr;gap:9px;margin-top:24px}
+#home .primary,#home .secondary{min-height:54px;border-radius:18px;box-shadow:0 10px 28px rgba(0,0,0,.2)}
+#home .primary{box-shadow:0 0 0 1px rgba(53,240,173,.2),0 12px 35px rgba(15,201,139,.18)}
+#home .section{padding:18px 14px 28px}
+#home .quick{grid-template-columns:repeat(2,1fr);gap:10px}
+#home .q{min-height:116px;padding:15px 12px;text-align:right;border-radius:19px;position:relative;overflow:hidden;
+ background:linear-gradient(145deg,#0b3038,#061a20);box-shadow:inset 0 1px 0 rgba(255,255,255,.03)}
+#home .q:after{content:"↗";position:absolute;left:12px;top:12px;color:#3ddcff;font-size:13px;opacity:.7}
+#home .q .ico{font-size:29px;margin-bottom:10px}
+#home .q b{font-size:14px}
+#home .q small{font-size:10px;max-width:125px}
+#home .progress{margin-top:12px;padding:15px;border-radius:20px;box-shadow:0 10px 30px rgba(0,0,0,.16)}
+#home .progressline{height:10px}
+#home .next{margin-top:12px;padding:16px;border-radius:20px;box-shadow:0 12px 30px rgba(0,0,0,.18)}
+#home .next .code{width:54px;height:54px;box-shadow:0 0 22px rgba(53,240,173,.12)}
+#home .titleRow{margin:24px 2px 11px}
+#home .titleRow h2{font-size:21px}
+#home #recent .lesson{border-radius:19px;background:linear-gradient(145deg,#0a2931,#06181e);box-shadow:0 8px 22px rgba(0,0,0,.14)}
+@media(max-width:360px){
+ #home .hero{min-height:410px}
+ #home .hero h1{font-size:32px} #home .hero h1 b{font-size:37px}
+ #home .actions{grid-template-columns:1fr}
+}
+</style></head>
 <body>
 <div id="app">
 <header class="top">
