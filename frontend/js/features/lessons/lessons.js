@@ -1,6 +1,66 @@
-function renderLessons(){
- $('lessonList').innerHTML=lessons.map((l,i)=>{const done=completedLessons.includes(l.id);const unlocked=i===0||completedLessons.includes(lessons[i-1].id);return `<div class="lesson-card ${done?'done':''}" onclick="${unlocked?`openLesson(${l.id})`:''}" style="opacity:${unlocked?1:.45}"><div class="lesson-title">${done?'✓ ':unlocked?'▶ ':'🔒 '}${l.title}</div><div class="lesson-description">${l.desc}</div><small>⭐ +${l.xp} XP · 🧠 ${l.skill}</small></div>`}).join('');
+function openSheet(title,html,extra=''){
+  const overlay=$('overlay');
+  if(!overlay)return;
+  $('sheetTitle').textContent=title;
+  $('sheetText').innerHTML=html;
+  $('sheetExtra').innerHTML=extra;
+  overlay.classList.add('open');
 }
-function openLesson(id=1){const l=lessons.find(x=>x.id===id);if(!l)return;if(id>1&&!completedLessons.includes(id-1)){toast('🔒 أكمل الدرس السابق أولاً');return}openWindow('lessonDetailModal');$('lessonDetail').innerHTML=`<h2>${l.title}</h2><p class="lesson-description">${l.desc}</p><div class="info-box"><strong>💡 الشرح:</strong><br>${l.explain}</div><div class="lesson-code">${l.code.replaceAll('\\n','<br>')}</div><div class="info-box"><strong>🎯 مهارة الدرس:</strong> ${l.skill}<br><strong>⭐ المكافأة:</strong> +${l.xp} XP</div><div class="info-box"><strong>⚔️ تحدي المبرمج:</strong><br>${l.question}<div class="answers">${l.answers.map((a,i)=>`<button class="answer" onclick="answerLesson(${l.id},${i},this)">${a}</button>`).join('')}</div><p id="ans${l.id}" style="margin-top:10px"></p></div><button class="btn" onclick="completeLesson(${l.id})">إكمال الدرس +${l.xp} XP</button>`}
-function answerLesson(id,i,btn){const l=lessons.find(x=>x.id===id);document.querySelectorAll('.answer').forEach(x=>x.classList.remove('correct','wrong'));btn.classList.add(i===l.correct?'correct':'wrong');toast(i===l.correct?'🎉 إجابة صحيحة!':'❌ حاول مرة أخرى')}
-async function completeLesson(id){if(completedLessons.includes(id)){toast('هذا الدرس مكتمل بالفعل');return}try{const r=await api('/lessons/'+id+'/complete',{method:'POST'});if(!r||!r.player)throw new Error('تعذر حفظ إكمال الدرس');const p=r.player;xp=Number(p.xp)||0;coins=Number(p.coins)||0;progress=Number(p.progress)||0;skillPoints=Number(p.skillPoints)||0;completedLessons=Array.isArray(p.completedLessons)?p.completedLessons.map(Number):completedLessons;if(p.skillLevels&&typeof p.skillLevels==='object')Object.assign(skillLevels,p.skillLevels);renderAll();toast('🎉 تم إكمال الدرس!');setTimeout(()=>closeWindows(),800)}catch(e){toast(e.message)}}
+function closeSheet(){const o=$('overlay');if(o)o.classList.remove('open')}
+
+function renderLessons(){
+  const list=$('lessonList');
+  if(!list)return;
+  list.innerHTML=lessons.map((l,i)=>{
+    const done=completedLessons.includes(l.id);
+    const unlocked=i===0||completedLessons.includes(lessons[i-1].id);
+    return `<article class="lesson" data-lesson="${l.id}" style="opacity:${unlocked?1:.5};cursor:${unlocked?'pointer':'not-allowed'}">
+      <div class="thumb">${l.title.match(/\p{Extended_Pictographic}/u)?.[0]||'🐍'}</div>
+      <div><h3>${done?'✓ ':unlocked?'▶ ':'🔒 '}${l.title.replace(/^\S+\s/,'')}</h3><p>${l.desc}</p></div>
+      <div class="tag">${done?'✓ مكتمل':l.xp+' XP'}</div>
+    </article>`;
+  }).join('');
+  list.querySelectorAll('[data-lesson]').forEach(el=>el.onclick=()=>openLesson(Number(el.dataset.lesson)));
+  const recent=$('recent');
+  if(recent)recent.innerHTML=lessons.slice(0,3).map(l=>{
+    const done=completedLessons.includes(l.id);
+    return `<article class="lesson" data-lesson="${l.id}"><div class="thumb">🐍</div><div><h3>${l.title}</h3><p>${l.desc}</p></div><div class="tag">${done?'✓':'+'+l.xp+' XP'}</div></article>`;
+  }).join('');
+  recent?.querySelectorAll('[data-lesson]').forEach(el=>el.onclick=()=>openLesson(Number(el.dataset.lesson)));
+}
+
+function openLesson(id=1){
+  const l=lessons.find(x=>x.id===id);
+  if(!l)return;
+  const index=lessons.findIndex(x=>x.id===id);
+  if(index>0&&!completedLessons.includes(lessons[index-1].id)){toast('🔒 أكمل الدرس السابق أولاً');return}
+  const done=completedLessons.includes(id);
+  const answers=l.answers.map((a,i)=>`<button class="smallbtn lesson-answer" data-answer="${i}" style="display:block;width:100%;margin:7px 0;text-align:right">${a}</button>`).join('');
+  const extra=`<div class="bigcard" style="margin-top:12px"><b>💻 المثال</b><pre style="direction:ltr;text-align:left;white-space:pre-wrap;color:#bfffe8;margin:10px 0">${escapeHtml(l.code)}</pre><p>${escapeHtml(l.explain)}</p><hr><b>🎯 ${escapeHtml(l.question)}</b><div id="lessonAnswers">${answers}</div><div id="lessonAnswerResult"></div></div><button class="close" id="completeLessonBtn" ${done?'disabled':''}>${done?'✓ الدرس مكتمل':'إكمال الدرس +'+l.xp+' XP'}</button>`;
+  openSheet(l.title,`<p>${escapeHtml(l.desc)}</p>`,extra);
+  document.querySelectorAll('.lesson-answer').forEach(btn=>btn.onclick=()=>{
+    document.querySelectorAll('.lesson-answer').forEach(x=>x.style.outline='');
+    const correct=Number(btn.dataset.answer)===l.correct;
+    btn.style.outline=correct?'2px solid #35f0ad':'2px solid #ff6e7d';
+    $('lessonAnswerResult').textContent=correct?'🎉 إجابة صحيحة!':'❌ حاول مرة أخرى';
+  });
+  $('completeLessonBtn')?.addEventListener('click',()=>completeLesson(id));
+}
+
+async function completeLesson(id){
+  if(completedLessons.includes(id)){toast('هذا الدرس مكتمل بالفعل');return}
+  try{
+    const r=await api('/lessons/'+id+'/complete',{method:'POST'});
+    if(!r?.player)throw new Error('تعذر حفظ إكمال الدرس');
+    const p=r.player;
+    xp=Number(p.xp)||0; coins=Number(p.coins)||0; progress=Number(p.progress)||0; skillPoints=Number(p.skillPoints)||0;
+    completedLessons=Array.isArray(p.completedLessons)?p.completedLessons.map(Number):completedLessons;
+    if(p.skillLevels)Object.assign(skillLevels,p.skillLevels);
+    if(p.gameState)mergeGameState(p.gameState);
+    renderAll();renderPersistentUI();
+    toast(r.alreadyCompleted?'هذا الدرس مكتمل بالفعل':'🎉 تم إكمال الدرس!');
+    setTimeout(closeSheet,700);
+  }catch(e){toast(e.message||'تعذر إكمال الدرس')}
+}
+
+function escapeHtml(v){return String(v??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#039;'}[c]))}
