@@ -384,3 +384,112 @@ button,input,textarea,select{max-width:100%;font:inherit}
   .bottom{z-index:1000 !important;}
   .window{padding-bottom:calc(96px + env(safe-area-inset-bottom));}
 }
+
+
+/* ===== Reference Home UI — Python Adventure ===== */
+.new-home{
+  display:block;position:relative;z-index:20;width:min(760px,100%);margin:0 auto;
+  padding:10px 12px 105px;color:#effff8;direction:rtl;
+}
+.home-top{height:58px;display:flex;align-items:center;justify-content:space-between;gap:12px;padding:0 5px}
+.home-menu,.home-avatar{
+  width:45px;height:45px;border-radius:14px;border:1px solid rgba(71,255,181,.55);
+  background:rgba(2,23,28,.72);color:#dffff6;font-size:24px;display:grid;place-items:center;
+  box-shadow:0 0 18px rgba(44,255,168,.08);backdrop-filter:blur(12px)
+}
+.home-avatar{border-radius:50%;font-size:25px}
+.brand{display:flex;align-items:center;gap:8px;font-size:20px;direction:ltr}
+.brand i{font-style:normal;color:#39efa0}
+.py-logo{font-size:28px;filter:drop-shadow(0 0 9px rgba(53,227,107,.35))}
+.home-hero{
+  position:relative;min-height:410px;border-radius:25px;overflow:hidden;
+  border:1px solid rgba(69,255,174,.18);background:#031719;
+  box-shadow:0 18px 45px rgba(0,0,0,.28);isolation:isolate
+}
+.hero-art{position:absolute;inset:0;z-index:-2;background:url('/assets/home-fantasy.svg') center/cover no-repeat}
+.home-hero:after{
+  content:"";position:absolute;inset:0;z-index:-1;
+  background:linear-gradient(90deg,rgba(1,12,14,.02) 0%,rgba(1,12,14,.18) 40%,rgba(1,10,12,.92) 76%,rgba(1,8,10,.98) 100%)
+}
+.hero-copy{padding:64px 34px 28px;width:55%;text-align:right}
+.hero-kicker{display:inline-block;color:#69ffae;font-size:10px;letter-spacing:1.4px;font-weight:900;border:1px solid rgba(91,255,181,.25);border-radius:99px;padding:6px 10px;background:rgba(1,24,22,.55)}
+.hero-copy h1{font-size:38px;line-height:1.16;margin:15px 0 9px;font-weight:900;text-shadow:0 5px 25px #000}
+.hero-copy h1 span{color:#38efa0;text-shadow:0 0 25px rgba(56,239,160,.20)}
+.hero-copy p{font-size:13px;line-height:1.9;color:#d1e6df;margin-bottom:18px}
+.hero-actions{display:grid;gap:9px;max-width:245px}
+.hero-start,.hero-lab{
+  height:47px;border-radius:15px;font-weight:900;font-size:15px;cursor:pointer;transition:.2s
+}
+.hero-start{border:1px solid #6effb2;background:linear-gradient(135deg,#52f29a,#1dc77b);color:#032116;box-shadow:0 10px 25px rgba(39,239,139,.22)}
+.hero-lab{border:1px solid #26e9cf;background:rgba(2,23,29,.72);color:#61ffe3}
+.hero-start:hover,.hero-lab:hover{transform:translateY(-2px)}
+.home-shortcuts{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin:10px 0}
+.home-shortcuts button{
+  min-height:135px;position:relative;text-align:right;padding:13px 11px 11px;
+  border:1px solid rgba(52,221,255,.22);border-radius:17px;background:linear-gradient(150deg,rgba(4,31,40,.92),rgba(2,19,25,.94));
+  color:#f1fff9;cursor:pointer;box-shadow:0 10px 25px rgba(0,0,0,.18)
+}
+.home-shortcuts button:hover{border-color:rgba(63,255,164,.48);transform:translateY(-2px)}
+.home-shortcuts span{display:block;font-size:27px;height:39px}
+.home-shortcuts b{display:block;font-size:15px;color:#effff8;margin:3px 0}
+.home-shortcuts small{display:block;color:#8ba9a4;font-size:9px;line-height:1.6}
+.home-shortcuts em{position:absolute;bottom:9px;left:11px;font-style:normal;color:#e4fff7;font-size:20px}
+.home-shortcuts button:nth-child(1) span{color:#56dfff;text-shadow:0 0 12px #2cdcff}
+.home-shortcuts button:nth-child(2) span{color:#ffe33d;text-shadow:0 0 12px #ffe33d}
+.home-shortcuts button:nth-child(3) span{color:#52ff9e;text-shadow:0 0 12px #52ff9e}
+.home-shortcuts button:nth-child(4) span{color:#b29aff;text-shadow:0 0 12px #a783ff}
+.home-progress{
+  display:flex;align-items:center;gap:11px;padding:11px 13px;margin-bottom:10px;border-radius:18px;
+  border:1px solid rgba(56,255,158,.55);background:linear-gradient(110deg,rgba(3,32,32,.94),rgba(3,22,29,.94));
+}
+.rank-icon{width:45px;height:45px;border-radius:14px;display:grid;place-items:center;color:#79ff83;font-size:27px;border:1px solid #53ff91;background:rgba(40,255,122,.10)}
+.rank-copy{min-width:85px}.rank-copy small{display:block;color:#d3e8e1;font-size:9px}.rank-copy b{color:#34efa0;font-size:19px}
+.rank-bar{height:10px;flex:1;background:#143642;border-radius:99px;overflow:hidden}.rank-bar span{display:block;width:12%;height:100%;border-radius:inherit;background:linear-gradient(90deg,#4df6a0,#36e4c8);box-shadow:0 0 13px #45ffae}
+.home-progress>strong{font-size:12px;color:#d8fff0}
+.first-step{
+  width:100%;display:flex;align-items:center;gap:13px;padding:12px 13px;margin-bottom:10px;text-align:right;
+  border:1px solid rgba(48,255,159,.5);border-radius:17px;color:#effff8;cursor:pointer;
+  background:linear-gradient(90deg,rgba(4,43,31,.94),rgba(2,24,28,.94));box-shadow:0 0 25px rgba(38,255,150,.06)
+}
+.code-icon{width:54px;height:54px;border-radius:14px;display:grid;place-items:center;background:rgba(44,255,170,.16);border:1px solid #35eaa0;color:#4dffae;font-weight:900;font-size:22px}
+.first-step div{flex:1}.first-step b{display:block;font-size:16px}.first-step small{display:block;color:#8eaaa4;font-size:10px;margin-top:4px}.first-step>strong{width:32px;height:32px;border-radius:50%;display:grid;place-items:center;border:1px solid #3df4a4;color:#4fffae}
+.latest{border-radius:18px;border:1px solid rgba(61,225,255,.14);background:rgba(3,20,27,.72);padding:13px}
+.latest-head{display:flex;justify-content:space-between;align-items:center;margin-bottom:8px}.latest-head h2{font-size:20px;margin:0}.latest-head button{background:none;border:0;color:#43f3ad;cursor:pointer}
+.lesson-card{
+  width:100%;min-height:100px;display:flex;align-items:center;gap:10px;position:relative;
+  text-align:right;padding:11px;margin:7px 0;border:1px solid rgba(54,215,255,.16);border-radius:15px;
+  background:linear-gradient(105deg,rgba(3,36,44,.86),rgba(2,23,30,.92));color:#effff8;cursor:pointer
+}
+.lesson-icon{width:52px;height:52px;flex:none;display:grid;place-items:center;border-radius:12px;background:rgba(4,50,62,.9);font-size:29px}
+.lesson-icon.code{color:#46f2af;font-size:28px}
+.lesson-info{flex:1;min-width:0}.lesson-info b{display:block;font-size:14px}.lesson-info small{display:block;color:#829f9a;font-size:9px;margin:5px 0}.lesson-info strong{display:inline-block;border-radius:99px;padding:5px 10px;background:#3feea0;color:#032116;font-size:9px}
+.lesson-level{position:absolute;top:9px;left:9px;color:#3df0a4;border:1px solid rgba(61,240,164,.4);border-radius:99px;padding:4px 7px;font-size:8px}.lesson-pct{position:absolute;bottom:9px;left:12px;color:#8ca7a3;font-size:9px}
+.new-home~.portal,.new-home~.door,.new-home~.code-screen,.new-home~.character,.new-home~.floating,.new-home~.panel,.new-home~.quests,.new-home~.chest{display:none!important}
+.game>.portal,.game>.door,.game>.code-screen,.game>.character,.game>.floating,.game>.panel,.game>.quests,.game>.chest{display:none!important}
+.game>.progress,.game>.player,.game>.coins,.game>.mobileQuick{display:none!important}
+.bottom{z-index:1000!important}
+@media(max-width:640px){
+ .new-home{width:100%;padding:5px 8px 88px}
+ .home-top{height:52px}
+ .home-menu,.home-avatar{width:40px;height:40px}
+ .brand{font-size:17px}.py-logo{font-size:24px}
+ .home-hero{min-height:475px;border-radius:22px}
+ .hero-art{background-position:56% center;background-size:auto 100%}
+ .home-hero:after{background:linear-gradient(180deg,rgba(1,9,12,.02) 0%,rgba(1,9,12,.12) 38%,rgba(1,10,12,.93) 67%,rgba(1,8,10,.98) 100%)}
+ .hero-copy{width:100%;padding:250px 18px 15px;text-align:right}
+ .hero-kicker{font-size:8px}.hero-copy h1{font-size:31px;margin:9px 0 7px}
+ .hero-copy p{font-size:11px;line-height:1.7;margin-bottom:12px}
+ .hero-actions{max-width:100%;gap:7px}.hero-start,.hero-lab{height:42px;font-size:13px;border-radius:13px}
+ .home-shortcuts{grid-template-columns:repeat(4,1fr);gap:5px}
+ .home-shortcuts button{min-height:120px;padding:10px 7px;border-radius:14px}
+ .home-shortcuts span{font-size:23px;height:34px}.home-shortcuts b{font-size:12px}.home-shortcuts small{font-size:7px}.home-shortcuts em{font-size:16px;left:7px}
+ .home-progress{padding:9px;gap:7px}.rank-icon{width:38px;height:38px}.rank-copy{min-width:65px}.rank-copy b{font-size:16px}
+ .first-step{padding:9px;gap:9px}.code-icon{width:45px;height:45px}.first-step b{font-size:13px}.first-step small{font-size:8px}
+ .latest{padding:9px}.latest-head h2{font-size:17px}.lesson-card{min-height:91px}.lesson-icon{width:45px;height:45px;font-size:24px}.lesson-info b{font-size:12px}.lesson-info small{font-size:8px}
+ .bottom{left:7px!important;right:7px!important;bottom:7px!important;grid-template-columns:repeat(5,1fr)!important;height:66px!important;border-radius:20px!important}
+ .bottom .nav{font-size:9px!important;min-width:0!important;padding:5px 1px!important}.bottom .nav span{font-size:20px!important}
+}
+@media(max-width:380px){
+ .home-hero{min-height:455px}.hero-copy{padding-top:232px}.hero-copy h1{font-size:28px}
+ .home-shortcuts button{min-height:111px}.home-shortcuts small{font-size:6.5px}
+}
