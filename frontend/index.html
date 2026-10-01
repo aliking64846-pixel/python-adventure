@@ -34,6 +34,61 @@
 <button class="quickAction" onclick="openChat()">💬 الرسائل</button>
 </div>
 
+<section class="new-home" aria-label="الصفحة الرئيسية رحلة بايثون">
+  <header class="home-top">
+    <button class="home-menu" aria-label="القائمة">☰</button>
+    <div class="brand"><span class="py-logo">🐍</span><strong>Python <i>Adventure</i></strong></div>
+    <div class="home-avatar">🐉</div>
+  </header>
+
+  <section class="home-hero">
+    <div class="hero-art"></div>
+    <div class="hero-copy">
+      <div class="hero-kicker">PYTHON ADVENTURE</div>
+      <h1>مرحباً بك في<br><span>رحلة بايثون</span></h1>
+      <p>تعلّم البرمجة بطريقة ممتعة وتفاعلية<br>واكتشف عالم بايثون خطوة بخطوة</p>
+      <div class="hero-actions">
+        <button class="hero-start" onclick="openWindow('lessonsModal')">ابدأ الرحلة <b>▶</b></button>
+        <button class="hero-lab" onclick="openWindow('labModal')">المختبر <b>⚗</b></button>
+      </div>
+    </div>
+  </section>
+
+  <div class="home-shortcuts">
+    <button onclick="openChat()"><span>💬</span><b>الرسائل</b><small>تواصل مع مجتمع<br>المتعلمين</small><em>←</em></button>
+    <button onclick="openWindow('skillsModal')"><span>☆</span><b>المهارات</b><small>طوّر مهاراتك<br>واكسب النجوم</small><em>←</em></button>
+    <button onclick="openWindow('questModal')"><span>☑</span><b>المهام</b><small>أكمل التمارين<br>واربح المكافآت</small><em>←</em></button>
+    <button onclick="openWindow('lessonsModal')"><span>📖</span><b>الدروس</b><small>تعلّم من الصفر<br>حتى الاحتراف</small><em>←</em></button>
+  </div>
+
+  <section class="home-progress">
+    <div class="rank-icon">✦</div>
+    <div class="rank-copy"><small>مستواك الحالي</small><b>المبتدئ</b></div>
+    <div class="rank-bar"><span id="homeProgressBar"></span></div>
+    <strong id="homeProgressText">1 / 10</strong>
+  </section>
+
+  <button class="first-step" onclick="openWindow('lessonsModal')">
+    <span class="code-icon">&lt;/&gt;</span>
+    <div><b>ابدأ أولى خطواتك</b><small>تعلّم أساسيات بايثون وابدأ رحلتك في عالم البرمجة</small></div>
+    <strong>→</strong>
+  </button>
+
+  <section class="latest">
+    <div class="latest-head"><h2>أحدث الدروس</h2><button onclick="openWindow('lessonsModal')">عرض الكل →</button></div>
+    <button class="lesson-card" onclick="openWindow('lessonsModal')">
+      <span class="lesson-icon">🐍</span>
+      <div class="lesson-info"><b>مقدمة في بايثون</b><small>تعرّف على لغة بايثون وميزاتها الأساسية</small><strong>ابدأ الدرس ▶</strong></div>
+      <div class="lesson-level">المستوى الأول</div><div class="lesson-pct">0%</div>
+    </button>
+    <button class="lesson-card" onclick="openWindow('lessonsModal')">
+      <span class="lesson-icon code">⌘</span>
+      <div class="lesson-info"><b>المتغيرات</b><small>تعلّم كيفية استخدام المتغيرات في بايثون</small></div>
+      <div class="lesson-level">المستوى الأول</div><div class="lesson-pct">0%</div>
+    </button>
+  </section>
+</section>
+
 <div class="portal"><div class="python">🐍</div></div>
 <div class="door left">???<div class="lock">🔒</div></div>
 <div class="door right">???<div class="lock">🔒</div></div>
@@ -56,14 +111,11 @@
 <div class="chest" onclick="openChest()">🎁</div>
 
 <div class="bottom">
-<button class="nav" onclick="openWindow('lessonsModal')"><span>📚</span>الدروس</button>
-<button class="nav" onclick="openWindow('inventoryModal')"><span>🎒</span>الحقيبة</button>
-<button class="nav" onclick="closeWindows();window.scrollTo({top:0,behavior:'smooth'})"><span>⌂</span>الرئيسية</button>
-<button class="nav" onclick="openWindow('labModal')"><span>🧪</span>المختبر</button>
-<button class="nav" onclick="openWindow('mapModal')"><span>🗺️</span>الخريطة</button>
-<button class="nav" onclick="openWindow('questModal')"><span>📜</span>المهام</button>
-<button class="nav" onclick="openWindow('achievementsModal')"><span>🏆</span>الإنجازات</button>
-<button class="nav" onclick="openChat()"><span>💬</span>الدردشة</button>
+<button class="nav is-active" onclick="closeWindows();window.scrollTo({top:0,behavior:'smooth'})"><span>⌂</span>الرئيسية</button>
+<button class="nav" onclick="openWindow('questModal')"><span>☑</span>المهام</button>
+<button class="nav" onclick="openWindow('skillsModal')"><span>☆</span>المهارات</button>
+<button class="nav" onclick="openChat()"><span>✉</span>الرسائل</button>
+<button class="nav" onclick="openWindow('lessonsModal')"><span>📖</span>الدروس</button>
 </div>
 
 <div class="modal" id="lessonsModal"><div class="window"><button class="close" onclick="closeWindows()">×</button><h2>📚 دروس Python</h2><p class="lesson-description">تتقدم في الخريطة درسًا بعد درس. كل درس يعطيك XP ويفتح مهارات جديدة.</p><div id="lessonList"></div></div></div>
