@@ -84,6 +84,7 @@ main{padding-bottom:86px}.hero{position:relative;min-height:385px;padding:26px 1
  #home .hero h1{font-size:32px} #home .hero h1 b{font-size:37px}
  #home .actions{grid-template-columns:1fr}
 }
+#home{display:none!important}
 </style></head>
 <body>
 <div id="app">
@@ -94,7 +95,7 @@ main{padding-bottom:86px}.hero{position:relative;min-height:385px;padding:26px 1
 </header>
 
 <main>
-<section id="home" class="view active">
+<section id="home" class="view" aria-hidden="true">
 <div class="hero">
 <div class="heroText">
 <h1>مرحباً بك في<br><b>رحلة بايثون</b></h1>
@@ -116,7 +117,7 @@ main{padding-bottom:86px}.hero{position:relative;min-height:385px;padding:26px 1
 </div>
 </section>
 
-<section id="lessons" class="view page">
+<section id="lessons" class="view page active">
 <h1>📖 الدروس</h1><p>مسار من الصفر إلى بناء برامج حقيقية.</p><div class="list" id="lessonList"></div>
 </section>
 
@@ -152,11 +153,11 @@ print("Hello", name)</textarea><button class="run" id="run">▶ تشغيل ال�
 </main>
 
 <nav class="bottom">
-<button class="nav active" data-nav="home"><span>⌂</span>الرئيسية</button>
+<button class="nav" data-nav="home" style="display:none" aria-hidden="true">الرئيسية</button>
 <button class="nav" data-nav="tasks"><span>☑</span>المهام</button>
 <button class="nav" data-nav="skills"><span>☆</span>المهارات</button>
 <button class="nav" data-nav="messages"><span>✉</span>الرسائل</button>
-<button class="nav" data-nav="lessons"><span>▢</span>الدروس</button>
+<button class="nav active" data-nav="lessons"><span>▢</span>الدروس</button>
 </nav>
 
 <div class="overlay" id="overlay"><div class="sheet"><h2 id="sheetTitle"></h2><p id="sheetText"></p><div id="sheetExtra"></div><button class="close" id="close">إغلاق</button></div></div>
@@ -214,13 +215,25 @@ print("Hello", name)</textarea><button class="run" id="run">▶ تشغيل ال�
   };
   window.closeWindows=function(){
     document.querySelectorAll(".view").forEach(v=>v.classList.remove("active"));
-    const home=document.getElementById("home"); if(home) home.classList.add("active");
-    document.querySelectorAll(".nav").forEach(n=>n.classList.toggle("active",n.dataset.nav==="home"));
+    const lessons=document.getElementById("lessons"); if(lessons) lessons.classList.add("active");
+    document.querySelectorAll(".nav").forEach(n=>n.classList.toggle("active",n.dataset.nav==="lessons"));
     if(document.getElementById("chatModal")) document.getElementById("chatModal").classList.remove("show");
     if(originalClose) { try{ originalClose(); }catch(e){} }
   };
   window.addEventListener("error",function(e){ if(e.message && /Cannot read properties of null/.test(e.message)) e.preventDefault(); });
 })();
 </script>
-</body>
+<script>
+(function(){
+  function openLessons(){
+    const home=document.getElementById("home"), lessons=document.getElementById("lessons");
+    if(home) home.classList.remove("active");
+    if(lessons) lessons.classList.add("active");
+    document.querySelectorAll(".nav").forEach(n=>n.classList.toggle("active",n.dataset.nav==="lessons"));
+    window.scrollTo(0,0);
+  }
+  if(document.readyState==="loading") document.addEventListener("DOMContentLoaded",openLessons,{once:true});
+  else openLessons();
+})();
+</script></body>
 </html>
