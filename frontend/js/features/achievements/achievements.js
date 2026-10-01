@@ -1,1 +1,1 @@
-function renderAchievements(){$('achievementList').innerHTML=achievements.map(a=>`<div class="info-box">${a[3]?'🏅':'🔒'} <strong>${a[1]}</strong><br>${a[2]}</div>`).join('')}
+function renderAchievements(){const list=$('achievementList');if(!list)return;list.innerHTML=achievements.map(a=>`<div class="info-box">${a[3]?'🏅':'🔒'} <strong>${a[1]}</strong><br>${a[2]}</div>`).join('')}
