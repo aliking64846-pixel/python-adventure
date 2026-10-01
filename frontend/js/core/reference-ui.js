@@ -65,7 +65,7 @@
     document.querySelectorAll('[data-view]').forEach(b=>b.onclick=()=>go(b.dataset.view));
     document.querySelectorAll('[data-nav]').forEach(b=>b.onclick=()=>go(b.dataset.nav));
     $id('start')?.addEventListener('click',()=>{go('lessons');openLesson(lessons[Math.min(completedLessons.length,lessons.length-1)]?.id||1)});
-    $id('labTop')?.addEventListener('click',()=>go('lab'));
+    $id('labTop')?.addEventListener('click',()=>go('lab'));$id('communityPageBtn')?.addEventListener('click',()=>openChat());
     $id('continue')?.addEventListener('click',()=>openLesson(Number($id('continue').dataset.lesson)||1));
     $id('run')?.addEventListener('click',runReferenceCode);
     $id('close')?.addEventListener('click',closeSheet);
