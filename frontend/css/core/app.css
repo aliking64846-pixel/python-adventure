@@ -493,3 +493,72 @@ button,input,textarea,select{max-width:100%;font:inherit}
  .home-hero{min-height:455px}.hero-copy{padding-top:232px}.hero-copy h1{font-size:28px}
  .home-shortcuts button{min-height:111px}.home-shortcuts small{font-size:6.5px}
 }
+
+
+/* ===== SUPPLIED MOBILE REFERENCE — FULL HOME REDESIGN ===== */
+@import url('https://fonts.googleapis.com/css2?family=Cairo:wght@400;500;600;700;800;900&display=swap');
+:root{--ref-bg:#031017;--ref-panel:#061f29;--ref-line:#164b55;--ref-green:#36f0a0;--ref-cyan:#42dfff;--ref-text:#f1f8f5;--ref-muted:#91aaa9}
+body,.game{font-family:'Cairo',Tahoma,Arial,sans-serif!important}
+.game{background:
+ radial-gradient(circle at 50% 0%,rgba(26,116,93,.18),transparent 34%),
+ linear-gradient(180deg,#02080d 0%,#03151c 45%,#020b11 100%)!important}
+.new-home.ref-home{display:block!important;width:min(100%,520px)!important;margin:0 auto!important;padding:7px 10px 92px!important;direction:rtl!important;color:var(--ref-text)!important}
+.ref-top{height:62px;display:flex;align-items:center;justify-content:space-between;direction:ltr;padding:0 2px}
+.ref-menu,.ref-avatar{width:46px;height:46px;border-radius:14px;border:1px solid rgba(57,255,180,.72);background:rgba(3,24,30,.72);color:#effff9;display:grid;place-items:center;cursor:pointer;box-shadow:0 0 18px rgba(40,255,166,.13);font-size:25px}
+.ref-avatar{border-radius:50%;font-size:24px}
+.ref-brand{display:flex;align-items:center;gap:8px;direction:ltr;font-size:20px;font-weight:800;letter-spacing:-.5px}
+.ref-brand i{font-style:normal;color:#39efa0}.python-mark{font-size:28px;filter:drop-shadow(0 0 8px rgba(54,240,160,.3))}
+.ref-hero{position:relative;height:455px;border-radius:0 0 25px 25px;overflow:hidden;margin:0 -2px 9px;border:1px solid rgba(60,239,178,.18);isolation:isolate;background:#031517}
+.ref-hero-art{position:absolute;inset:0;z-index:-3;background:url('/assets/python-adventure-hero.svg') 37% center/cover no-repeat}
+.ref-hero-overlay{position:absolute;inset:0;z-index:-2;background:
+ linear-gradient(90deg,rgba(0,8,11,.02) 0%,rgba(0,9,12,.16) 38%,rgba(0,9,12,.78) 66%,rgba(0,8,11,.96) 100%),
+ linear-gradient(180deg,rgba(0,0,0,.04) 0%,rgba(0,5,7,.04) 45%,rgba(0,8,10,.92) 100%)}
+.ref-hero-copy{position:absolute;right:18px;top:150px;width:55%;text-align:right}
+.ref-hero-copy h1{margin:0 0 9px;font-size:35px;line-height:1.18;font-weight:900;letter-spacing:-1px;text-shadow:0 3px 18px rgba(0,0,0,.7)}
+.ref-hero-copy h1 span{color:#35efa3;text-shadow:0 0 18px rgba(53,239,163,.22)}
+.ref-hero-copy p{font-size:12px;line-height:1.85;color:#eef8f4;margin:0 0 16px;text-shadow:0 2px 10px #000}
+.ref-hero-buttons{display:grid;gap:9px}
+.ref-start,.ref-lab{height:49px;border-radius:27px;font-family:inherit;font-weight:800;font-size:15px;cursor:pointer}
+.ref-start{border:1px solid #70ffc0;background:linear-gradient(180deg,#4ef3ae,#20d891);color:#03251b;box-shadow:0 0 24px rgba(49,244,167,.22)}
+.ref-lab{border:1.5px solid #35efc0;background:rgba(1,18,24,.56);color:#48f4cf;box-shadow:inset 0 0 20px rgba(35,237,191,.05)}
+.ref-start b,.ref-lab b{margin-right:7px}
+.ref-cards{display:grid;grid-template-columns:repeat(4,1fr);gap:7px;margin:0 0 9px}
+.ref-cards button{position:relative;min-height:153px;padding:12px 8px 8px;border-radius:17px;border:1px solid rgba(57,203,231,.22);background:linear-gradient(145deg,rgba(5,34,44,.97),rgba(4,24,32,.97));color:#f4faf8;text-align:center;cursor:pointer;box-shadow:inset 0 1px rgba(255,255,255,.025),0 8px 22px rgba(0,0,0,.17);font-family:inherit}
+.ref-cards button:hover{border-color:rgba(56,240,160,.6);transform:translateY(-2px)}
+.ref-cards .ico{width:43px;height:43px;margin:0 auto 8px;display:grid;place-items:center;border-radius:12px;font-weight:900;font-size:27px;text-shadow:0 0 12px currentColor}
+.ref-cards .blue{color:#53dfff}.ref-cards .yellow{color:#ffe23f}.ref-cards .green{color:#4effaa}.ref-cards .purple{color:#a98cff}
+.ref-cards b{display:block;font-size:14px;margin-bottom:4px}.ref-cards small{display:block;color:#a9bdbb;font-size:8px;line-height:1.65}.ref-cards em{display:block;font-style:normal;font-size:21px;line-height:1;margin-top:6px;color:#eafff6}
+.ref-level{height:78px;display:flex;align-items:center;gap:9px;margin-bottom:9px;padding:9px 11px;border-radius:20px;border:1px solid rgba(50,241,164,.7);background:linear-gradient(90deg,rgba(4,40,38,.97),rgba(3,26,34,.97));box-shadow:0 0 20px rgba(40,255,160,.06)}
+.ref-level-icon{width:48px;height:48px;flex:none;display:grid;place-items:center;border:2px solid #54ff9b;border-radius:13px;color:#61ff9f;font-size:28px;box-shadow:0 0 14px rgba(74,255,158,.16);background:rgba(62,255,151,.08)}
+.ref-level-name{min-width:76px}.ref-level-name small{display:block;font-size:9px;color:#d1dfdc}.ref-level-name b{font-size:19px;color:#38efa0}
+.ref-progress{height:11px;flex:1;border-radius:99px;background:#153847;overflow:hidden}.ref-progress span{display:block;width:12%;height:100%;border-radius:inherit;background:linear-gradient(90deg,#36eea0,#52efc6);box-shadow:0 0 12px #39f0a6}
+.ref-level>strong{font-size:12px;color:#e9f6f3}
+.ref-first{width:100%;display:flex;align-items:center;gap:11px;min-height:76px;margin-bottom:11px;padding:9px 12px;text-align:right;border-radius:20px;border:1px solid #20c982;background:
+ linear-gradient(90deg,rgba(4,48,39,.92),rgba(4,29,35,.96)),url('/assets/python-adventure-hero.svg') center/cover;box-shadow:inset 0 0 30px rgba(31,237,149,.08);color:#f4fbf7;font-family:inherit;cursor:pointer}
+.ref-code{width:51px;height:51px;display:grid;place-items:center;flex:none;border-radius:13px;border:1px solid #39eeb0;background:rgba(31,235,161,.14);color:#39efb0;font-size:24px;font-weight:900}
+.ref-first div{flex:1}.ref-first b{display:block;font-size:15px}.ref-first small{display:block;color:#a7bab8;font-size:9px;margin-top:4px}.ref-first>strong{width:32px;height:32px;display:grid;place-items:center;border:1px solid #43f0aa;border-radius:50%;color:#4fffb1;font-size:22px}
+.ref-lessons{border-radius:20px;padding:12px 10px 8px;border:1px solid rgba(47,207,237,.15);background:rgba(3,22,29,.8)}
+.ref-section-head{display:flex;align-items:center;justify-content:space-between;margin:0 3px 7px}.ref-section-head h2{font-size:20px;margin:0;font-weight:900}.ref-section-head button{border:0;background:none;color:#b5c5c2;font-family:inherit;font-size:11px;cursor:pointer}.ref-section-head button b{color:#48f0b0;font-size:18px}
+.ref-lesson{width:100%;min-height:104px;display:flex;align-items:center;gap:9px;position:relative;text-align:right;padding:9px;margin:6px 0;border-radius:16px;border:1px solid rgba(54,204,235,.14);background:linear-gradient(105deg,rgba(5,40,49,.92),rgba(3,24,32,.96));color:#f4faf8;font-family:inherit;cursor:pointer}
+.ref-python-box,.ref-code-box{width:54px;height:54px;flex:none;display:grid;place-items:center;border-radius:12px;background:linear-gradient(145deg,#0a4e64,#063340);border:1px solid #26b5d0;color:#46dcff;font-size:28px;font-weight:900}.ref-code-box{color:#45efad;border-color:#2ad19d}
+.ref-lesson-info{flex:1;min-width:0}.ref-lesson-info b{display:block;font-size:13px}.ref-lesson-info small{display:block;color:#91aaa8;font-size:8px;margin:5px 0}.ref-lesson-info strong{display:inline-block;padding:4px 9px;border-radius:99px;background:#42efa5;color:#032219;font-size:8px}
+.ref-level-tag{position:absolute;top:8px;left:8px;padding:3px 7px;border-radius:99px;border:1px solid rgba(57,240,168,.42);background:rgba(27,181,118,.12);color:#3af0a4;font-size:7px}.ref-zero{position:absolute;bottom:8px;left:10px;color:#91a9a8;font-size:8px}
+.game>.portal,.game>.door,.game>.code-screen,.game>.character,.game>.floating,.game>.panel,.game>.quests,.game>.chest{display:none!important}
+.game>.progress,.game>.player,.game>.coins,.game>.mobileQuick{display:none!important}
+.bottom{z-index:1000!important}
+@media(max-width:640px){
+ .new-home.ref-home{width:100%!important;padding:3px 8px 91px!important}
+ .ref-top{height:58px}.ref-menu,.ref-avatar{width:43px;height:43px}.ref-brand{font-size:19px}
+ .ref-hero{height:480px;border-radius:0 0 24px 24px}.ref-hero-art{background-position:36% center}
+ .ref-hero-copy{right:15px;top:163px;width:55%}.ref-hero-copy h1{font-size:32px}.ref-hero-copy p{font-size:11px}
+ .ref-cards{gap:5px}.ref-cards button{min-height:143px;padding:10px 5px}.ref-cards .ico{width:40px;height:40px;font-size:24px}.ref-cards b{font-size:12px}.ref-cards small{font-size:7px}.ref-cards em{font-size:18px}
+ .ref-level{height:73px}.ref-level-icon{width:44px;height:44px}.ref-level-name b{font-size:17px}
+ .ref-first{min-height:74px}.ref-first b{font-size:13px}.ref-first small{font-size:8px}
+ .ref-section-head h2{font-size:18px}.ref-lesson{min-height:97px}.ref-lesson-info b{font-size:12px}
+ .bottom{left:7px!important;right:7px!important;bottom:7px!important;height:67px!important;border-radius:22px!important;grid-template-columns:repeat(5,1fr)!important}
+ .bottom .nav{font-family:'Cairo',Tahoma,Arial,sans-serif!important;font-size:8px!important;padding:5px 1px!important}.bottom .nav span{font-size:21px!important}
+}
+@media(max-width:380px){
+ .ref-hero{height:455px}.ref-hero-copy{top:151px}.ref-hero-copy h1{font-size:29px}.ref-hero-copy p{font-size:10px}
+ .ref-cards button{min-height:135px}.ref-cards small{font-size:6.5px}
+}
