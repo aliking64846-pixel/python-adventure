@@ -79,13 +79,8 @@
  }
  function updateContinue(){
    const id=lessons[Math.min(completedLessons.length,lessons.length-1)]?.id||1;
-   const l=lessons.find(x=>x.id===id);
    const continueButton=$('uxContinue');
-   const messagesPage=$('messages');
-   if(continueButton){
-     // هذا الزر خاص بصفحة الرسائل فقط، ولا يظهر في أي صفحة أخرى.
-     continueButton.style.display=messagesPage?.classList.contains('active')?'block':'none';
-   }
+   if(continueButton)continueButton.style.display='none';
 
    if($('uxTopXP'))$('uxTopXP').textContent=Number(xp)||0;
    if($('uxTopCoins'))$('uxTopCoins').textContent=Number(coins)||0;
