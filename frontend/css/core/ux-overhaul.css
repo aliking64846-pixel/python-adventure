@@ -1,4 +1,8 @@
 /* Python Adventure UX Overhaul — v2 */
+/* Keep each application page isolated: only the active view is rendered. */
+#app .view{display:none!important}
+#app .view.active{display:block!important}
+
 :root{
  --ux-bg:#071014;--ux-surface:#0b1a20;--ux-surface2:#0f232a;--ux-line:#1b424b;
  --ux-text:#effffc;--ux-muted:#91aaae;--ux-accent:#35f0ad;--ux-accent2:#3ddcff;
