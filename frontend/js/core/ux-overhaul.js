@@ -70,6 +70,13 @@
    $('uxResults').querySelectorAll('[data-cmd]').forEach(b=>b.onclick=()=>{$('uxCommandModal').classList.remove('open');go(b.dataset.cmd)});
  }
 
+ function syncActiveNavigation(){
+   const active=document.querySelector('.view.active');
+   const view=active?.id;
+   if(!view)return;
+   document.querySelectorAll('[data-nav]').forEach(n=>n.classList.toggle('active',n.dataset.nav===view));
+   document.querySelectorAll('#uxSidebar button[data-route]').forEach(n=>n.classList.toggle('active',n.dataset.route===view));
+ }
  function updateContinue(){
    const id=lessons[Math.min(completedLessons.length,lessons.length-1)]?.id||1;
    const l=lessons.find(x=>x.id===id);
@@ -104,11 +111,12 @@
  window.addEventListener('load',()=>{
    document.body.classList.add('uxHasSidebar');
    refresh();
+   syncActiveNavigation();
    hookRender();
 
    // بعض التنقلات تتم من ملفات أخرى؛ راقب تبدّل الصفحة النشطة حتى يبقى
    // زر "تابع من حيث توقفت" ظاهرًا داخل الرسائل فقط.
-   const observer=new MutationObserver(updateContinue);
+   const observer=new MutationObserver(()=>{updateContinue();syncActiveNavigation()});
    observer.observe(document.body,{subtree:true,attributes:true,attributeFilter:['class']});
  });
  window.addEventListener('pythonAdventureRendered',updateContinue);
