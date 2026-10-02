@@ -12,7 +12,7 @@
   ['skills','🌳','المهارات','طور قدراتك'],
   ['mapPage','🗺️','الخريطة','تقدم الرحلة'],
   ['achievementsPage','🏆','الإنجازات','جوائزك'],
-  ['messages','💬','المجتمع','تواصل مع المتعلمين']
+  ['messages','💬','الرسائل','رسائلك ومحادثاتك']
  ];
  function go(view){
    if(view==='projects'){window.openAcademy?.('projects');return}
@@ -30,11 +30,10 @@
    side.innerHTML='<div class="uxBrand">🐍 <span>Python</span> Adventure</div><div class="uxLabel">التعلم</div>'+
     routes.slice(0,7).map(r=>`<button data-route="${r[0]}"><span style="font-size:18px">${r[1]}</span><span><b style="display:block;font-size:12px">${r[2]}</b><small style="color:#617d82">${r[3]}</small></span></button>`).join('')+
     '<div class="uxLabel">رحلتك</div>'+routes.slice(7).map(r=>`<button data-route="${r[0]}"><span style="font-size:18px">${r[1]}</span><span><b style="display:block;font-size:12px">${r[2]}</b><small style="color:#617d82">${r[3]}</small></span></button>`).join('')+
-    '<div class="uxBottom"><button id="uxSideProfile">👤 ملفي وحسابي</button><button id="uxSideCommunity">👥 مجتمع اللاعبين</button></div>';
+    '<div class="uxBottom"><button id="uxSideProfile">👤 ملفي وحسابي</button></div>';
    document.body.appendChild(side);
    side.querySelectorAll('[data-route]').forEach(b=>b.onclick=()=>go(b.dataset.route));
    $('uxSideProfile').onclick=()=>window.openProfile?.();
-   $('uxSideCommunity').onclick=()=>window.openChat?.();
  }
  function buildTopbar(){
    if($('uxTopbar'))return;
