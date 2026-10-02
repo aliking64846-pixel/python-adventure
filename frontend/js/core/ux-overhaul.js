@@ -73,18 +73,44 @@
  function updateContinue(){
    const id=lessons[Math.min(completedLessons.length,lessons.length-1)]?.id||1;
    const l=lessons.find(x=>x.id===id);
+   const continueButton=$('uxContinue');
+   const messagesPage=$('messages');
+   if(continueButton){
+     // هذا الزر خاص بصفحة الرسائل فقط، ولا يظهر في أي صفحة أخرى.
+     continueButton.style.display=messagesPage?.classList.contains('active')?'block':'none';
+   }
 
    if($('uxTopXP'))$('uxTopXP').textContent=Number(xp)||0;
    if($('uxTopCoins'))$('uxTopCoins').textContent=Number(coins)||0;
  }
- function addContinue(){if($('uxContinue'))return;const b=document.createElement('button');b.id='uxContinue';b.innerHTML='▶️ تابع من حيث توقفت';b.onclick=()=>{const id=lessons[Math.min(completedLessons.length,lessons.length-1)]?.id||1;openLesson(id)};document.body.appendChild(b)}
+ function addContinue(){
+   if($('uxContinue'))return;
+   const b=document.createElement('button');
+   b.id='uxContinue';
+   b.innerHTML='▶️ تابع من حيث توقفت';
+   b.onclick=()=>{const id=lessons[Math.min(completedLessons.length,lessons.length-1)]?.id||1;openLesson(id)};
+   b.style.display='none';
+   document.body.appendChild(b);
+ }
  function refresh(){buildSidebar();buildTopbar();buildMobile();addContinue();updateContinue()}
  function hookRender(){
    if(window.__uxRenderWrapped)return;
    const old=window.renderAll;
-   if(typeof old==='function'){window.renderAll=function(){const r=old.apply(this,arguments);setTimeout(updateContinue,0);return r};window.__uxRenderWrapped=true}
+   if(typeof old==='function'){
+     window.renderAll=function(){const r=old.apply(this,arguments);setTimeout(updateContinue,0);return r};
+     window.__uxRenderWrapped=true;
+   }
  }
- window.addEventListener('load',()=>{document.body.classList.add('uxHasSidebar');refresh();hookRender()});
+ window.addEventListener('load',()=>{
+   document.body.classList.add('uxHasSidebar');
+   refresh();
+   hookRender();
+
+   // بعض التنقلات تتم من ملفات أخرى؛ راقب تبدّل الصفحة النشطة حتى يبقى
+   // زر "تابع من حيث توقفت" ظاهرًا داخل الرسائل فقط.
+   const observer=new MutationObserver(updateContinue);
+   observer.observe(document.body,{subtree:true,attributes:true,attributeFilter:['class']});
+ });
  window.addEventListener('pythonAdventureRendered',updateContinue);
  window.openUXCommand=openCommand;
 })();
