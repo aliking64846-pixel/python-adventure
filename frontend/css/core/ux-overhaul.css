@@ -62,12 +62,13 @@ body.uxHasSidebar #app .top{margin-top:70px}
 .uxResults{display:grid;gap:6px;margin-top:10px}
 .uxResults button{padding:12px;border:1px solid transparent;border-radius:12px;background:#07171c;color:#d9f4f1;text-align:right}
 .uxResults button:hover{background:#0d2c2d;border-color:#25665b}
-#uxContinue{position:fixed;bottom:94px;right:28px;z-index:45;padding:11px 16px;border:1px solid #2d7e69;border-radius:15px;background:#0a3029;color:#8affd3;box-shadow:0 10px 30px #0007}
+#uxContinue{display:none!important;position:fixed;bottom:94px;right:28px;z-index:45;padding:11px 16px;border:1px solid #2d7e69;border-radius:15px;background:#0a3029;color:#8affd3;box-shadow:0 10px 30px #0007}
 #uxHomeGrid{display:grid;grid-template-columns:1.4fr .8fr;gap:14px;margin-top:14px}
 .uxPanel{border:1px solid var(--ux-line);border-radius:20px;background:#091a20;padding:18px}
 .uxPanel h3{margin:0 0 10px;font-size:15px}.uxPanel p{color:var(--ux-muted);font-size:11px;line-height:1.7}
 .uxMiniProgress{height:7px;background:#102d34;border-radius:99px;overflow:hidden;margin-top:10px}.uxMiniProgress i{display:block;height:100%;background:linear-gradient(90deg,#35f0ad,#3ddcff)}
 .uxActionGrid{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:10px}.uxAction{padding:13px;border:1px solid var(--ux-line);border-radius:14px;background:#07171c;color:#d9f8f2;text-align:right}.uxAction b{display:block;color:#71f8c7;margin-bottom:3px}.uxAction small{color:#789397}
+body:has(#messages.active) #uxContinue{display:block!important}
 @media(max-width:900px){
  body.uxHasSidebar #app{padding-right:0}
  #uxSidebar,#uxTopbar{display:none}
