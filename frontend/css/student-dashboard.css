@@ -112,3 +112,33 @@
     height: 43px;
   }
 }
+
+/* Second calibration: align content edges to the 25px reference inset. */
+@media (min-width: 1500px) {
+  .welcome,
+  .stats-grid,
+  .analytics-grid,
+  .bottom-grid {
+    margin-left: 9px;
+  }
+
+  .bottom-grid {
+    width: calc(100% - 202px);
+  }
+
+  .analytics-grid {
+    grid-template-columns: minmax(0, 1.85fr) minmax(0, 1fr) 186px;
+  }
+
+  .quick-tools .quick-button {
+    min-height: 52px;
+  }
+
+  .recent .section-heading {
+    min-height: 24px;
+  }
+
+  .recent table {
+    font-size: 11px;
+  }
+}
