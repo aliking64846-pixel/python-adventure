@@ -1,0 +1,124 @@
+<!doctype html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+  <meta name="theme-color" content="#03102b">
+  <title>مستقبلي 100 | لوحة الطالب</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/css/student-dashboard.css">
+</head>
+<body>
+<div class="dashboard" id="dashboard">
+  <aside class="sidebar">
+    <a class="brand" href="/dashboard.html" aria-label="مستقبلي 100">
+      <span class="brand-mark"><svg viewBox="0 0 48 48" aria-hidden="true"><path d="M24 3 43 13v22L24 45 5 35V13z" fill="#087cff"/><path d="M24 8 38 16v16L24 40 10 32V16z" fill="#13b8ff"/><path d="M17 14h14v14H17z" fill="#dff6ff"/><path d="m20 28 4-5 4 5" fill="none" stroke="#087cff" stroke-width="2.5"/></svg></span>
+      <span><strong>مستقبلي 100</strong><small>نحو مستقبل أفضل</small></span>
+    </a>
+    <nav class="side-nav" aria-label="التنقل الرئيسي">
+      <button class="side-link active" data-page="الرئيسية"><span class="nav-ico">⌂</span><span>الرئيسية</span></button>
+      <button class="side-link" data-page="المناهج"><span class="nav-ico">▤</span><span>المناهج</span></button>
+      <button class="side-link" data-page="المدرّس الذكي"><span class="nav-ico">♙</span><span>المدرّس الذكي</span></button>
+      <button class="side-link" data-page="الاختبارات"><span class="nav-ico">▤</span><span>الاختبارات</span></button>
+      <button class="side-link" data-page="خطة الدراسة"><span class="nav-ico">▦</span><span>خطة الدراسة</span></button>
+      <button class="side-link" data-page="سجل الأخطاء"><span class="nav-ico">◎</span><span>سجل الأخطاء</span></button>
+      <button class="side-link" data-page="المراجعة الذكية"><span class="nav-ico">✥</span><span>المراجعة الذكية</span></button>
+      <button class="side-link" data-page="إحصائيات"><span class="nav-ico">▥</span><span>إحصائيات</span></button>
+      <button class="side-link" data-page="المكتبة"><span class="nav-ico">▣</span><span>المكتبة</span></button>
+      <button class="side-link" data-page="الإعدادات"><span class="nav-ico">⚙</span><span>الإعدادات</span></button>
+    </nav>
+    <div class="sidebar-promo">
+      <div class="mountain-art" aria-hidden="true"><span class="star s1">✦</span><span class="star s2">✧</span><svg viewBox="0 0 230 105"><path d="M20 92 82 23l25 30 26-43 78 82z" fill="#0745bd"/><path d="m82 23 25 30-12-3-13-13-15 18z" fill="#19a5ff"/><path d="m133 10 20 24-17-8-11 10z" fill="#3ed7ff"/><path d="M107 53 83 92h51z" fill="#071c63"/><path d="m133 10 12 21 16 10-28-5-9-14z" fill="#1689ff"/></svg></div>
+      <strong>مستقبلك يبدأ من هنا</strong><p>اجتهد .. وحقق حلمك</p>
+    </div>
+  </aside>
+
+  <main class="main">
+    <header class="topbar">
+      <div class="user-profile"><div class="avatar"><span>ع</span></div><div class="user-copy"><strong>علي عبود <i class="online"></i></strong><small>طالب - الثالث المتوسط</small></div></div>
+      <button class="icon-button notification" id="notifications" aria-label="الإشعارات">♧<span class="notification-count">3</span></button>
+      <label class="search"><span>⌕</span><input id="searchInput" type="search" placeholder="ابحث عن درس، سؤال، أو أي شيء..." autocomplete="off"><kbd>⌕</kbd></label>
+      <div class="top-actions"><button class="icon-button" id="themeToggle" aria-label="تغيير المظهر">☾</button><button class="icon-button" id="fullscreen" aria-label="ملء الشاشة">⛶</button></div>
+      <div class="date-box"><span id="dateText">الخميس، 29 أكتوبر 2026</span><small id="timeText">11:24 ص</small><span class="calendar-icon">▦</span></div>
+    </header>
+
+    <section class="welcome panel">
+      <div class="welcome-art" aria-hidden="true">
+        <div class="book-stack"><i></i><i></i><i></i><i></i></div>
+        <div class="lamp"><span></span><b></b></div><div class="clock"><span>12</span><i></i></div>
+        <div class="laptop"><div class="screen"><span>✦</span><b>ABC</b><i></i><i></i></div><div class="base"></div></div>
+        <div class="iraq-flag"><i></i><b>الله أكبر</b></div>
+        <div class="art-glow"></div>
+      </div>
+      <div class="welcome-copy"><h1>مرحباً غني عبود <span class="wave">👋</span></h1><p>رحلتك نحو التفوق تبدأ من هنا</p><div class="welcome-quote"><span class="target">◎</span><span>”النجاح لا يأتي صدفة.<br>بل من خطة، واجتهاد، ومتابعة.“</span></div></div>
+      <div class="welcome-bottom"><div class="overall"><span>دليل التقدم العام</span><strong>68%</strong></div><div class="long-progress"><i style="width:68%"></i></div><div class="level-pill"><span>مستوى الطالب</span><b>متميز <em>★</em></b></div></div>
+    </section>
+
+    <section class="stats-grid" aria-label="ملخص التقدم">
+      <article class="stat-card purple"><div class="stat-icon">▤</div><div class="stat-info"><span>إجمالي الدروس</span><strong>62</strong><small>تم إكمال 42 درس</small><div class="mini-progress"><i style="width:68%"></i></div><a href="#lessons" data-action="lessons">عرض الكل ↗</a></div></article>
+      <article class="stat-card green"><div class="stat-icon">☷</div><div class="stat-info"><span>الاختبارات</span><strong>18</strong><small>تم إكمال 12 اختبار</small><div class="mini-progress"><i style="width:67%"></i></div><a href="#tests" data-action="الاختبارات">عرض الكل ↗</a></div></article>
+      <article class="stat-card blue"><div class="stat-icon">✥</div><div class="stat-info"><span>المدرّس الذكي</span><strong>12</strong><small>محادثة نشطة ▫</small><a href="#teacher" data-action="المدرّس الذكي">عرض الكل ↗</a></div></article>
+      <article class="stat-card amber"><div class="stat-icon">◴</div><div class="stat-info"><span>خطة الدراسة</span><strong>15</strong><small>أيام متبقية</small><div class="mini-progress"><i style="width:42%"></i></div><a href="#plan" data-action="خطة الدراسة">عرض الخطة ↗</a></div></article>
+      <article class="stat-card pink"><div class="stat-icon">◎</div><div class="stat-info"><span>سجل الأخطاء</span><strong>7</strong><small>في هذا الأسبوع</small><a href="#errors" data-action="سجل الأخطاء">عرض التفاصيل ↗</a></div></article>
+    </section>
+
+    <section class="analytics-grid">
+      <article class="panel performance">
+        <div class="section-heading"><h2>تطور مستواك في المواد</h2><span class="heading-icon">▥</span></div>
+        <div class="chart-wrap"><svg class="line-chart" viewBox="0 0 650 210" role="img" aria-label="رسم بياني لتطور مستوى الطالب"><defs><linearGradient id="areaFill" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#10baff" stop-opacity=".48"/><stop offset="1" stop-color="#1d4cff" stop-opacity=".04"/></linearGradient><linearGradient id="lineStroke" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#06d8ff"/><stop offset=".45" stop-color="#c62cff"/><stop offset="1" stop-color="#ff9b1b"/></linearGradient></defs>
+          <g class="grid-lines"><path d="M45 25H630M45 58H630M45 91H630M45 124H630M45 157H630M45 190H630"/><path d="M45 25V190M162 25V190M279 25V190M396 25V190M513 25V190M630 25V190"/></g>
+          <g class="axis-labels"><text x="31" y="29">100</text><text x="31" y="62">80</text><text x="31" y="95">60</text><text x="31" y="128">40</text><text x="31" y="161">20</text><text x="31" y="194">0</text></g>
+          <path d="M45 91 L132 58 L220 112 L307 91 L395 107 L513 58 L630 74 L630 190 L45 190Z" fill="url(#areaFill)"/>
+          <path d="M45 91 L132 58 L220 112 L307 91 L395 107 L513 58 L630 74" fill="none" stroke="url(#lineStroke)" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/>
+          <g class="chart-points"><circle cx="45" cy="91" r="4"/><circle cx="132" cy="58" r="5"/><circle cx="220" cy="112" r="4"/><circle cx="307" cy="91" r="4"/><circle cx="395" cy="107" r="4"/><circle cx="513" cy="58" r="5"/><circle cx="630" cy="74" r="4"/></g>
+          <g class="x-labels"><text x="45" y="207">الاجتماعيات</text><text x="145" y="207">اللغة العربية</text><text x="279" y="207">اللغة الإنجليزية</text><text x="395" y="207">الرياضيات</text><text x="530" y="207">العلوم</text></g>
+          <g class="chart-tooltip"><rect x="100" y="5" width="70" height="40" rx="10"/><text x="135" y="21">الاجتماعيات</text><text x="135" y="36">92%</text></g>
+        </svg></div>
+      </article>
+
+      <article class="panel distribution">
+        <div class="section-heading"><h2>توزيع الوقت على المواد</h2><span class="heading-icon">◷</span></div>
+        <div class="donut-layout"><div class="donut"><div class="donut-center"><strong>62</strong><span>درس</span></div></div><ul class="legend"><li><i class="c1"></i><span>الاجتماعيات</span><b>28% (17)</b></li><li><i class="c2"></i><span>اللغة العربية</span><b>22% (14)</b></li><li><i class="c3"></i><span>اللغة الإنجليزية</span><b>18% (11)</b></li><li><i class="c4"></i><span>الرياضيات</span><b>16% (10)</b></li><li><i class="c5"></i><span>العلوم</span><b>16% (10)</b></li></ul></div>
+      </article>
+
+      <article class="panel quick-tools">
+        <div class="section-heading"><h2>أدوات سريعة</h2><span class="heading-icon">ϟ</span></div>
+        <button class="quick-button q-blue" data-action="بدء درس جديد"><span>▣</span>بدء درس جديد</button>
+        <button class="quick-button q-purple" data-action="المدرّس الذكي"><span>♙</span>المدرّس الذكي</button>
+        <button class="quick-button q-green" data-action="اختبار جديد"><span>▤</span>اختبار جديد</button>
+        <button class="quick-button q-orange" data-action="خطة اليوم"><span>▦</span>خطة اليوم</button>
+      </article>
+    </section>
+
+    <section class="bottom-grid">
+      <article class="panel recent">
+        <div class="section-heading"><h2>أحدث الدروس للمراجعة</h2><span class="heading-icon">▣</span><button class="text-link" data-action="عرض جميع الدروس">عرض جميع الدروس ↗</button></div>
+        <div class="table-scroll"><table id="lessonTable"><thead><tr><th>المادة</th><th>الدرس</th><th>النوع</th><th>التاريخ</th><th>النتيجة</th><th>الإجراء</th></tr></thead><tbody>
+          <tr data-search="الاجتماعيات العراق في العصر العباسي"><td><span class="subject orange-dot">الاجتماعيات</span></td><td>العراق في العصر العباسي</td><td>درس</td><td>2026-10-24</td><td class="score">95%</td><td><button class="table-button" data-action="مراجعة: العراق في العصر العباسي">◉ مراجعة</button></td></tr>
+          <tr data-search="اللغة العربية الأسلوب الخبري والإنشائي"><td><span class="subject teal-dot">اللغة العربية</span></td><td>الأسلوب الخبري والإنشائي</td><td>درس</td><td>2026-10-23</td><td class="score">88%</td><td><button class="table-button" data-action="مراجعة: الأسلوب الخبري والإنشائي">◉ مراجعة</button></td></tr>
+          <tr data-search="الرياضيات المعادلات الخطية"><td><span class="subject pink-dot">الرياضيات</span></td><td>المعادلات الخطية</td><td class="test-type">اختبار</td><td>2026-10-22</td><td class="score">76%</td><td><button class="table-button details" data-action="تفاصيل: المعادلات الخطية">▤ تفاصيل</button></td></tr>
+          <tr data-search="اللغة الإنجليزية present simple"><td><span class="subject blue-dot">اللغة الإنجليزية</span></td><td>Present Simple</td><td>درس</td><td>2026-10-21</td><td class="score">92%</td><td><button class="table-button" data-action="مراجعة: Present Simple">◉ مراجعة</button></td></tr>
+          <tr data-search="العلوم الجهاز التنفسي"><td><span class="subject purple-dot">العلوم</span></td><td>الجهاز التنفسي</td><td>درس</td><td>2026-10-20</td><td class="score">85%</td><td><button class="table-button" data-action="مراجعة: الجهاز التنفسي">◉ مراجعة</button></td></tr>
+        </tbody></table></div>
+      </article>
+      <article class="panel mini-stats">
+        <div class="section-heading"><h2>إحصائيات سريعة</h2><span class="heading-icon">▥</span></div>
+        <div class="rings">
+          <div class="ring-item"><div class="ring r68"><span>68%</span></div><small>معدل الإنجاز</small></div>
+          <div class="ring-item"><div class="ring r85"><span>85%</span></div><small>معدل الاختبارات</small></div>
+          <div class="ring-item"><div class="ring r92"><span>92%</span></div><small>دقة الإجابات</small></div>
+          <div class="ring-item"><div class="ring r7"><span>7</span></div><small>أيام متبقية<br>على الامتحان</small></div>
+        </div>
+      </article>
+    </section>
+
+    <footer class="footer"><span>♥ مستقبلي 100 .. لأنك تستحق الأفضل</span><div class="tech"><b>5</b> HTML5 <b>3</b> CSS3 <b>▣</b> JavaScript <b>◈</b> Firebase <b>◉</b> GitHub</div><span>من فكرة إلى منصة تعليمية متكاملة 🚀</span></footer>
+  </main>
+</div>
+<div class="toast" id="toast" role="status" aria-live="polite"></div>
+<div class="modal" id="actionModal" aria-hidden="true"><div class="modal-card" role="dialog" aria-modal="true" aria-labelledby="modalTitle"><button class="modal-close" id="modalClose" aria-label="إغلاق">×</button><div class="modal-symbol">✦</div><h2 id="modalTitle">أهلاً بك</h2><p id="modalText">اختر ما تريد إنجازه اليوم.</p><div id="modalContent"></div><button class="modal-primary" id="modalOk">حسناً</button></div></div>
+<script src="/js/student-dashboard.js" defer></script>
+</body>
+</html>
